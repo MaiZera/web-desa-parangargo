@@ -1,9 +1,13 @@
 <?php
 
-<<<<<<< HEAD
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\StaffController;
+use App\Http\Controllers\Admin\ProfileDesaController;
+use App\Http\Controllers\Admin\DemografisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,13 +29,6 @@ Route::get('/berita', [PageController::class, 'news'])->name('news');
 Route::get('/transparansi', [PageController::class, 'transparency'])->name('transparency');
 Route::get('/umkm', [PageController::class, 'umkm'])->name('umkm');
 Route::get('/partisipasi', [PageController::class, 'participation'])->name('participation');
-=======
-use App\Http\Controllers\ProfileController;
-use Illuminate\Support\Facades\Route;
-
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::get('/dashboard', function () {
     $banners = \App\Models\Banner::where('is_active', true)->latest()->get();
