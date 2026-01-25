@@ -1,28 +1,69 @@
 @extends('layouts.main')
 
 @section('content')
+<style>
+    /* Style for lists in prose content */
+    .prose ul {
+        list-style-type: disc;
+        padding-left: 1.5rem;
+    }
+    
+    .prose ol {
+        list-style-type: decimal;
+        padding-left: 1.5rem;
+    }
+    
+    .prose li {
+        margin-bottom: 0.25rem;
+    }
+</style>
+
 <div class="space-y-16 py-12 px-4 max-w-7xl mx-auto">
     <section class="grid md:grid-cols-2 gap-12 items-center">
         <div class="space-y-6">
-            <h1 class="text-4xl font-bold text-slate-900">Profil &amp; Sejarah Desa</h1>
-            <p class="text-lg text-slate-600 leading-relaxed">Desa Mandiri Jaya didirikan pada tahun 1945 oleh sekelompok pejuang kemerdekaan yang ingin membangun pemukiman mandiri yang berlandaskan gotong royong. Berlokasi di kaki pegunungan, desa ini awalnya merupakan sentra pertanian yang kini berkembang menjadi desa digital percontohan.</p>
+            <h1 class="text-4xl font-bold text-slate-900">Profil & Sejarah Desa</h1>
+            
+            @if($profile && $profile->deskripsi)
+                <div class="text-lg text-slate-600 leading-relaxed prose prose-slate max-w-none">
+                    {!! $profile->deskripsi !!}
+                </div>
+            @else
+                <p class="text-lg text-slate-600 leading-relaxed">Desa Parangargo didirikan pada tahun 1945 oleh sekelompok pejuang kemerdekaan yang ingin membangun pemukiman mandiri yang berlandaskan gotong royong. Berlokasi di kaki pegunungan, desa ini awalnya merupakan sentra pertanian yang kini berkembang menjadi desa digital percontohan.</p>
+            @endif
+            
             <div class="grid grid-cols-2 gap-6 pt-4">
                 <div class="p-6 bg-white border border-slate-100 rounded-2xl shadow-sm">
                     <h3 class="font-bold text-emerald-600 mb-2">Visi</h3>
-                    <p class="text-sm text-slate-500">Mewujudkan desa yang mandiri, cerdas, dan sejahtera lahir batin.</p>
+                    @if($profile && $profile->visi)
+                        <div class="text-sm text-slate-500 prose prose-sm max-w-none">
+                            {!! $profile->visi !!}
+                        </div>
+                    @else
+                        <p class="text-sm text-slate-500">Mewujudkan desa yang mandiri, cerdas, dan sejahtera lahir batin.</p>
+                    @endif
                 </div>
                 <div class="p-6 bg-white border border-slate-100 rounded-2xl shadow-sm">
                     <h3 class="font-bold text-emerald-600 mb-2">Misi</h3>
-                    <ul class="text-sm text-slate-500 list-disc list-inside space-y-1">
-                        <li>Meningkatkan layanan digital</li>
-                        <li>Memberdayakan UMKM lokal</li>
-                        <li>Pelestarian lingkungan hidup</li>
-                    </ul>
+                    @if($profile && $profile->misi)
+                        <div class="text-sm text-slate-500 prose prose-sm max-w-none">
+                            {!! $profile->misi !!}
+                        </div>
+                    @else
+                        <ul class="text-sm text-slate-500 list-disc list-inside space-y-1">
+                            <li>Meningkatkan layanan digital</li>
+                            <li>Memberdayakan UMKM lokal</li>
+                            <li>Pelestarian lingkungan hidup</li>
+                        </ul>
+                    @endif
                 </div>
             </div>
         </div>
         <div class="rounded-3xl overflow-hidden shadow-2xl rotate-2">
-            <img alt="Sejarah Desa" class="w-full h-full object-cover" src="https://picsum.photos/seed/history/800/600">
+            @if($profile && $profile->image_path)
+                <img alt="Profil Desa" class="w-full h-full object-cover" src="{{ asset('storage/' . $profile->image_path) }}">
+            @else
+                <img alt="Sejarah Desa" class="w-full h-full object-cover" src="https://picsum.photos/seed/history/800/600">
+            @endif
         </div>
     </section>
 
@@ -59,45 +100,33 @@
     <section class="space-y-8">
         <div class="text-center">
             <h2 class="text-3xl font-bold">Struktur Organisasi</h2>
-            <p class="text-slate-500">Pelayan masyarakat Desa Mandiri Jaya</p>
+            <p class="text-slate-500">Pelayan masyarakat Desa Parangargo</p>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <!-- Staff Member 1 -->
-            <div class="text-center group">
-                <div class="relative mb-4 inline-block">
-                    <div class="absolute inset-0 bg-emerald-600 rounded-2xl rotate-6 group-hover:rotate-0 transition-transform"></div>
-                    <img alt="Drs. H. Ahmad Fauzi" class="relative w-40 h-40 object-cover rounded-2xl shadow-lg border-2 border-white" src="https://picsum.photos/seed/person1/200/200">
+            @forelse($staff as $member)
+                <!-- Staff Member -->
+                <div class="text-center group">
+                    <div class="relative mb-4 inline-block">
+                        <div class="absolute inset-0 bg-emerald-600 rounded-2xl rotate-6 group-hover:rotate-0 transition-transform"></div>
+                        @if($member->foto)
+                            <img alt="{{ $member->nama }}" class="relative w-40 h-40 object-cover rounded-2xl shadow-lg border-2 border-white" src="{{ asset('storage/' . $member->foto) }}">
+                        @else
+                            <div class="relative w-40 h-40 bg-gray-200 rounded-2xl shadow-lg border-2 border-white flex items-center justify-center">
+                                <svg class="w-20 h-20 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                            </div>
+                        @endif
+                    </div>
+                    <h3 class="font-bold text-lg">{{ $member->nama }}</h3>
+                    <p class="text-emerald-600 font-medium text-sm">{{ $member->jabatan }}</p>
+                    @if($member->nip)
+                        <p class="text-xs text-gray-400 mt-1">NIP: {{ $member->nip }}</p>
+                    @endif
                 </div>
-                <h3 class="font-bold text-lg">Drs. H. Ahmad Fauzi</h3>
-                <p class="text-emerald-600 font-medium text-sm">Kepala Desa</p>
-            </div>
-            <!-- Staff Member 2 -->
-             <div class="text-center group">
-                <div class="relative mb-4 inline-block">
-                    <div class="absolute inset-0 bg-emerald-600 rounded-2xl rotate-6 group-hover:rotate-0 transition-transform"></div>
-                    <img alt="Budi Santoso" class="relative w-40 h-40 object-cover rounded-2xl shadow-lg border-2 border-white" src="https://picsum.photos/seed/person2/200/200">
+            @empty
+                <div class="col-span-full text-center py-12 text-gray-500">
+                    <p>Data staff belum tersedia.</p>
                 </div>
-                <h3 class="font-bold text-lg">Budi Santoso</h3>
-                <p class="text-emerald-600 font-medium text-sm">Sekretaris Desa</p>
-            </div>
-            <!-- Staff Member 3 -->
-             <div class="text-center group">
-                <div class="relative mb-4 inline-block">
-                    <div class="absolute inset-0 bg-emerald-600 rounded-2xl rotate-6 group-hover:rotate-0 transition-transform"></div>
-                    <img alt="Siti Aminah" class="relative w-40 h-40 object-cover rounded-2xl shadow-lg border-2 border-white" src="https://picsum.photos/seed/person3/200/200">
-                </div>
-                <h3 class="font-bold text-lg">Siti Aminah</h3>
-                <p class="text-emerald-600 font-medium text-sm">Kaur Keuangan</p>
-            </div>
-            <!-- Staff Member 4 -->
-             <div class="text-center group">
-                <div class="relative mb-4 inline-block">
-                    <div class="absolute inset-0 bg-emerald-600 rounded-2xl rotate-6 group-hover:rotate-0 transition-transform"></div>
-                    <img alt="Rudi Hartono" class="relative w-40 h-40 object-cover rounded-2xl shadow-lg border-2 border-white" src="https://picsum.photos/seed/person4/200/200">
-                </div>
-                <h3 class="font-bold text-lg">Rudi Hartono</h3>
-                <p class="text-emerald-600 font-medium text-sm">Kaur Umum</p>
-            </div>
+            @endforelse
         </div>
     </section>
 

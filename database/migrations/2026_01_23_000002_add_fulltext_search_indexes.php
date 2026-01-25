@@ -12,6 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (DB::getDriverName() === 'sqlite') {
+            return;
+        }
+
         // Add fulltext index to news table for search functionality
         DB::statement('ALTER TABLE news ADD FULLTEXT idx_news_search (title, summary, content)');
 

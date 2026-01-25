@@ -15,7 +15,7 @@
       </div>
       <div class="relative group py-4">
         <a class="text-sm font-semibold transition-colors flex items-center gap-1.5 {{ Request::is('tentang') ? 'text-emerald-600' : 'text-slate-600 hover:text-emerald-600' }}" href="{{ url('/tentang') }}">
-          Tentang Desa
+          Tentang
         </a>
       </div>
       <div class="relative group py-4">
