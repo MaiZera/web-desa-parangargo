@@ -13,12 +13,7 @@ return new class extends Migration
     {
         Schema::create('profil_desa', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_desa');
             $table->text('alamat');
-            $table->string('kecamatan');
-            $table->string('kabupaten');
-            $table->string('provinsi');
-            $table->string('kode_pos')->nullable();
             $table->string('telepon')->nullable();
             $table->string('email')->nullable();
             $table->string('website')->nullable();
@@ -27,16 +22,6 @@ return new class extends Migration
             $table->text('visi')->nullable();
             $table->text('misi')->nullable();
             $table->longText('sejarah')->nullable();
-            
-            // Data Geografis
-            $table->decimal('luas_wilayah', 10, 2)->nullable(); // dalam km²
-            $table->string('batas_utara')->nullable();
-            $table->string('batas_selatan')->nullable();
-            $table->string('batas_timur')->nullable();
-            $table->string('batas_barat')->nullable();
-            $table->string('latitude')->nullable();
-            $table->string('longitude')->nullable();
-            $table->integer('ketinggian')->nullable(); // mdpl (meter di atas permukaan laut)
             
             // Data Demografis
             $table->integer('jumlah_penduduk')->default(0);

@@ -1,13 +1,9 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\Admin\BannerController;
-use App\Http\Controllers\Admin\StaffController;
-use App\Http\Controllers\Admin\ProfileDesaController;
-use App\Http\Controllers\Admin\DemografisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +16,7 @@ use App\Http\Controllers\Admin\DemografisController;
 |
 */
 
+// Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/tentang', [PageController::class, 'about'])->name('about');
@@ -28,18 +25,20 @@ Route::get('/berita', [PageController::class, 'news'])->name('news');
 Route::get('/transparansi', [PageController::class, 'transparency'])->name('transparency');
 Route::get('/umkm', [PageController::class, 'umkm'])->name('umkm');
 Route::get('/partisipasi', [PageController::class, 'participation'])->name('participation');
+=======
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
-// Tentang Desa Dropdown Routes
-Route::get('/profile-desa', [PageController::class, 'profileDesa'])->name('profile-desa');
-Route::get('/demografis', [PageController::class, 'demografis'])->name('demografis');
-Route::get('/struktur-desa', [PageController::class, 'strukturDesa'])->name('struktur-desa');
-Route::get('/maps', [PageController::class, 'maps'])->name('maps');
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::get('/dashboard', function () {
     $banners = \App\Models\Banner::where('is_active', true)->latest()->get();
     return view('dashboard', compact('banners'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// Authenticated routes
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

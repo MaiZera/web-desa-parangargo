@@ -12,26 +12,13 @@ class ProfilDesa extends Model
     protected $table = 'profil_desa';
 
     protected $fillable = [
-        'nama_desa',
         'alamat',
-        'kecamatan',
-        'kabupaten',
-        'provinsi',
-        'kode_pos',
         'telepon',
         'email',
         'website',
         'visi',
         'misi',
         'sejarah',
-        'luas_wilayah',
-        'batas_utara',
-        'batas_selatan',
-        'batas_timur',
-        'batas_barat',
-        'latitude',
-        'longitude',
-        'ketinggian',
         'jumlah_penduduk',
         'jumlah_kk',
         'jumlah_laki_laki',
@@ -45,8 +32,6 @@ class ProfilDesa extends Model
     ];
 
     protected $casts = [
-        'luas_wilayah' => 'decimal:2',
-        'ketinggian' => 'integer',
         'jumlah_penduduk' => 'integer',
         'jumlah_kk' => 'integer',
         'jumlah_laki_laki' => 'integer',
@@ -56,9 +41,5 @@ class ProfilDesa extends Model
         'jumlah_rt' => 'integer',
     ];
 
-    // Helper method to get full address
-    public function getAlamatLengkapAttribute()
-    {
-        return "{$this->alamat}, {$this->kecamatan}, {$this->kabupaten}, {$this->provinsi} {$this->kode_pos}";
-    }
+
 }
