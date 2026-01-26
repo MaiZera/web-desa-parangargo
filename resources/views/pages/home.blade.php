@@ -3,42 +3,71 @@
 @section('content')
 <div class="space-y-12 pb-12">
     <!-- Hero Slider -->
-    <section class="relative h-[400px] md:h-[600px] overflow-hidden rounded-3xl group mx-4 mt-8" x-data="{ active: 0 }" x-init="setInterval(() => active = (active + 1) % 2, 5000)">
-        <!-- Slide 1 -->
-        <div class="absolute inset-0 transition-opacity duration-1000" :class="{ 'opacity-100': active === 0, 'opacity-0': active !== 0 }">
-            <img alt="Selamat Datang di Desa Mandiri Jaya" class="w-full h-full object-cover" src="https://picsum.photos/seed/slide1/1200/600">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-8 md:p-16">
-                <div class="max-w-2xl text-white space-y-4">
-                    <h1 class="text-4xl md:text-6xl font-bold leading-tight">Selamat Datang di Desa Mandiri Jaya</h1>
-                    <p class="text-lg md:text-xl text-slate-200">Membangun masa depan desa yang lebih cerdas dan berdikari.</p>
-                    <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-full font-semibold flex items-center gap-2 transition-all">
-                        Lihat Selengkapnya 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-5 h-5" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                    </button>
+    <!-- Hero Slider -->
+    @if(isset($banners) && $banners->count() > 0)
+        <section class="relative h-[400px] md:h-[600px] overflow-hidden rounded-3xl group mx-4 mt-8" x-data="{ active: 0 }" x-init="setInterval(() => active = (active + 1) % {{ $banners->count() }}, 5000)">
+            @foreach($banners as $index => $banner)
+                <!-- Slide {{ $index + 1 }} -->
+                <div class="absolute inset-0 transition-opacity duration-1000" :class="{ 'opacity-100': active === {{ $index }}, 'opacity-0': active !== {{ $index }} }">
+                    <img alt="{{ $banner->title ?? 'Banner' }}" class="w-full h-full object-cover" src="{{ asset('storage/' . $banner->image_path) }}">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-8 md:p-16">
+                        <div class="max-w-2xl text-white space-y-4">
+                            @if($banner->title)
+                                <h1 class="text-4xl md:text-6xl font-bold leading-tight">{{ $banner->title }}</h1>
+                            @endif
+                            @if($banner->description)
+                                <p class="text-lg md:text-xl text-slate-200">{{ $banner->description }}</p>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+            
+            <!-- Indicators -->
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+                @foreach($banners as $index => $banner)
+                    <button class="h-3 rounded-full transition-all bg-white" :class="active === {{ $index }} ? 'w-8' : 'w-3/50 opacity-50'" @click="active = {{ $index }}"></button>
+                @endforeach
+            </div>
+        </section>
+    @else
+        <section class="relative h-[400px] md:h-[600px] overflow-hidden rounded-3xl group mx-4 mt-8" x-data="{ active: 0 }" x-init="setInterval(() => active = (active + 1) % 2, 5000)">
+            <!-- Slide 1 -->
+            <div class="absolute inset-0 transition-opacity duration-1000" :class="{ 'opacity-100': active === 0, 'opacity-0': active !== 0 }">
+                <img alt="Selamat Datang di Desa Mandiri Jaya" class="w-full h-full object-cover" src="https://picsum.photos/seed/slide1/1200/600">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-8 md:p-16">
+                    <div class="max-w-2xl text-white space-y-4">
+                        <h1 class="text-4xl md:text-6xl font-bold leading-tight">Selamat Datang di Desa Mandiri Jaya</h1>
+                        <p class="text-lg md:text-xl text-slate-200">Membangun masa depan desa yang lebih cerdas dan berdikari.</p>
+                        <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-full font-semibold flex items-center gap-2 transition-all">
+                            Lihat Selengkapnya 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-5 h-5" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- Slide 2 -->
-        <div class="absolute inset-0 transition-opacity duration-1000" :class="{ 'opacity-100': active === 1, 'opacity-0': active !== 1 }">
-            <img alt="Festival Budaya 2023" class="w-full h-full object-cover" src="https://picsum.photos/seed/slide2/1200/600">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-8 md:p-16">
-                <div class="max-w-2xl text-white space-y-4">
-                    <h1 class="text-4xl md:text-6xl font-bold leading-tight">Festival Budaya 2023</h1>
-                    <p class="text-lg md:text-xl text-slate-200">Mari lestarikan warisan leluhur kita.</p>
-                    <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-full font-semibold flex items-center gap-2 transition-all">
-                        Lihat Selengkapnya 
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-5 h-5" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
-                    </button>
+            <!-- Slide 2 -->
+            <div class="absolute inset-0 transition-opacity duration-1000" :class="{ 'opacity-100': active === 1, 'opacity-0': active !== 1 }">
+                <img alt="Festival Budaya 2023" class="w-full h-full object-cover" src="https://picsum.photos/seed/slide2/1200/600">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex items-end p-8 md:p-16">
+                    <div class="max-w-2xl text-white space-y-4">
+                        <h1 class="text-4xl md:text-6xl font-bold leading-tight">Festival Budaya 2023</h1>
+                        <p class="text-lg md:text-xl text-slate-200">Mari lestarikan warisan leluhur kita.</p>
+                        <button class="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 rounded-full font-semibold flex items-center gap-2 transition-all">
+                            Lihat Selengkapnya 
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-5 h-5" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Indicators -->
-        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-            <button class="h-3 rounded-full transition-all bg-white" :class="active === 0 ? 'w-8' : 'w-3/50 opacity-50'" @click="active = 0"></button>
-            <button class="h-3 rounded-full transition-all bg-white" :class="active === 1 ? 'w-8' : 'w-3/50 opacity-50'" @click="active = 1"></button>
-        </div>
-    </section>
+            
+            <!-- Indicators -->
+            <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
+                <button class="h-3 rounded-full transition-all bg-white" :class="active === 0 ? 'w-8' : 'w-3/50 opacity-50'" @click="active = 0"></button>
+                <button class="h-3 rounded-full transition-all bg-white" :class="active === 1 ? 'w-8' : 'w-3/50 opacity-50'" @click="active = 1"></button>
+            </div>
+        </section>
+    @endif
 
     <!-- Stats Section -->
     <section class="grid md:grid-cols-3 gap-6 px-4 max-w-7xl mx-auto">
