@@ -9,7 +9,14 @@
                 <div class="p-6 text-gray-900">
 
                     <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-xl font-semibold">Daftar Kategori</h2>
+                        <div class="flex items-center gap-4">
+                            <h2 class="text-xl font-semibold">Daftar Kategori</h2>
+                            <form method="GET" action="{{ route('admin.categories.index') }}">
+                                <input type="text" name="search" value="{{ request('search') }}"
+                                    placeholder="Cari kategori..."
+                                    class="rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50 text-sm px-3 py-1.5 w-64">
+                            </form>
+                        </div>
                         <a href="{{ route('admin.categories.create') }}"
                             class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition-colors">
                             + Tambah Kategori
@@ -22,7 +29,7 @@
                         </div>
                     @endif
 
-                    <div class="overflow-x-auto">
+                    <div id="search-results" class="overflow-x-auto">
                         <table class="w-full text-left">
                             <thead>
                                 <tr class="text-gray-400 border-b border-gray-100">
@@ -36,7 +43,10 @@
                                 @foreach($categories as $category)
                                     <tr class="hover:bg-gray-50 transition-colors">
                                         <td class="px-6 py-4">
-                                            <div class="font-medium text-gray-900">{{ $category->name }}</div>
+                                            <a href="{{ route('admin.news.index', ['category' => $category->name]) }}"
+                                                class="font-medium text-emerald-600 hover:text-emerald-800 hover:underline transition-colors">
+                                                {{ $category->name }}
+                                            </a>
                                         </td>
                                         <td class="px-6 py-4 text-sm text-gray-500">
                                             {{ $category->slug }}
@@ -92,4 +102,49 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const searchInput = document.querySelector('input[name="search"]');
+                const resultsContainer = document.getElementById('search-results');
+                let timeoutId;
+
+                searchInput.addEventListener('input', function () {
+                    clearTimeout(timeoutId);
+                    const query = this.value;
+
+                    timeoutId = setTimeout(() => {
+                        // Update URL without reloading
+                        const url = new URL(window.location.href);
+                        if (query) {
+                            url.searchParams.set('search', query);
+                        } else {
+                            url.searchParams.delete('search');
+                        }
+                        // Reset pagination to page 1 on search
+                        url.searchParams.delete('page');
+
+                        window.history.pushState({}, '', url);
+
+                        fetch(url, {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        })
+                            .then(response => response.text())
+                            .then(html => {
+                                const parser = new DOMParser();
+                                const doc = parser.parseFromString(html, 'text/html');
+                                const newResults = doc.getElementById('search-results');
+                                if (newResults) {
+                                    resultsContainer.innerHTML = newResults.innerHTML;
+                                }
+                            })
+                            .catch(error => console.error('Error fetching results:', error));
+                    }, 300); // 300ms debounce
+                });
+            });
+        </script>
+    @endpush
 </x-admin-layout>

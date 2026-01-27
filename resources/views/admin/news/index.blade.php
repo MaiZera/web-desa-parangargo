@@ -9,18 +9,60 @@
                 <div class="p-6 text-gray-900">
 
                     <div class="flex justify-between items-center mb-6">
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-4">
                             <h2 class="text-xl font-semibold">Daftar Berita</h2>
-                            @if(request('category'))
-                                <a href="{{ route('admin.news.index') }}"
-                                    class="text-xs px-2 py-1 bg-gray-200 text-gray-700 rounded-full hover:bg-gray-300 transition-colors flex items-center gap-1">
-                                    <span>Filter: {{ request('category') }}</span>
-                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M6 18L18 6M6 6l12 12"></path>
-                                    </svg>
-                                </a>
-                            @endif
+
+                            <form method="GET" action="{{ route('admin.news.index') }}" class="flex items-center gap-2">
+                                <!-- Category Dropdown -->
+                                <div x-data="{ open: false, selected: {{ json_encode((array)request('category')) }} }" class="relative">
+                                    <button @click="open = !open" type="button" 
+                                        class="flex items-center justify-between w-48 px-2 py-1 text-xs text-left bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 overflow-hidden h-8">
+                                        <span class="truncate block" x-text="selected.length > 0 ? selected.length + ' Kategori Dipilih' : 'Filter Kategori'">
+                                            Filter Kategori
+                                        </span>
+                                        <svg class="w-4 h-4 ml-2 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                        </svg>
+                                    </button>
+                                    
+                                    <div x-show="open" @click.outside="open = false" 
+                                        x-transition:enter="transition ease-out duration-100"
+                                        x-transition:enter-start="transform opacity-0 scale-95"
+                                        x-transition:enter-end="transform opacity-100 scale-100"
+                                        x-transition:leave="transition ease-in duration-75"
+                                        x-transition:leave-start="transform opacity-100 scale-100"
+                                        x-transition:leave-end="transform opacity-0 scale-95"
+                                        class="absolute z-10 w-56 mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-y-auto"
+                                        style="display: none;">
+                                        <div class="p-2 space-y-1">
+                                            @foreach($allCategories as $cat)
+                                                <label class="flex items-center space-x-2 px-2 py-1 hover:bg-gray-50 rounded cursor-pointer">
+                                                    <input type="checkbox" name="category[]" value="{{ $cat->name }}" 
+                                                        class="text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 w-4 h-4"
+                                                        {{ in_array($cat->name, (array)request('category')) ? 'checked' : '' }}
+                                                        @change="if($el.checked) { selected.push($el.value) } else { selected = selected.filter(i => i !== $el.value) }">
+                                                    <span class="text-xs text-gray-700">{{ $cat->name }}</span>
+                                                </label>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit"
+                                    class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs px-2 py-1 rounded-md transition-colors h-8">
+                                    Filter
+                                </button>
+
+                                <select name="status" onchange="this.form.submit()"
+                                    class="text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 py-1 px-2 h-8">
+                                    <option value="">Semua Status</option>
+                                    <option value="published" {{ request('status') == 'published' ? 'selected' : '' }}>
+                                        Published</option>
+                                    <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>Draft
+                                    </option>
+                                    <option value="archived" {{ request('status') == 'archived' ? 'selected' : '' }}>
+                                        Archived</option>
+                                </select>
+                            </form>
                         </div>
                         <a href="{{ route('admin.news.create') }}"
                             class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition-colors">
@@ -70,8 +112,17 @@
                                                         title="{{ $item->title }}">{{ $item->title }}</div>
                                                     <div class="flex flex-wrap gap-1 mt-1">
                                                         @foreach($item->categories as $category)
-                                                            <a href="{{ route('admin.news.index', ['category' => $category->name]) }}"
-                                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium transition-colors hover:bg-blue-200 {{ request('category') == $category->name ? 'bg-blue-600 text-white' : 'bg-blue-100 text-blue-800' }}">
+                                                            @php
+                                                                $currentCats = (array) request('category', []);
+                                                                $isActive = in_array($category->name, $currentCats);
+                                                                $newCats = $currentCats;
+                                                                if (!$isActive) {
+                                                                    $newCats[] = $category->name;
+                                                                }
+                                                                $routeParams = array_merge(request()->query(), ['category' => $newCats]);
+                                                            @endphp
+                                                            <a href="{{ route('admin.news.index', $routeParams) }}"
+                                                                class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-medium transition-colors hover:bg-blue-200 {{ $isActive ? 'bg-blue-600 text-white' : 'bg-blue-100 text-blue-800' }}">
                                                                 #{{ $category->name }}
                                                             </a>
                                                         @endforeach

@@ -286,7 +286,7 @@
                 <!-- Right Actions -->
                 <div class="flex items-center gap-x-4 lg:gap-x-6">
                     <!-- Search -->
-                    <div class="relative hidden sm:block">
+                    <!-- <div class="relative hidden sm:block">
                         <svg class="pointer-events-none absolute left-3 top-2.5 h-5 w-5 text-gray-400"
                             viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                             <path fill-rule="evenodd"
@@ -296,7 +296,7 @@
                         <input type="text"
                             class="block w-full rounded-md border-0 py-1.5 pl-10 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                             placeholder="Search...">
-                    </div>
+                    </div> -->
 
                     <div class="h-6 w-px bg-gray-200" aria-hidden="true"></div>
 
@@ -324,8 +324,10 @@
             <main class="flex-1 overflow-y-auto bg-gray-100 p-8">
                 {{ $slot }}
             </main>
+            </main>
         </div>
     </div>
+    @stack('scripts')
 </body>
 
 </html>

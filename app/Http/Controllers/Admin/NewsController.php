@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
+use App\Models\Category; // Ensure this is imported at the top
+
 class NewsController extends Controller
 {
     public function index(Request $request)
@@ -15,14 +17,26 @@ class NewsController extends Controller
         $query = News::with(['author', 'categories'])->latest();
 
         if ($request->has('category')) {
-            $categoryName = $request->input('category');
-            $query->whereHas('categories', function ($q) use ($categoryName) {
-                $q->where('name', $categoryName);
-            });
+            $categories = (array) $request->input('category');
+
+            // Filter out empty values
+            $categories = array_filter($categories);
+
+            if (!empty($categories)) {
+                $query->whereHas('categories', function ($q) use ($categories) {
+                    $q->whereIn('name', $categories);
+                });
+            }
+        }
+
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
         }
 
         $news = $query->paginate(10);
-        return view('admin.news.index', compact('news'));
+        $allCategories = Category::all();
+
+        return view('admin.news.index', compact('news', 'allCategories'));
     }
 
     public function create()
