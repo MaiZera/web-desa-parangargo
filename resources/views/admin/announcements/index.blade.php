@@ -8,10 +8,48 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-xl font-semibold">Daftar Pengumuman</h2>
+                    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-6">
+                        <div class="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+                            <h2 class="text-xl font-semibold whitespace-nowrap">Daftar Pengumuman</h2>
+
+                            <form action="{{ route('admin.announcements.index') }}" method="GET"
+                                class="flex flex-col md:flex-row gap-2 w-full md:w-auto">
+                                <select name="tipe" onchange="this.form.submit()"
+                                    class="rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-sm">
+                                    <option value="">Semua Tipe</option>
+                                    <option value="umum" {{ request('tipe') == 'umum' ? 'selected' : '' }}>Umum</option>
+                                    <option value="agenda" {{ request('tipe') == 'agenda' ? 'selected' : '' }}>Agenda
+                                    </option>
+                                    <option value="layanan" {{ request('tipe') == 'layanan' ? 'selected' : '' }}>Layanan
+                                    </option>
+                                    <option value="darurat" {{ request('tipe') == 'darurat' ? 'selected' : '' }}>Darurat
+                                    </option>
+                                    <option value="berita" {{ request('tipe') == 'berita' ? 'selected' : '' }}>Berita
+                                    </option>
+                                </select>
+
+                                <select name="status" onchange="this.form.submit()"
+                                    class="rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-sm">
+                                    <option value="">Semua Status</option>
+                                    <option value="published" {{ request('status') == 'published' ? 'selected' : '' }}>
+                                        Published</option>
+                                    <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>Draft
+                                    </option>
+                                    <option value="archived" {{ request('status') == 'archived' ? 'selected' : '' }}>
+                                        Archived</option>
+                                </select>
+
+                                @if(request('tipe') || request('status'))
+                                    <a href="{{ route('admin.announcements.index') }}"
+                                        class="px-3 py-2 bg-gray-100 text-gray-600 rounded-md hover:bg-gray-200 text-sm flex items-center justify-center">
+                                        Reset
+                                    </a>
+                                @endif
+                            </form>
+                        </div>
+
                         <a href="{{ route('admin.announcements.create') }}"
-                            class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition-colors">
+                            class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition-colors text-center whitespace-nowrap">
                             + Tambah Pengumuman
                         </a>
                     </div>
@@ -38,15 +76,44 @@
                                 @foreach($announcements as $item)
                                     <tr class="hover:bg-gray-50 transition-colors">
                                         <td class="px-6 py-4">
-                                            <div>
-                                                <div class="font-medium text-gray-900 line-clamp-2"
-                                                    title="{{ $item->judul }}">
-                                                    {{ $item->judul }}
+                                            <div class="flex gap-3">
+                                                <!-- Attachment Preview -->
+                                                @if($item->file_lampiran)
+                                                    <div
+                                                        class="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden bg-gray-100 border border-gray-200 flex items-center justify-center">
+                                                        @php
+                                                            $ext = pathinfo($item->file_lampiran, PATHINFO_EXTENSION);
+                                                        @endphp
+                                                        @if(in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif']))
+                                                            <img src="{{ asset('storage/' . $item->file_lampiran) }}" alt="Preview"
+                                                                class="w-full h-full object-cover">
+                                                        @else
+                                                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor"
+                                                                viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                    stroke-width="2"
+                                                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                                                </path>
+                                                            </svg>
+                                                        @endif
+                                                    </div>
+                                                @else
+                                                    <div
+                                                        class="flex-shrink-0 w-20 h-20 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center">
+                                                        <span class="text-xs text-gray-300">No Image</span>
+                                                    </div>
+                                                @endif
+
+                                                <div>
+                                                    <div class="font-medium text-gray-900 line-clamp-2"
+                                                        title="{{ $item->judul }}">
+                                                        {{ $item->judul }}
+                                                    </div>
+                                                    <span
+                                                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 mt-1">
+                                                        {{ ucfirst($item->tipe) }}
+                                                    </span>
                                                 </div>
-                                                <span
-                                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 mt-1">
-                                                    {{ ucfirst($item->tipe) }}
-                                                </span>
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 text-sm text-gray-500">

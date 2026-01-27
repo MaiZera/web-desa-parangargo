@@ -16,8 +16,12 @@ class AnnouncementController extends Controller
     {
         $query = Announcement::with('author')->latest();
 
-        if ($request->has('tipe')) {
+        if ($request->has('tipe') && $request->tipe != '') {
             $query->where('tipe', $request->tipe);
+        }
+
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
         }
 
         $announcements = $query->paginate(10);

@@ -55,34 +55,91 @@
                                 @enderror
                             </div>
 
-                            <div>
-                                <label for="tanggal_mulai" class="block text-sm font-medium text-gray-700 mb-1">Tanggal
-                                    Mulai</label>
-                                <input type="date" name="tanggal_mulai" id="tanggal_mulai"
-                                    value="{{ old('tanggal_mulai') }}"
-                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
-                                @error('tanggal_mulai')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
+                            <div class="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6"
+                                x-show="tipe === 'agenda'" x-transition>
+                                <div>
+                                    <label for="tanggal_mulai"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Tanggal
+                                        Mulai</label>
+                                    <input type="date" name="tanggal_mulai" id="tanggal_mulai"
+                                        value="{{ old('tanggal_mulai') }}"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+                                    @error('tanggal_mulai')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
+
+                                <div>
+                                    <label for="tanggal_selesai"
+                                        class="block text-sm font-medium text-gray-700 mb-1">Tanggal Selesai</label>
+                                    <input type="date" name="tanggal_selesai" id="tanggal_selesai"
+                                        value="{{ old('tanggal_selesai') }}"
+                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
+                                    @error('tanggal_selesai')
+                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                    @enderror
+                                </div>
                             </div>
 
-                            <div>
-                                <label for="tanggal_selesai"
-                                    class="block text-sm font-medium text-gray-700 mb-1">Tanggal Selesai</label>
-                                <input type="date" name="tanggal_selesai" id="tanggal_selesai"
-                                    value="{{ old('tanggal_selesai') }}"
-                                    class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
-                                @error('tanggal_selesai')
-                                    <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                @enderror
-                            </div>
-
-                            <div class="col-span-2">
+                            <div class="col-span-2" x-data="{
+                                file: null,
+                                previewUrl: null,
+                                isImage: false,
+                                handleFile(event) {
+                                    const file = event.target.files[0];
+                                    if (!file) return;
+                                    this.file = file;
+                                    this.isImage = file.type.startsWith('image/');
+                                    if (this.isImage) {
+                                        const reader = new FileReader();
+                                        reader.onload = (e) => this.previewUrl = e.target.result;
+                                        reader.readAsDataURL(file);
+                                    } else {
+                                        this.previewUrl = null;
+                                    }
+                                }
+                            }">
                                 <label for="file_lampiran" class="block text-sm font-medium text-gray-700 mb-1">File
                                     Lampiran (Optional)</label>
-                                <input type="file" name="file_lampiran" id="file_lampiran"
+                                <input type="file" name="file_lampiran" id="file_lampiran" @change="handleFile"
                                     class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
                                 <p class="text-xs text-gray-500 mt-1">PDF, DOC, DOCX, JPG, PNG (Max 5MB)</p>
+
+                                <!-- Preview Area -->
+                                <div class="mt-3" x-show="file" x-transition>
+                                    <template x-if="isImage && previewUrl">
+                                        <div class="relative w-full max-w-xs">
+                                            <img :src="previewUrl" alt="Preview"
+                                                class="rounded-lg border border-gray-200 shadow-sm">
+                                            <button type="button"
+                                                @click="file = null; previewUrl = null; document.getElementById('file_lampiran').value = ''"
+                                                class="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 hover:bg-red-600">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </template>
+                                    <template x-if="!isImage && file">
+                                        <div
+                                            class="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
+                                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z">
+                                                </path>
+                                            </svg>
+                                            <div class="text-sm">
+                                                <p class="font-medium text-gray-900" x-text="file.name"></p>
+                                                <p class="text-gray-500" x-text="(file.size / 1024).toFixed(1) + ' KB'">
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+
                                 @error('file_lampiran')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                                 @enderror
