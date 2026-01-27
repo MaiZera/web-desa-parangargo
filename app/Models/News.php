@@ -18,7 +18,9 @@ class News extends Model
         'content',
         'image',
         'image_caption',
-        'category',
+        'image_caption',
+        // 'category', // Removed column
+        'is_featured',
         'is_featured',
         'status',
         'view_count',
@@ -42,8 +44,8 @@ class News extends Model
     public function scopePublished($query)
     {
         return $query->where('status', 'published')
-                     ->whereNotNull('published_at')
-                     ->where('published_at', '<=', now());
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now());
     }
 
     public function scopeFeatured($query)
@@ -67,5 +69,10 @@ class News extends Model
     public function incrementViewCount()
     {
         $this->increment('view_count');
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class, 'category_news');
     }
 }

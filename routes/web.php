@@ -30,6 +30,9 @@ Route::get('/transparansi', [PageController::class, 'transparency'])->name('tran
 Route::get('/umkm', [PageController::class, 'umkm'])->name('umkm');
 Route::get('/partisipasi', [PageController::class, 'participation'])->name('participation');
 
+Route::get('/banner', [App\Http\Controllers\BannerController::class, 'index'])->name('banner.index');
+Route::get('/banner/{banner}', [App\Http\Controllers\BannerController::class, 'show'])->name('banner.show');
+
 Route::get('/dashboard', function () {
     $banners = \App\Models\Banner::where('is_active', true)->latest()->get();
     return view('dashboard', compact('banners'));
@@ -44,15 +47,26 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('banners', BannerController::class);
         Route::resource('staff', StaffController::class);
-        
+        // Category routes
+        Route::get('categories/search', [App\Http\Controllers\Admin\CategoryController::class, 'search'])->name('categories.search');
+        Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
+
+        // News routes
+        Route::post('news/autosave', [App\Http\Controllers\Admin\NewsController::class, 'autosave'])->name('news.autosave');
+        Route::resource('news', App\Http\Controllers\Admin\NewsController::class);
+        Route::post('content/upload', [App\Http\Controllers\Admin\ContentUploadController::class, 'upload'])->name('content.upload');
+
         // Profile Desa routes
         Route::get('profile-desa/edit', [ProfileDesaController::class, 'edit'])->name('profile-desa.edit');
         Route::put('profile-desa', [ProfileDesaController::class, 'update'])->name('profile-desa.update');
-        
+
         // Demografis routes
         Route::get('demografis/edit', [DemografisController::class, 'edit'])->name('demografis.edit');
         Route::put('demografis', [DemografisController::class, 'update'])->name('demografis.update');
+
+        // Announcement routes
+        Route::resource('announcements', App\Http\Controllers\Admin\AnnouncementController::class);
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

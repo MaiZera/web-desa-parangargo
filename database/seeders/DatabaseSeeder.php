@@ -17,14 +17,14 @@ class DatabaseSeeder extends Seeder
     {
         // Call seeders in order
         $this->call([
-            // UserSeeder::class,
-            // ProfilDesaSeeder::class,
-            // NewsSeeder::class,
-            // UmkmSeeder::class,
-            // LayananPublikSeeder::class,
-            // StaffSeeder::class,
+            UserSeeder::class,
+            ProfilDesaSeeder::class,
+            NewsSeeder::class,
+            UmkmSeeder::class,
+            LayananPublikSeeder::class,
+            StaffSeeder::class,
         ]);
-        
+
         $this->command->info('Database seeding completed successfully!');
     }
 }

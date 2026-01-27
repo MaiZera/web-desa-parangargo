@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mandiri Jaya - Digital Village Portal</title>
+    <title>Desa Parangargo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -37,18 +38,22 @@
         ::-webkit-scrollbar {
             width: 8px;
         }
+
         ::-webkit-scrollbar-track {
             background: #f1f1f1;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #d1d5db;
             border-radius: 4px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: #9ca3af;
         }
     </style>
 </head>
+
 <body class="bg-white text-slate-800 font-sans antialiased min-h-screen flex flex-col">
 
     @include('components.header')
@@ -60,4 +65,5 @@
     @include('components.footer')
 
 </body>
+
 </html>
