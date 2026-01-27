@@ -32,20 +32,22 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg',
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
         ]);
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('banners', 'public');
-            
+
             Banner::create([
                 'title' => $request->title,
                 'description' => $request->description,
                 'image_path' => $imagePath,
                 'is_active' => true,
             ]);
+        } else {
+            return redirect()->route('admin.banners.index')->with('error', 'Banner gagal ditambahkan.');
         }
 
         return redirect()->route('admin.banners.index')->with('success', 'Banner berhasil ditambahkan.');
@@ -81,11 +83,11 @@ class BannerController extends Controller
     public function destroy(string $id)
     {
         $banner = Banner::findOrFail($id);
-        
+
         if ($banner->image_path) {
             Storage::disk('public')->delete($banner->image_path);
         }
-        
+
         $banner->delete();
 
         return redirect()->route('admin.banners.index')->with('success', 'Banner berhasil dihapus.');

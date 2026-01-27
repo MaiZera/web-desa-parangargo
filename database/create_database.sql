@@ -1,12 +1,12 @@
 -- Database Creation Script for Desa Parangargo
 -- Execute this in phpMyAdmin or MySQL Workbench
 
-CREATE DATABASE IF NOT EXISTS desa_parangargo 
+CREATE DATABASE IF NOT EXISTS desaParangargo 
 CHARACTER SET utf8mb4 
 COLLATE utf8mb4_unicode_ci;
 
 -- Select the database
-USE desa_parangargo;
+USE desaParangargo;
 
 -- Database created successfully!
 -- Next steps:

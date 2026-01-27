@@ -35,6 +35,9 @@ Route::get('/umkm', [PageController::class, 'umkm'])->name('umkm');
 Route::get('/galeri', [PageController::class, 'gallery'])->name('gallery');
 Route::get('/partisipasi', [PageController::class, 'participation'])->name('participation');
 
+Route::get('/banner', [App\Http\Controllers\BannerController::class, 'index'])->name('banner.index');
+Route::get('/banner/{banner}', [App\Http\Controllers\BannerController::class, 'show'])->name('banner.show');
+
 Route::get('/dashboard', function () {
     $banners = \App\Models\Banner::where('is_active', true)->latest()->get();
     return view('dashboard', compact('banners'));
@@ -54,7 +57,7 @@ Route::middleware('auth')->group(function () {
         // Profile Desa routes
         Route::get('profile-desa/edit', [ProfileDesaController::class, 'edit'])->name('profile-desa.edit');
         Route::put('profile-desa', [ProfileDesaController::class, 'update'])->name('profile-desa.update');
-        
+
         // Demografis routes
         Route::get('demografis/edit', [DemografisController::class, 'edit'])->name('demografis.edit');
         Route::put('demografis', [DemografisController::class, 'update'])->name('demografis.update');
@@ -63,4 +66,4 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
