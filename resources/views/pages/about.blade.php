@@ -19,50 +19,57 @@
 </style>
 
 <div class="space-y-16 py-12 px-4 max-w-7xl mx-auto">
-    <section class="grid md:grid-cols-2 gap-12 items-center">
-        <div class="space-y-6">
-            <h1 class="text-4xl font-bold text-slate-900">Profil & Sejarah Desa</h1>
-            
-            @if($profile && $profile->deskripsi)
-                <div class="text-lg text-slate-600 leading-relaxed prose prose-slate max-w-none">
-                    {!! $profile->deskripsi !!}
-                </div>
-            @else
-                <p class="text-lg text-slate-600 leading-relaxed">Desa Parangargo didirikan pada tahun 1945 oleh sekelompok pejuang kemerdekaan yang ingin membangun pemukiman mandiri yang berlandaskan gotong royong. Berlokasi di kaki pegunungan, desa ini awalnya merupakan sentra pertanian yang kini berkembang menjadi desa digital percontohan.</p>
-            @endif
-            
-            <div class="grid grid-cols-2 gap-6 pt-4">
-                <div class="p-6 bg-white border border-slate-100 rounded-2xl shadow-sm">
-                    <h3 class="font-bold text-emerald-600 mb-2">Visi</h3>
-                    @if($profile && $profile->visi)
-                        <div class="text-sm text-slate-500 prose prose-sm max-w-none">
-                            {!! $profile->visi !!}
-                        </div>
-                    @else
-                        <p class="text-sm text-slate-500">Mewujudkan desa yang mandiri, cerdas, dan sejahtera lahir batin.</p>
-                    @endif
-                </div>
-                <div class="p-6 bg-white border border-slate-100 rounded-2xl shadow-sm">
-                    <h3 class="font-bold text-emerald-600 mb-2">Misi</h3>
-                    @if($profile && $profile->misi)
-                        <div class="text-sm text-slate-500 prose prose-sm max-w-none">
-                            {!! $profile->misi !!}
-                        </div>
-                    @else
-                        <ul class="text-sm text-slate-500 list-disc list-inside space-y-1">
-                            <li>Meningkatkan layanan digital</li>
-                            <li>Memberdayakan UMKM lokal</li>
-                            <li>Pelestarian lingkungan hidup</li>
-                        </ul>
-                    @endif
-                </div>
+    <section class="grid lg:grid-cols-3 md:grid-cols-2 gap-12 items-start">
+        <div class="space-y-12 lg:col-span-2">
+            <!-- Profil & Sejarah -->
+            <div class="space-y-6">
+                <h1 class="text-4xl font-bold text-slate-900">Profil & Sejarah Desa</h1>
+                
+                @if($profile && $profile->deskripsi)
+                    <div class="text-lg text-slate-600 leading-relaxed prose prose-slate max-w-none">
+                        {!! $profile->deskripsi !!}
+                    </div>
+                @else
+                    <p class="text-lg text-slate-600 leading-relaxed">Desa Parangargo didirikan pada tahun 1945 oleh sekelompok pejuang kemerdekaan yang ingin membangun pemukiman mandiri yang berlandaskan gotong royong. Berlokasi di kaki pegunungan, desa ini awalnya merupakan sentra pertanian yang kini berkembang menjadi desa digital percontohan.</p>
+                @endif
+            </div>
+
+            <!-- Visi & Misi -->
+            <div class="space-y-6">
+                <!-- <h2 class="text-3xl font-bold text-slate-900">Visi & Misi</h2> -->
+                
+                    <div class="p-6 bg-white border border-slate-100 rounded-2xl shadow-sm">
+                        <h3 class="font-bold text-emerald-600 mb-2">Visi</h3>
+                        @if($profile && $profile->visi)
+                            <div class="text-sm text-slate-600 prose prose-sm max-w-none">
+                                {!! $profile->visi !!}
+                            </div>
+                        @else
+                            <p class="text-sm text-slate-500">Mewujudkan desa yang mandiri, cerdas, dan sejahtera lahir batin.</p>
+                        @endif
+                    </div>
+                    <div class="p-6 bg-white border border-slate-100 rounded-2xl shadow-sm">
+                        <h3 class="font-bold text-emerald-600 mb-2">Misi</h3>
+                        @if($profile && $profile->misi)
+                            <div class="text-sm text-slate-600 prose prose-sm max-w-none">
+                                {!! $profile->misi !!}
+                            </div>
+                        @else
+                            <ul class="text-sm text-slate-600 list-disc list-inside space-y-1">
+                                <li>Meningkatkan layanan digital</li>
+                                <li>Memberdayakan UMKM lokal</li>
+                                <li>Pelestarian lingkungan hidup</li>
+                            </ul>
+                        @endif
+                    </div>
             </div>
         </div>
-        <div class="rounded-3xl overflow-hidden shadow-2xl rotate-2">
+
+        <div class="sticky top-8 h-fit rounded-3xl overflow-hidden shadow-2xl rotate-2">
             @if($profile && $profile->image_path)
-                <img alt="Profil Desa" class="w-full h-full object-cover" src="{{ asset('storage/' . $profile->image_path) }}">
+                <img alt="Profil Desa" class="w-full h-auto object-cover" src="{{ asset('storage/' . $profile->image_path) }}">
             @else
-                <img alt="Sejarah Desa" class="w-full h-full object-cover" src="https://picsum.photos/seed/history/800/600">
+                <img alt="Sejarah Desa" class="w-full h-auto object-cover" src="https://picsum.photos/seed/history/800/1000">
             @endif
         </div>
     </section>
@@ -73,25 +80,97 @@
             <h2 class="text-3xl font-bold">Data Demografis</h2>
             <p class="text-slate-500">Gambaran nyata penduduk Desa Mandiri Jaya</p>
         </div>
-        <div class="grid md:grid-cols-2 gap-8 h-[400px]">
-            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col">
-                <h3 class="text-center font-semibold mb-6">Perbandingan Gender</h3>
-                <div class="h-full w-full flex items-center justify-center bg-slate-50 rounded-xl relative overflow-hidden">
-                   <!-- Placeholder for Chart -->
-                   <div class="text-center">
-                        <p class="text-slate-400 text-sm">Grafik Perbandingan Gender</p>
-                        <div class="mt-4 flex gap-4 text-xs font-bold">
-                            <div class="flex items-center gap-1"><span class="w-3 h-3 bg-blue-500 rounded-full"></span> Laki-laki</div>
-                            <div class="flex items-center gap-1"><span class="w-3 h-3 bg-pink-500 rounded-full"></span> Perempuan</div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Gender -->
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 flex flex-col min-h-[350px]">
+                <h3 class="text-center font-bold text-slate-900 mb-6 uppercase text-[10px] tracking-widest">Keseimbangan Gender</h3>
+                <div class="flex-1 flex flex-col items-center justify-center bg-slate-50 rounded-2xl relative overflow-hidden p-6">
+                    <div class="w-32 h-32 rounded-full border-[16px] border-blue-500 border-r-pink-500 rotate-45 mb-6 shadow-inner"></div>
+                    <div class="grid grid-cols-2 gap-4 w-full">
+                        <div class="text-center">
+                            <p class="text-2xl font-black text-blue-500">48%</p>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase">Laki-laki</p>
                         </div>
-                   </div>
+                        <div class="text-center">
+                            <p class="text-2xl font-black text-pink-500">52%</p>
+                            <p class="text-[9px] font-bold text-slate-400 uppercase">Perempuan</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 flex flex-col">
-                <h3 class="text-center font-semibold mb-6">Tingkat Pendidikan</h3>
-                <div class="h-full w-full flex items-center justify-center bg-slate-50 rounded-xl">
-                   <!-- Placeholder for Chart -->
-                   <p class="text-slate-400 text-sm">Grafik Tingkat Pendidikan</p>
+
+            <!-- Education -->
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 flex flex-col min-h-[350px]">
+                <h3 class="text-center font-bold text-slate-900 mb-6 uppercase text-[10px] tracking-widest">Tingkat Pendidikan</h3>
+                <div class="flex-1 flex flex-col justify-end bg-slate-50 rounded-2xl p-6 gap-3">
+                    <div class="flex items-end gap-2 h-32">
+                        <div class="flex-1 bg-emerald-100 rounded-lg transition-all hover:bg-emerald-500 h-[40%] group relative">
+                            <div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] font-bold text-emerald-600">SD</div>
+                        </div>
+                        <div class="flex-1 bg-emerald-200 rounded-lg transition-all hover:bg-emerald-500 h-[60%] group relative">
+                            <div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] font-bold text-emerald-600">SMP</div>
+                        </div>
+                        <div class="flex-1 bg-emerald-400 rounded-lg transition-all hover:bg-emerald-500 h-[85%] group relative">
+                            <div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] font-bold text-emerald-600">SMA</div>
+                        </div>
+                        <div class="flex-1 bg-emerald-600 rounded-lg transition-all h-[55%] group relative">
+                            <div class="absolute -top-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] font-bold text-emerald-600">PT</div>
+                        </div>
+                    </div>
+                    <p class="text-[9px] text-center font-bold text-slate-400 uppercase mt-2">Didominasi Lulusan SMA/SMK</p>
+                </div>
+            </div>
+
+            <!-- Religion (NEW) -->
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 flex flex-col min-h-[350px]">
+                <h3 class="text-center font-bold text-slate-900 mb-6 uppercase text-[10px] tracking-widest">Proporsi Agama</h3>
+                <div class="flex-1 flex flex-col gap-4 bg-slate-50 rounded-2xl p-6 overflow-y-auto custom-scrollbar">
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-[10px] font-black uppercase"><span class="text-slate-600">Islam</span> <span class="text-emerald-600">92%</span></div>
+                        <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden"><div class="bg-emerald-500 h-full w-[92%]"></div></div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-[10px] font-black uppercase"><span class="text-slate-600">Kristen</span> <span class="text-blue-600">5%</span></div>
+                        <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden"><div class="bg-blue-500 h-full w-[5%]"></div></div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-[10px] font-black uppercase"><span class="text-slate-600">Hindu</span> <span class="text-amber-600">2%</span></div>
+                        <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden"><div class="bg-amber-500 h-full w-[2%]"></div></div>
+                    </div>
+                    <div class="space-y-1">
+                        <div class="flex justify-between text-[10px] font-black uppercase"><span class="text-slate-600">Lainnya</span> <span class="text-slate-400">1%</span></div>
+                        <div class="w-full bg-slate-200 h-1.5 rounded-full overflow-hidden"><div class="bg-slate-400 h-full w-[1%]"></div></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Occupation (NEW) -->
+            <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 flex flex-col min-h-[350px]">
+                <h3 class="text-center font-bold text-slate-900 mb-6 uppercase text-[10px] tracking-widest">Mata Pencaharian</h3>
+                <div class="flex-1 flex flex-col justify-center bg-slate-50 rounded-2xl p-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-10 bg-emerald-500 rounded-full"></div>
+                            <div>
+                                <p class="text-xl font-black text-slate-900 leading-none">Petani</p>
+                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Sektor Utama (64%)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-10 bg-blue-500 rounded-full"></div>
+                            <div>
+                                <p class="text-xl font-black text-slate-900 leading-none">Wirausaha</p>
+                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Pedagang & UMKM (22%)</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-10 bg-slate-400 rounded-full"></div>
+                            <div>
+                                <p class="text-xl font-black text-slate-900 leading-none">Pegawai</p>
+                                <p class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">PNS/Karyawan (14%)</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

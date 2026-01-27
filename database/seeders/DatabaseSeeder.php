@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             UmkmSeeder::class,
             LayananPublikSeeder::class,
             StaffSeeder::class,
+            AgendaSeeder::class,
         ]);
 
         $this->command->info('Database seeding completed successfully!');

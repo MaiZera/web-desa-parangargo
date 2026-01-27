@@ -58,12 +58,13 @@
 
     @include('components.header')
 
-    <main class="flex-1 max-w-7xl mx-auto w-full px-4 md:px-0 mt-8">
+    <main class="flex-1 w-full">
         @yield('content')
     </main>
 
     @include('components.footer')
 
+    @stack('scripts')
 </body>
 
 </html>

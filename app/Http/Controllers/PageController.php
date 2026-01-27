@@ -25,6 +25,22 @@ class PageController extends Controller
         return view('pages.news');
     }
 
+    public function artikel()
+    {
+        return view('pages.artikel');
+    }
+
+    public function pengumuman()
+    {
+        return view('pages.pengumuman');
+    }
+
+    public function laporan()
+    {
+        return view('pages.laporan');
+    }
+
+
     public function transparency()
     {
         return view('pages.transparency');
@@ -38,6 +54,11 @@ class PageController extends Controller
     public function participation()
     {
         return view('pages.participation');
+    }
+
+    public function gallery()
+    {
+        return view('pages.gallery');
     }
 
     public function profileDesa()

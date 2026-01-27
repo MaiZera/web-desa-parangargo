@@ -9,7 +9,7 @@
     
     <section class="bg-white p-8 rounded-[3rem] shadow-sm border border-slate-100">
         <div class="flex justify-between items-center mb-12">
-            <h3 class="text-2xl font-bold">Laporan Realisasi APBDes 2023</h3>
+            <h3 class="text-2xl font-bold">Laporan Keuangan Masuk</h3>
             <div class="flex gap-4">
                 <div class="flex items-center gap-2 text-sm"><div class="w-3 h-3 bg-blue-500 rounded"></div> Anggaran</div>
                 <div class="flex items-center gap-2 text-sm"><div class="w-3 h-3 bg-emerald-500 rounded"></div> Realisasi</div>
@@ -53,15 +53,15 @@
         </div>
     </section>
 
-    <div class="grid md:grid-cols-2 gap-8">
+    <!-- <div class="grid md:grid-cols-2 gap-8">
         <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 space-y-6">
             <h3 class="text-xl font-bold flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hard-hat w-6 h-6 text-emerald-600"><path d="M2 13.381a15 15 0 0 0 7.378 1.44H15a15 15 0 0 0 7-1.5"/><path d="M12 18v3"/><path d="M2 10.134V15a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-4.866a8 8 0 0 0-16 0"/><path d="M22 10v-.53a3 3 0 0 0-1.85-2.77 10 10 0 0 0-11-2.203"/></svg>
                 Proyek Pembangunan 2023
             </h3>
-            <div class="space-y-6">
+            <div class="space-y-6"> -->
                 <!-- Project 1 -->
-                <div>
+                <!-- <div>
                     <div class="flex justify-between mb-2">
                         <h4 class="font-bold text-sm">Jalan Lingkar Desa</h4>
                         <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded">100% Selesai</span>
@@ -69,9 +69,9 @@
                     <div class="w-full bg-slate-100 rounded-full h-2">
                          <div class="bg-emerald-500 h-2 rounded-full" style="width: 100%"></div>
                     </div>
-                </div>
+                </div> -->
                 <!-- Project 2 -->
-                 <div>
+                 <!-- <div>
                     <div class="flex justify-between mb-2">
                         <h4 class="font-bold text-sm">Renovasi Balai Warga</h4>
                         <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded">75% Berjalan</span>
@@ -79,9 +79,9 @@
                     <div class="w-full bg-slate-100 rounded-full h-2">
                          <div class="bg-blue-500 h-2 rounded-full" style="width: 75%"></div>
                     </div>
-                </div>
+                </div> -->
                 <!-- Project 3 -->
-                 <div>
+                 <!-- <div>
                     <div class="flex justify-between mb-2">
                         <h4 class="font-bold text-sm">Saluran Irigasi</h4>
                         <span class="text-xs font-bold text-orange-600 bg-orange-50 px-2 py-1 rounded">30% Berjalan</span>
@@ -89,11 +89,11 @@
                     <div class="w-full bg-slate-100 rounded-full h-2">
                          <div class="bg-orange-500 h-2 rounded-full" style="width: 30%"></div>
                     </div>
-                </div>
-            </div>
-        </div>
+                </div> -->
+            <!-- </div>
+        </div> -->
 
-        <div class="bg-slate-900 text-white p-8 rounded-3xl space-y-6">
+        <!-- <div class="bg-slate-900 text-white p-8 rounded-3xl space-y-6">
             <h3 class="text-xl font-bold flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-file-stack w-6 h-6 text-emerald-400"><path d="M21 7h-3a2 2 0 0 1-2-2V2"/><path d="M21 6v6.5c0 .8-.7 1.5-1.5 1.5h-7c-.8 0-1.5-.7-1.5-1.5v-9c0-.8.7-1.5 1.5-1.5H12L21 6Z"/><path d="M7 8v8.8c0 .3.2.6.4.8.2.2.5.4.8.4H15"/><path d="M3 12v8.8c0 .3.2.6.4.8.2.2.5.4.8.4H11"/></svg>
                 Dokumen Regulasi Desa
@@ -131,6 +131,6 @@
                 </li>
             </ul>
         </div>
-    </div>
+    </div> -->
 </div>
 @endsection

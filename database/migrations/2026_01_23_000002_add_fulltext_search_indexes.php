@@ -31,6 +31,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (DB::getDriverName() === 'sqlite') {
+            return;
+        }
+
         // Drop fulltext indexes
         Schema::table('news', function (Blueprint $table) {
             $table->dropIndex('idx_news_search');

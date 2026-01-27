@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\ProfileDesaController;
 use App\Http\Controllers\Admin\DemografisController;
+use App\Http\Controllers\Admin\AgendaController as AdminAgendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +27,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tentang', [PageController::class, 'about'])->name('about');
 Route::get('/layanan', [PageController::class, 'services'])->name('services');
 Route::get('/berita', [PageController::class, 'news'])->name('news');
+Route::get('/berita/artikel', [PageController::class, 'artikel'])->name('news.artikel');
+Route::get('/berita/pengumuman', [PageController::class, 'pengumuman'])->name('news.pengumuman');
+Route::get('/berita/laporan', [PageController::class, 'laporan'])->name('news.laporan');
 Route::get('/transparansi', [PageController::class, 'transparency'])->name('transparency');
 Route::get('/umkm', [PageController::class, 'umkm'])->name('umkm');
+Route::get('/galeri', [PageController::class, 'gallery'])->name('gallery');
 Route::get('/partisipasi', [PageController::class, 'participation'])->name('participation');
 
 Route::get('/banner', [App\Http\Controllers\BannerController::class, 'index'])->name('banner.index');
@@ -47,15 +52,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('banners', BannerController::class);
         Route::resource('staff', StaffController::class);
-        // Category routes
-        Route::get('categories/search', [App\Http\Controllers\Admin\CategoryController::class, 'search'])->name('categories.search');
-        Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
-
-        // News routes
-        Route::post('news/autosave', [App\Http\Controllers\Admin\NewsController::class, 'autosave'])->name('news.autosave');
-        Route::resource('news', App\Http\Controllers\Admin\NewsController::class);
-        Route::post('content/upload', [App\Http\Controllers\Admin\ContentUploadController::class, 'upload'])->name('content.upload');
-
+        Route::resource('agendas', AdminAgendaController::class);
+        
         // Profile Desa routes
         Route::get('profile-desa/edit', [ProfileDesaController::class, 'edit'])->name('profile-desa.edit');
         Route::put('profile-desa', [ProfileDesaController::class, 'update'])->name('profile-desa.update');
@@ -64,8 +62,7 @@ Route::middleware('auth')->group(function () {
         Route::get('demografis/edit', [DemografisController::class, 'edit'])->name('demografis.edit');
         Route::put('demografis', [DemografisController::class, 'update'])->name('demografis.update');
 
-        // Announcement routes
-        Route::resource('announcements', App\Http\Controllers\Admin\AnnouncementController::class);
+        Route::resource('umkm', \App\Http\Controllers\Admin\UmkmController::class);
     });
 });
 

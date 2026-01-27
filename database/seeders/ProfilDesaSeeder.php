@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\ProfilDesa;
+use App\Models\ProfileDesa;
 
 class ProfilDesaSeeder extends Seeder
 {
@@ -12,7 +12,7 @@ class ProfilDesaSeeder extends Seeder
      */
     public function run(): void
     {
-        ProfilDesa::create([
+        ProfileDesa::create([
             'nama_desa' => 'Parangargo',
             'alamat' => 'Jl. Raya Parangargo No. 1',
             'kecamatan' => 'Parangargo',
