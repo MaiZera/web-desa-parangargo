@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\ProfileDesaController;
 use App\Http\Controllers\Admin\DemografisController;
+use App\Http\Controllers\Admin\AgendaController as AdminAgendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +27,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tentang', [PageController::class, 'about'])->name('about');
 Route::get('/layanan', [PageController::class, 'services'])->name('services');
 Route::get('/berita', [PageController::class, 'news'])->name('news');
+Route::get('/berita/artikel', [PageController::class, 'artikel'])->name('news.artikel');
+Route::get('/berita/pengumuman', [PageController::class, 'pengumuman'])->name('news.pengumuman');
+Route::get('/berita/laporan', [PageController::class, 'laporan'])->name('news.laporan');
 Route::get('/transparansi', [PageController::class, 'transparency'])->name('transparency');
 Route::get('/umkm', [PageController::class, 'umkm'])->name('umkm');
+Route::get('/galeri', [PageController::class, 'gallery'])->name('gallery');
 Route::get('/partisipasi', [PageController::class, 'participation'])->name('participation');
 
 Route::get('/dashboard', function () {
@@ -44,6 +49,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('banners', BannerController::class);
         Route::resource('staff', StaffController::class);
+        Route::resource('agendas', AdminAgendaController::class);
         
         // Profile Desa routes
         Route::get('profile-desa/edit', [ProfileDesaController::class, 'edit'])->name('profile-desa.edit');
@@ -52,6 +58,8 @@ Route::middleware('auth')->group(function () {
         // Demografis routes
         Route::get('demografis/edit', [DemografisController::class, 'edit'])->name('demografis.edit');
         Route::put('demografis', [DemografisController::class, 'update'])->name('demografis.update');
+
+        Route::resource('umkm', \App\Http\Controllers\Admin\UmkmController::class);
     });
 });
 

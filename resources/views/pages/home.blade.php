@@ -103,6 +103,57 @@
         </div>
     </section>
 
+    <!-- Calendar Section -->
+    <section class="max-w-7xl mx-auto px-4 mt-12 mb-12">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 md:p-8">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold">Agenda Desa</h2>
+                <p class="text-slate-500">Jadwal kegiatan dan acara penting di Desa Mandiri Jaya.</p>
+            </div>
+            
+            <div id="calendar" class="min-h-[700px] font-sans"></div>
+        </div>
+    </section>
+
+    @push('scripts')
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,listMonth'
+                },
+                locale: 'id',
+                buttonText: {
+                    today: 'Hari Ini',
+                    month: 'Bulan',
+                    week: 'Minggu',
+                    day: 'Hari',
+                    list: 'List'
+                },
+                events: '/api/agendas',
+                eventColor: '#059669', // emerald-600
+                eventBorderColor: '#047857', // emerald-700
+                displayEventTime: true,
+                eventTimeFormat: {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    meridiem: false
+                },
+                eventClick: function(info) {
+                    // Simple alert for now, could be a modal
+                    alert('Kegiatan: ' + info.event.title + '\n\nWaktu: ' + info.event.start.toLocaleString() + '\nLokasi: ' + (info.event.extendedProps.location || '-'));
+                }
+            });
+            calendar.render();
+        });
+    </script>
+    @endpush
+
     <!-- News Section -->
     <section class="max-w-7xl mx-auto px-4">
         <div class="flex justify-between items-end mb-8">
