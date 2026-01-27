@@ -16,6 +16,11 @@ class AnnouncementController extends Controller
     {
         $query = Announcement::with('author')->latest();
 
+        // Search
+        if ($request->filled('search')) {
+            $query->where('judul', 'like', '%' . $request->search . '%');
+        }
+
         if ($request->has('tipe') && $request->tipe != '') {
             $query->where('tipe', $request->tipe);
         }

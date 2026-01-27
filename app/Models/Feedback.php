@@ -13,10 +13,12 @@ class Feedback extends Model
 
     protected $fillable = [
         'nama',
+        'rt',
+        'rw',
         'email',
         'telepon',
         'subjek',
-        'pesan',
+        'deskripsi',
         'kategori',
         'status',
         'tanggapan',

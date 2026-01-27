@@ -8,9 +8,19 @@ use Illuminate\Http\Request;
 
 class AgendaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $agendas = Agenda::orderBy('tanggal_mulai', 'desc')->paginate(10);
+        $query = Agenda::orderBy('tanggal_mulai', 'desc');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', "%{$search}%")
+                    ->orWhere('deskripsi', 'like', "%{$search}%");
+            });
+        }
+
+        $agendas = $query->paginate(10);
         return view('admin.agendas.index', compact('agendas'));
     }
 

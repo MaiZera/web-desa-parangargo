@@ -9,6 +9,9 @@ use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\ProfileDesaController;
 use App\Http\Controllers\Admin\DemografisController;
 use App\Http\Controllers\Admin\AgendaController as AdminAgendaController;
+use App\Http\Controllers\Admin\AnnouncementController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\NewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +56,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('banners', BannerController::class);
         Route::resource('staff', StaffController::class);
         Route::resource('agendas', AdminAgendaController::class);
-        
+
         // Profile Desa routes
         Route::get('profile-desa/edit', [ProfileDesaController::class, 'edit'])->name('profile-desa.edit');
         Route::put('profile-desa', [ProfileDesaController::class, 'update'])->name('profile-desa.update');
@@ -63,6 +66,26 @@ Route::middleware('auth')->group(function () {
         Route::put('demografis', [DemografisController::class, 'update'])->name('demografis.update');
 
         Route::resource('umkm', \App\Http\Controllers\Admin\UmkmController::class);
+
+        // Custom routes for AJAX
+        Route::get('categories/search', [CategoryController::class, 'search'])->name('categories.search');
+        Route::post('categories/store', [CategoryController::class, 'store']); // Match JS URL
+        Route::post('news/autosave', [NewsController::class, 'autosave'])->name('news.autosave');
+
+        Route::resource('announcements', AnnouncementController::class);
+        Route::resource('categories', CategoryController::class);
+        Route::resource('news', NewsController::class);
+
+        // Feedback Routes
+        Route::get('feedback', [\App\Http\Controllers\FeedbackController::class, 'index'])->name('feedback.index');
+        Route::get('feedback/{feedback}', [\App\Http\Controllers\FeedbackController::class, 'show'])->name('feedback.show');
+        Route::delete('feedback/{feedback}', [\App\Http\Controllers\FeedbackController::class, 'destroy'])->name('feedback.destroy');
+        Route::put('feedback/{feedback}/status', [\App\Http\Controllers\FeedbackController::class, 'updateStatus'])->name('feedback.update-status');
+        Route::get('feedback/{feedback}/respond', [\App\Http\Controllers\FeedbackController::class, 'respond'])->name('feedback.respond');
+        Route::put('feedback/{feedback}/respond', [\App\Http\Controllers\FeedbackController::class, 'storeResponse'])->name('feedback.store-response');
+        Route::put('feedback/{feedback}/complete', [\App\Http\Controllers\FeedbackController::class, 'complete'])->name('feedback.complete');
+
+        Route::resource('sponsors', \App\Http\Controllers\SponsorController::class);
     });
 });
 

@@ -18,9 +18,9 @@ class SponsorController extends Controller
         // Search
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('nama', 'like', "%{$search}%")
-                  ->orWhere('deskripsi', 'like', "%{$search}%");
+                    ->orWhere('deskripsi', 'like', "%{$search}%");
             });
         }
 
@@ -47,7 +47,7 @@ class SponsorController extends Controller
     {
         $maxUrutan = Sponsor::max('urutan') ?? 0;
         $categories = $this->getCategories();
-        
+
         return view('admin.sponsors.create', compact('maxUrutan', 'categories'));
     }
 
@@ -60,10 +60,13 @@ class SponsorController extends Controller
             'nama' => 'required|string|max:255',
             'logo' => 'nullable|image|mimes:png,jpg,jpeg,svg|max:2048',
             'website' => 'nullable|url|max:255',
+            'instagram' => 'nullable|string|max:255',
             'deskripsi' => 'nullable|string',
             'kategori' => 'nullable|string|max:255',
             'urutan' => 'required|integer|min:0',
             'is_active' => 'boolean',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
         ]);
 
         // Handle logo upload
@@ -91,7 +94,7 @@ class SponsorController extends Controller
     public function edit(Sponsor $sponsor)
     {
         $categories = $this->getCategories();
-        
+
         return view('admin.sponsors.edit', compact('sponsor', 'categories'));
     }
 
@@ -104,10 +107,13 @@ class SponsorController extends Controller
             'nama' => 'required|string|max:255',
             'logo' => 'nullable|image|mimes:png,jpg,jpeg,svg|max:2048',
             'website' => 'nullable|url|max:255',
+            'instagram' => 'nullable|string|max:255',
             'deskripsi' => 'nullable|string',
             'kategori' => 'nullable|string|max:255',
             'urutan' => 'required|integer|min:0',
             'is_active' => 'boolean',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date|after_or_equal:start_date',
         ]);
 
         // Handle logo upload
@@ -149,7 +155,7 @@ class SponsorController extends Controller
         $sponsor->update(['is_active' => !$sponsor->is_active]);
 
         $message = $sponsor->is_active ? 'Sponsor diaktifkan!' : 'Sponsor dinonaktifkan!';
-        
+
         return back()->with('success', $message);
     }
 
