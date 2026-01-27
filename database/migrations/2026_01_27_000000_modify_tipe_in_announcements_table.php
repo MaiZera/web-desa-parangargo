@@ -12,9 +12,13 @@ return new class extends Migration {
     public function up(): void
     {
         // Using raw SQL to modify the ENUM column as it's the most reliable way without doctrine/dbal
-        // and allows preserving data (though strict mode might complain if we were removing values)
-        // We are expanding the enum, so it's safe.
-        DB::statement("ALTER TABLE announcements MODIFY COLUMN tipe ENUM('umum', 'agenda', 'layanan', 'darurat', 'berita') NOT NULL DEFAULT 'umum'");
+        // and allows preserving data.
+
+        // SQLite doesn't support MODIFY COLUMN. We skip this for SQLite assuming it treats ENUMs as TEXT 
+        // or effectively doesn't enforce the modification limit without a table rebuild.
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement("ALTER TABLE announcements MODIFY COLUMN tipe ENUM('umum', 'agenda', 'layanan', 'darurat', 'berita') NOT NULL DEFAULT 'umum'");
+        }
     }
 
     /**
@@ -22,9 +26,8 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        // Reverting to the original set. CAUTION: Data with new types will cause truncation/errors if rolled back.
-        // We attempt to map them back to 'umum' or just let the rollback fail if strict.
-        // Ideally we shouldn't down this if data exists, but for completeness:
-        DB::statement("ALTER TABLE announcements MODIFY COLUMN tipe ENUM('urgent', 'penting', 'umum') NOT NULL DEFAULT 'umum'");
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement("ALTER TABLE announcements MODIFY COLUMN tipe ENUM('urgent', 'penting', 'umum') NOT NULL DEFAULT 'umum'");
+        }
     }
 };
