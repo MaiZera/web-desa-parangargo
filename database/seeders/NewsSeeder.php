@@ -107,18 +107,24 @@ class NewsSeeder extends Seeder
         ];
 
         foreach ($newsData as $news) {
-            News::create([
+            $createdNews = News::create([
                 'title' => $news['title'],
                 'slug' => Str::slug($news['title']),
                 'summary' => $news['summary'],
                 'content' => $news['content'],
-                'category' => $news['category'],
+                // 'category' => $news['category'], // Column removed, using relation below
                 'is_featured' => $news['is_featured'],
                 'status' => $news['status'],
                 'view_count' => rand(50, 500),
                 'author_id' => 1, // Super Admin
                 'published_at' => $news['published_at'],
             ]);
+
+            // Attach Category
+            $category = \App\Models\Category::where('name', $news['category'])->first();
+            if ($category) {
+                $createdNews->categories()->attach($category->id);
+            }
         }
     }
 }

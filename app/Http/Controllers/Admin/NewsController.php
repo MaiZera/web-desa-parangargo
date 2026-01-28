@@ -16,6 +16,11 @@ class NewsController extends Controller
     {
         $query = News::with(['author', 'categories'])->latest();
 
+        // Search
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
         if ($request->has('category')) {
             $categories = (array) $request->input('category');
 

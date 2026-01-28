@@ -18,11 +18,11 @@ class FeedbackController extends Controller
         // Search
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('nama', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('subjek', 'like', "%{$search}%")
-                  ->orWhere('pesan', 'like', "%{$search}%");
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('subjek', 'like', "%{$search}%")
+                    ->orWhere('deskripsi', 'like', "%{$search}%");
             });
         }
 
@@ -36,9 +36,20 @@ class FeedbackController extends Controller
             $query->where('kategori', $request->kategori);
         }
 
+        // Filter by month
+        if ($request->filled('month')) {
+            $query->whereRaw("DATE_FORMAT(created_at, '%Y-%m') = ?", [$request->month]);
+        }
+
         $feedback = $query->paginate(15);
 
-        return view('admin.feedback.index', compact('feedback'));
+        // Get available months for filter
+        $months = Feedback::selectRaw("DATE_FORMAT(created_at, '%Y-%m') as value, DATE_FORMAT(created_at, '%M %Y') as label")
+            ->distinct()
+            ->orderBy('value', 'desc')
+            ->get();
+
+        return view('admin.feedback.index', compact('feedback', 'months'));
     }
 
     /**
@@ -56,10 +67,12 @@ class FeedbackController extends Controller
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
+            'rt' => 'nullable|string|max:5',
+            'rw' => 'nullable|string|max:5',
             'email' => 'required|email|max:255',
             'telepon' => 'nullable|string|max:20',
             'subjek' => 'required|string|max:255',
-            'pesan' => 'required|string',
+            'deskripsi' => 'required|string',
             'kategori' => 'nullable|in:Complaint,Suggestion,Question,Praise',
         ]);
 
@@ -78,12 +91,12 @@ class FeedbackController extends Controller
     public function show(Feedback $feedback)
     {
         $feedback->load('responder');
-        
+
         // Mark as read
         if ($feedback->status === 'baru') {
             $feedback->update(['status' => 'dibaca']);
         }
-        
+
         return view('admin.feedback.show', compact('feedback'));
     }
 

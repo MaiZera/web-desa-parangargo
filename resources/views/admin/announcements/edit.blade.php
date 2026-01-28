@@ -30,7 +30,6 @@
                                 <select name="tipe" id="tipe" x-model="tipe"
                                     class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
                                     <option value="umum" {{ old('tipe', $announcement->tipe) == 'umum' ? 'selected' : '' }}>Umum</option>
-                                    <option value="agenda" {{ old('tipe', $announcement->tipe) == 'agenda' ? 'selected' : '' }}>Agenda</option>
                                     <option value="layanan" {{ old('tipe', $announcement->tipe) == 'layanan' ? 'selected' : '' }}>Layanan</option>
                                     <option value="darurat" {{ old('tipe', $announcement->tipe) == 'darurat' ? 'selected' : '' }}>Darurat</option>
                                     <option value="berita" {{ old('tipe', $announcement->tipe) == 'berita' ? 'selected' : '' }}>Berita</option>
@@ -53,30 +52,7 @@
                                 @enderror
                             </div>
 
-                            <div class="col-span-1 md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6"
-                                x-show="tipe === 'agenda'" x-transition>
-                                <div>
-                                    <label for="tanggal_mulai"
-                                        class="block text-sm font-medium text-gray-700 mb-1">Tanggal Mulai</label>
-                                    <input type="date" name="tanggal_mulai" id="tanggal_mulai"
-                                        value="{{ old('tanggal_mulai', $announcement->tanggal_mulai?->format('Y-m-d')) }}"
-                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
-                                    @error('tanggal_mulai')
-                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
-                                </div>
-
-                                <div>
-                                    <label for="tanggal_selesai"
-                                        class="block text-sm font-medium text-gray-700 mb-1">Tanggal Selesai</label>
-                                    <input type="date" name="tanggal_selesai" id="tanggal_selesai"
-                                        value="{{ old('tanggal_selesai', $announcement->tanggal_selesai?->format('Y-m-d')) }}"
-                                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
-                                    @error('tanggal_selesai')
-                                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-                                    @enderror
-                                </div>
-                            </div>
+                            <!-- Agenda dates removed -->
 
                             <div class="col-span-2" x-data="{
                                 file: null,

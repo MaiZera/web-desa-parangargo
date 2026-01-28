@@ -32,13 +32,15 @@ class Umkm extends Model
         'tahun_berdiri',
         'kisaran_harga_min',
         'kisaran_harga_max',
+        'jam_buka',
         'is_active',
     ];
 
     protected $casts = [
         'tahun_berdiri' => 'integer',
-        'kisaran_harga_min' => 'decimal:2',
         'kisaran_harga_max' => 'decimal:2',
+        'jam_buka' => 'array',
+        'produk_layanan' => 'array',
         'is_active' => 'boolean',
     ];
 
@@ -64,8 +66,8 @@ class Umkm extends Model
     public function getKisaranHargaAttribute()
     {
         if ($this->kisaran_harga_min && $this->kisaran_harga_max) {
-            return "Rp " . number_format($this->kisaran_harga_min, 0, ',', '.') . 
-                   " - Rp " . number_format($this->kisaran_harga_max, 0, ',', '.');
+            return "Rp " . number_format((float) $this->kisaran_harga_min, 0, ',', '.') .
+                " - Rp " . number_format((float) $this->kisaran_harga_max, 0, ',', '.');
         }
         return null;
     }

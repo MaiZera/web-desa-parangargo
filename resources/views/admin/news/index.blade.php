@@ -8,64 +8,38 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
-                    <div class="flex justify-between items-center mb-6">
-                        <div class="flex items-center gap-4">
-                            <h2 class="text-xl font-semibold">Daftar Berita</h2>
+                    <div class="mb-6 text-center">
+                        <h2 class="text-xl font-semibold">Daftar Berita</h2>
+                    </div>
 
-                            <form method="GET" action="{{ route('admin.news.index') }}" class="flex items-center gap-2">
-                                <!-- Category Dropdown -->
-                                <div x-data="{ open: false, selected: {{ json_encode((array)request('category')) }} }" class="relative">
-                                    <button @click="open = !open" type="button" 
-                                        class="flex items-center justify-between w-48 px-2 py-1 text-xs text-left bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 overflow-hidden h-8">
-                                        <span class="truncate block" x-text="selected.length > 0 ? selected.length + ' Kategori Dipilih' : 'Filter Kategori'">
-                                            Filter Kategori
-                                        </span>
-                                        <svg class="w-4 h-4 ml-2 text-gray-500 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                                        </svg>
-                                    </button>
-                                    
-                                    <div x-show="open" @click.outside="open = false" 
-                                        x-transition:enter="transition ease-out duration-100"
-                                        x-transition:enter-start="transform opacity-0 scale-95"
-                                        x-transition:enter-end="transform opacity-100 scale-100"
-                                        x-transition:leave="transition ease-in duration-75"
-                                        x-transition:leave-start="transform opacity-100 scale-100"
-                                        x-transition:leave-end="transform opacity-0 scale-95"
-                                        class="absolute z-10 w-56 mt-1 bg-white border border-gray-200 rounded-md shadow-lg max-h-60 overflow-y-auto"
-                                        style="display: none;">
-                                        <div class="p-2 space-y-1">
-                                            @foreach($allCategories as $cat)
-                                                <label class="flex items-center space-x-2 px-2 py-1 hover:bg-gray-50 rounded cursor-pointer">
-                                                    <input type="checkbox" name="category[]" value="{{ $cat->name }}" 
-                                                        class="text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 w-4 h-4"
-                                                        {{ in_array($cat->name, (array)request('category')) ? 'checked' : '' }}
-                                                        @change="if($el.checked) { selected.push($el.value) } else { selected = selected.filter(i => i !== $el.value) }">
-                                                    <span class="text-xs text-gray-700">{{ $cat->name }}</span>
-                                                </label>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="submit"
-                                    class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs px-2 py-1 rounded-md transition-colors h-8">
-                                    Filter
-                                </button>
+                    <div class="flex flex-col lg:flex-row justify-between items-center mb-6 gap-4">
+                        <form method="GET" action="{{ route('admin.news.index') }}"
+                            class="flex flex-row items-center gap-2 w-full lg:w-auto">
+                            <select name="status" onchange="this.form.submit()"
+                                class="rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50 text-sm px-3 py-1.5 w-full sm:w-32">
+                                <option value="">Semua Status</option>
+                                <option value="published" {{ request('status') == 'published' ? 'selected' : '' }}>
+                                    Published</option>
+                                <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>Draft</option>
+                                <option value="archived" {{ request('status') == 'archived' ? 'selected' : '' }}>Archived
+                                </option>
+                            </select>
 
-                                <select name="status" onchange="this.form.submit()"
-                                    class="text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 py-1 px-2 h-8">
-                                    <option value="">Semua Status</option>
-                                    <option value="published" {{ request('status') == 'published' ? 'selected' : '' }}>
-                                        Published</option>
-                                    <option value="draft" {{ request('status') == 'draft' ? 'selected' : '' }}>Draft
-                                    </option>
-                                    <option value="archived" {{ request('status') == 'archived' ? 'selected' : '' }}>
-                                        Archived</option>
-                                </select>
-                            </form>
-                        </div>
+                            <select name="category" onchange="this.form.submit()"
+                                class="rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50 text-sm px-3 py-1.5 w-full sm:w-40">
+                                <option value="">Semua Kategori</option>
+                                @foreach($allCategories as $cat)
+                                    <option value="{{ $cat->name }}" {{ is_array(request('category')) && in_array($cat->name, request('category')) ? 'selected' : (request('category') == $cat->name ? 'selected' : '') }}>{{ $cat->name }}</option>
+                                @endforeach
+                            </select>
+
+                            <input type="text" name="search" value="{{ request('search') }}"
+                                placeholder="Cari Berita..."
+                                class="rounded-md border-gray-300 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50 text-sm px-3 py-1.5 w-full sm:w-48">
+                        </form>
+
                         <a href="{{ route('admin.news.create') }}"
-                            class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition-colors">
+                            class="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition-colors whitespace-nowrap">
                             + Tambah Berita
                         </a>
                     </div>
@@ -76,7 +50,7 @@
                         </div>
                     @endif
 
-                    <div class="overflow-x-auto">
+                    <div id="search-results" class="overflow-x-auto">
                         <table class="w-full text-left">
                             <thead>
                                 <tr class="text-gray-400 border-b border-gray-100">
@@ -197,4 +171,54 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const searchInput = document.querySelector('input[name="search"]');
+                const resultsContainer = document.getElementById('search-results');
+                let timeoutId;
+
+                searchInput.addEventListener('input', function () {
+                    clearTimeout(timeoutId);
+                    const query = this.value;
+
+                    timeoutId = setTimeout(() => {
+                        // Update URL without reloading
+                        const url = new URL(window.location.href);
+                        if (query) {
+                            url.searchParams.set('search', query);
+                        } else {
+                            url.searchParams.delete('search');
+                        }
+                        url.searchParams.delete('page');
+
+                        // Keep existing filters
+                        const category = document.querySelector('select[name="category"]').value;
+                        const status = document.querySelector('select[name="status"]').value;
+                        if(category) url.searchParams.set('category', category);
+                        if(status) url.searchParams.set('status', status);
+
+                        window.history.pushState({}, '', url);
+
+                        fetch(url, {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        })
+                            .then(response => response.text())
+                            .then(html => {
+                                const parser = new DOMParser();
+                                const doc = parser.parseFromString(html, 'text/html');
+                                const newResults = doc.getElementById('search-results');
+                                if (newResults) {
+                                    resultsContainer.innerHTML = newResults.innerHTML;
+                                }
+                            })
+                            .catch(error => console.error('Error fetching results:', error));
+                    }, 300);
+                });
+            });
+        </script>
+    @endpush
 </x-admin-layout>

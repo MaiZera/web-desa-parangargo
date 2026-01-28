@@ -13,15 +13,20 @@ class Sponsor extends Model
         'nama',
         'logo',
         'website',
+        'instagram',
         'deskripsi',
         'kategori',
         'urutan',
         'is_active',
+        'start_date',
+        'end_date',
     ];
 
     protected $casts = [
         'urutan' => 'integer',
         'is_active' => 'boolean',
+        'start_date' => 'date',
+        'end_date' => 'date',
     ];
 
     // Scopes
