@@ -8,9 +8,9 @@
             <p class="text-lg text-slate-600 leading-relaxed">Punya saran, keluhan, atau ide untuk desa kita? Jangan ragu untuk bersuara! Partisipasi Anda sangat berarti untuk kemajuan Desa Mandiri Jaya.</p>
         </div>
         
-        <div class="space-y-6">
+        <!-- <div class="space-y-6"> -->
             <!-- Privacy Card -->
-            <div class="flex gap-4 items-start p-6 bg-white rounded-3xl shadow-sm border border-slate-100">
+            <!-- <div class="flex gap-4 items-start p-6 bg-white rounded-3xl shadow-sm border border-slate-100">
                 <div class="p-3 bg-blue-50 text-blue-600 rounded-2xl">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-check w-6 h-6"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
                 </div>
@@ -18,9 +18,9 @@
                    <h3 class="font-bold text-lg mb-1">Data Terjamin</h3>
                    <p class="text-slate-500 text-sm leading-relaxed">Identitas dan data pribadi Anda aman dan dilindungi undang-undang.</p>
                 </div>
-            </div>
+            </div> -->
              <!-- Speed Card -->
-            <div class="flex gap-4 items-start p-6 bg-white rounded-3xl shadow-sm border border-slate-100">
+            <!-- <div class="flex gap-4 items-start p-6 bg-white rounded-3xl shadow-sm border border-slate-100">
                 <div class="p-3 bg-orange-50 text-orange-600 rounded-2xl">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap w-6 h-6"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
                 </div>
@@ -28,9 +28,9 @@
                    <h3 class="font-bold text-lg mb-1">Respon Cepat</h3>
                    <p class="text-slate-500 text-sm leading-relaxed">Laporan Anda akan ditindaklanjuti oleh petugas dalam 2x24 jam kerja.</p>
                 </div>
-            </div>
+            </div> -->
              <!-- Help Card -->
-            <div class="flex gap-4 items-start p-6 bg-white rounded-3xl shadow-sm border border-slate-100">
+            <!-- <div class="flex gap-4 items-start p-6 bg-white rounded-3xl shadow-sm border border-slate-100">
                 <div class="p-3 bg-emerald-50 text-emerald-600 rounded-2xl">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users w-6 h-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
                 </div>
@@ -39,7 +39,7 @@
                    <p class="text-slate-500 text-sm leading-relaxed">Setiap aspirasi akan dibahas dalam musyawarah rutin desa.</p>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
     
     <form class="bg-white p-10 rounded-[3rem] shadow-xl border border-slate-100 space-y-6">

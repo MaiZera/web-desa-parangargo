@@ -28,9 +28,9 @@
                     <span class="flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar w-4 h-4" aria-hidden="true"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path></svg> 15 Okt 2023
                     </span>
-                    <button class="flex items-center gap-1 hover:underline">Baca Selengkapnya
+                    <a href="{{ route('news.show', 'featured-article') }}" class="flex items-center gap-1 hover:underline">Baca Selengkapnya
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -49,9 +49,9 @@
                 </div>
                 <h3 class="text-xl font-bold leading-tight group-hover:text-emerald-600 transition-colors">Pembangunan Jalan Lingkar Desa Tahap 1 Selesai</h3>
                 <p class="text-slate-500 text-sm line-clamp-3 leading-relaxed">Pemerintah desa berhasil merampungkan pembangunan jalan lingkar sepanjang 2km untuk mempermudah akses tani.</p>
-                <button class="pt-2 text-emerald-600 font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all">Selengkapnya
+                <a href="{{ route('news.show', 'pembangunan-jalan-lingkar') }}" class="pt-2 text-emerald-600 font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all">Selengkapnya
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
-                </button>
+                </a>
             </div>
         </article>
         <!-- Article 2 -->
@@ -66,9 +66,9 @@
                 </div>
                 <h3 class="text-xl font-bold leading-tight group-hover:text-emerald-600 transition-colors">Festival Budaya Mandiri Jaya 2023 Berlangsung Meriah</h3>
                 <p class="text-slate-500 text-sm line-clamp-3 leading-relaxed">Ribuan warga memadati balai desa untuk menyaksikan pertunjukan seni tradisional tahunan.</p>
-                <button class="pt-2 text-emerald-600 font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all">Selengkapnya
+                <a href="{{ route('news.show', 'festival-budaya') }}" class="pt-2 text-emerald-600 font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all">Selengkapnya
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
-                </button>
+                </a>
             </div>
         </article>
         <!-- Article 3 -->
@@ -83,9 +83,9 @@
                 </div>
                 <h3 class="text-xl font-bold leading-tight group-hover:text-emerald-600 transition-colors">Pelatihan Digital Marketing untuk Pelaku UMKM</h3>
                 <p class="text-slate-500 text-sm line-clamp-3 leading-relaxed">Puluhan pengusaha lokal diberikan pelatihan cara berjualan online menggunakan marketplace.</p>
-                <button class="pt-2 text-emerald-600 font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all">Selengkapnya
+                <a href="{{ route('news.show', 'pelatihan-umkm') }}" class="pt-2 text-emerald-600 font-bold text-sm flex items-center gap-1 hover:gap-2 transition-all">Selengkapnya
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
-                </button>
+                </a>
             </div>
         </article>
     </div>

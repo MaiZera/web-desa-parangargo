@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\NewsController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,7 +33,9 @@ Route::get('/layanan', [PageController::class, 'services'])->name('services');
 Route::get('/berita', [PageController::class, 'news'])->name('news');
 Route::get('/berita/artikel', [PageController::class, 'artikel'])->name('news.artikel');
 Route::get('/berita/pengumuman', [PageController::class, 'pengumuman'])->name('news.pengumuman');
+Route::get('/berita/pengumuman/{slug}', [PageController::class, 'announcementDetail'])->name('news.announcement.show');
 Route::get('/berita/laporan', [PageController::class, 'laporan'])->name('news.laporan');
+Route::get('/berita/{slug}', [PageController::class, 'newsDetail'])->name('news.show');
 Route::get('/transparansi', [PageController::class, 'transparency'])->name('transparency');
 Route::get('/umkm', [PageController::class, 'umkm'])->name('umkm');
 Route::get('/galeri', [PageController::class, 'gallery'])->name('gallery');
@@ -56,6 +59,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('banners', BannerController::class);
         Route::resource('staff', StaffController::class);
         Route::resource('agendas', AdminAgendaController::class);
+        Route::resource('announcements', AnnouncementController::class);
 
         // Profile Desa routes
         Route::get('profile-desa/edit', [ProfileDesaController::class, 'edit'])->name('profile-desa.edit');

@@ -53,7 +53,13 @@ class AgendaController extends Controller
                     'location' => $agenda->lokasi,
                     'description' => $agenda->deskripsi,
                     'source' => 'local',
-                    'is_featured' => $agenda->is_featured
+                    'is_featured' => $agenda->is_featured,
+                    'gambar' => $agenda->gambar ? (str_starts_with($agenda->gambar, 'http') ? $agenda->gambar : asset('storage/' . $agenda->gambar)) : null,
+                    'penyelenggara' => $agenda->penyelenggara,
+                    'narahubung' => $agenda->narahubung,
+                    'telepon' => $agenda->telepon,
+                    'tanggal_mulai_formatted' => $agenda->tanggal_mulai ? $agenda->tanggal_mulai->translatedFormat('d F Y, H:i') : null,
+                    'tanggal_selesai_formatted' => $agenda->tanggal_selesai ? $agenda->tanggal_selesai->translatedFormat('d F Y, H:i') : null,
                 ]
             ]);
         }

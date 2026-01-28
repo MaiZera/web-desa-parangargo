@@ -78,7 +78,7 @@
     <section class="space-y-12">
         <div class="text-center">
             <h2 class="text-3xl font-bold">Data Demografis</h2>
-            <p class="text-slate-500">Gambaran nyata penduduk Desa Mandiri Jaya</p>
+            <p class="text-slate-500">Gambaran nyata penduduk Desa Parangargo</p>
         </div>
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Gender -->
@@ -218,13 +218,13 @@
                         <div class="p-3 bg-white/10 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin w-6 h-6 text-emerald-400"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
                         <div>
                             <p class="text-emerald-400 font-bold text-sm">Alamat Kantor</p>
-                            <p class="text-slate-300">Jl. Pahlawan No. 45, Desa Mandiri Jaya, Kec. Makmur</p>
+                            <p class="text-slate-300">Jl. Raya Parangargo No. 1, Desa Parangargo, Kec. Wagir, Kab. Malang</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="h-full min-h-[300px] rounded-3xl overflow-hidden grayscale contrast-125 brightness-75">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15865.138406798243!2d106.822247!3d-6.195250!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f41f237bf7bd%3A0x6a2c27b00350436d!2sMonumen%20Nasional!5e0!3m2!1sid!2sid!4v1689654321098!5m2!1sid!2sid" width="100%" height="100%" style="border: 0px;" allowfullscreen="" loading="lazy"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15801.439268383827!2d112.58614486518428!3d-8.03444654924769!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7882956f4d221d%3A0xc348633c7f96bbf0!2sParangargo%2C%20Wagir%2C%20Malang%20Regency%2C%20East%20Java!5e0!3m2!1sen!2sid!4v1706423000000!5m2!1sen!2sid" width="100%" height="100%" style="border: 0px;" allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
     </section>
