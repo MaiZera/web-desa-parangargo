@@ -63,7 +63,7 @@ class NewsController extends Controller
         $data = $request->except(['image', 'categories']);
         $data['slug'] = Str::slug($request->title);
         $data['author_id'] = auth()->id();
-        $data['summary'] = Str::limit(strip_tags($request->content), 150);
+        $data['summary'] = Str::limit(strip_tags($request->input('content')), 150);
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('news', 'public');
@@ -103,7 +103,7 @@ class NewsController extends Controller
 
         $data = $request->except(['image', 'categories']);
         $data['slug'] = Str::slug($request->title);
-        $data['summary'] = Str::limit(strip_tags($request->content), 150);
+        $data['summary'] = Str::limit(strip_tags($request->input('content')), 150);
 
         if ($request->hasFile('image')) {
             if ($news->image) {
@@ -134,7 +134,7 @@ class NewsController extends Controller
         // Assuming FormData is passed.
 
         $data['slug'] = Str::slug($request->title);
-        $data['summary'] = Str::limit(strip_tags($request->content), 150);
+        $data['summary'] = Str::limit(strip_tags($request->input('content')), 150);
         $data['status'] = 'draft';
         $data['author_id'] = auth()->id();
 

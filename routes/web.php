@@ -44,10 +44,9 @@ Route::get('/partisipasi', [PageController::class, 'participation'])->name('part
 Route::get('/banner', [App\Http\Controllers\BannerController::class, 'index'])->name('banner.index');
 Route::get('/banner/{banner}', [App\Http\Controllers\BannerController::class, 'show'])->name('banner.show');
 
-Route::get('/dashboard', function () {
-    $banners = \App\Models\Banner::where('is_active', true)->latest()->get();
-    return view('dashboard', compact('banners'));
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
@@ -90,6 +89,7 @@ Route::middleware('auth')->group(function () {
         Route::put('feedback/{feedback}/complete', [\App\Http\Controllers\FeedbackController::class, 'complete'])->name('feedback.complete');
 
         Route::resource('sponsors', \App\Http\Controllers\SponsorController::class);
+        Route::resource('transparency', \App\Http\Controllers\Admin\TransparencyController::class);
     });
 });
 

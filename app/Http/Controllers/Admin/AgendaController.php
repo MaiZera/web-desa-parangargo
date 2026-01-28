@@ -62,6 +62,7 @@ class AgendaController extends Controller
             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
             'penyelenggara' => 'nullable|string|max:255',
             'narahubung' => 'nullable|string|max:255',
+<<<<<<< HEAD
             'telepon' => 'nullable|string|max:20',
             'status' => 'required|in:scheduled,ongoing,completed',
             'is_featured' => 'nullable',
@@ -72,6 +73,22 @@ class AgendaController extends Controller
 
         if ($request->hasFile('gambar')) {
             $validated['gambar'] = $request->file('gambar')->store('agendas', 'public');
+=======
+            'is_featured' => 'boolean',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'judul.required' => 'Judul agenda wajib diisi.',
+            'tanggal_mulai.required' => 'Tanggal mulai wajib diisi.',
+            'gambar.image' => 'File harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
+            'gambar.uploaded' => 'Gagal mengupload gambar.',
+        ]);
+
+        if ($request->hasFile('gambar')) {
+            $path = $request->file('gambar')->store('agenda', 'public');
+            $validated['gambar'] = $path;
+>>>>>>> b65391a (Update admin area)
         }
 
         Agenda::create($validated);
@@ -116,6 +133,7 @@ class AgendaController extends Controller
             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
             'penyelenggara' => 'nullable|string|max:255',
             'narahubung' => 'nullable|string|max:255',
+<<<<<<< HEAD
             'telepon' => 'nullable|string|max:20',
             'is_featured' => 'nullable',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
@@ -142,6 +160,26 @@ class AgendaController extends Controller
             $validated['status'] = 'ongoing';
         } else {
             $validated['status'] = 'scheduled';
+=======
+            'is_featured' => 'boolean',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'judul.required' => 'Judul agenda wajib diisi.',
+            'tanggal_mulai.required' => 'Tanggal mulai wajib diisi.',
+            'gambar.image' => 'File harus berupa gambar.',
+            'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
+            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
+            'gambar.uploaded' => 'Gagal mengupload gambar.',
+        ]);
+
+        if ($request->hasFile('gambar')) {
+            // Delete old image
+            if ($agenda->gambar) {
+                Storage::disk('public')->delete($agenda->gambar);
+            }
+            $path = $request->file('gambar')->store('agenda', 'public');
+            $validated['gambar'] = $path;
+>>>>>>> b65391a (Update admin area)
         }
 
         $agenda->update($validated);

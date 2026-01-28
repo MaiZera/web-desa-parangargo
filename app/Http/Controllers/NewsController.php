@@ -20,10 +20,10 @@ class NewsController extends Controller
         // Search
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('summary', 'like', "%{$search}%")
-                  ->orWhere('content', 'like', "%{$search}%");
+                    ->orWhere('summary', 'like', "%{$search}%")
+                    ->orWhere('content', 'like', "%{$search}%");
             });
         }
 
@@ -54,7 +54,7 @@ class NewsController extends Controller
     {
         $categories = $this->getCategories();
         $authors = User::select('id', 'name')->get();
-        
+
         return view('admin.news.create', compact('categories', 'authors'));
     }
 
@@ -63,17 +63,30 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'summary' => 'required|string',
-            'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'image_caption' => 'nullable|string|max:255',
-            'category' => 'nullable|string|max:255',
-            'is_featured' => 'boolean',
-            'status' => 'required|in:draft,published,archived',
-            'published_at' => 'nullable|date',
-        ]);
+        $rules = [
+            'title' => ['required', 'string', 'max:255'],
+            'summary' => ['required', 'string'],
+            'content' => ['required', 'string'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'image_caption' => ['nullable', 'string', 'max:255'],
+            'category' => ['nullable', 'string', 'max:255'],
+            'is_featured' => ['boolean'],
+            'status' => ['required', 'in:draft,published,archived'],
+            'published_at' => ['nullable', 'date'],
+        ];
+
+        $messages = [
+            'image.max' => 'Ukuran gambar terlalu besar. Maksimal 2MB.',
+            'image.uploaded' => 'Gagal mengupload gambar. Ukuran file mungkin melebihi batas server.',
+            'image.mimes' => 'Format gambar harus jpeg, png, jpg, atau webp.',
+            'image.image' => 'File harus berupa gambar.',
+            'title.required' => 'Judul berita wajib diisi.',
+            'summary.required' => 'Ringkasan berita wajib diisi.',
+            'content.required' => 'Isi berita wajib diisi.',
+            'status.required' => 'Status berita wajib dipilih.',
+        ];
+
+        $validated = $request->validate($rules, $messages);
 
         // Handle image upload
         if ($request->hasFile('image')) {
@@ -103,7 +116,7 @@ class NewsController extends Controller
     public function show(News $news)
     {
         $news->load('author');
-        
+
         return view('admin.news.show', compact('news'));
     }
 
@@ -114,7 +127,7 @@ class NewsController extends Controller
     {
         $categories = $this->getCategories();
         $authors = User::select('id', 'name')->get();
-        
+
         return view('admin.news.edit', compact('news', 'categories', 'authors'));
     }
 
@@ -123,17 +136,30 @@ class NewsController extends Controller
      */
     public function update(Request $request, News $news)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'summary' => 'required|string',
-            'content' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'image_caption' => 'nullable|string|max:255',
-            'category' => 'nullable|string|max:255',
-            'is_featured' => 'boolean',
-            'status' => 'required|in:draft,published,archived',
-            'published_at' => 'nullable|date',
-        ]);
+        $rules = [
+            'title' => ['required', 'string', 'max:255'],
+            'summary' => ['required', 'string'],
+            'content' => ['required', 'string'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'image_caption' => ['nullable', 'string', 'max:255'],
+            'category' => ['nullable', 'string', 'max:255'],
+            'is_featured' => ['boolean'],
+            'status' => ['required', 'in:draft,published,archived'],
+            'published_at' => ['nullable', 'date'],
+        ];
+
+        $messages = [
+            'image.max' => 'Ukuran gambar terlalu besar. Maksimal 2MB.',
+            'image.uploaded' => 'Gagal mengupload gambar. Ukuran file mungkin melebihi batas server.',
+            'image.mimes' => 'Format gambar harus jpeg, png, jpg, atau webp.',
+            'image.image' => 'File harus berupa gambar.',
+            'title.required' => 'Judul berita wajib diisi.',
+            'summary.required' => 'Ringkasan berita wajib diisi.',
+            'content.required' => 'Isi berita wajib diisi.',
+            'status.required' => 'Status berita wajib dipilih.',
+        ];
+
+        $validated = $request->validate($rules, $messages);
 
         // Handle image upload
         if ($request->hasFile('image')) {
@@ -207,7 +233,7 @@ class NewsController extends Controller
         $news->update(['is_featured' => !$news->is_featured]);
 
         $message = $news->is_featured ? 'Berita ditandai sebagai unggulan!' : 'Berita dihapus dari unggulan!';
-        
+
         return back()->with('success', $message);
     }
 

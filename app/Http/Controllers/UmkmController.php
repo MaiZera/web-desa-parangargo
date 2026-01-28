@@ -19,11 +19,11 @@ class UmkmController extends Controller
         // Search
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('nama_usaha', 'like', "%{$search}%")
-                  ->orWhere('nama_pemilik', 'like', "%{$search}%")
-                  ->orWhere('deskripsi', 'like', "%{$search}%")
-                  ->orWhere('produk_layanan', 'like', "%{$search}%");
+                    ->orWhere('nama_pemilik', 'like', "%{$search}%")
+                    ->orWhere('deskripsi', 'like', "%{$search}%")
+                    ->orWhere('produk_layanan', 'like', "%{$search}%");
             });
         }
 
@@ -49,7 +49,7 @@ class UmkmController extends Controller
     public function create()
     {
         $categories = $this->getCategories();
-        
+
         return view('admin.umkm.create', compact('categories'));
     }
 
@@ -58,26 +58,43 @@ class UmkmController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nama_usaha' => 'required|string|max:255',
-            'nama_pemilik' => 'required|string|max:255',
-            'kategori' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'produk_layanan' => 'nullable|string',
-            'alamat' => 'required|string',
-            'telepon' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255',
-            'whatsapp' => 'nullable|string|max:20',
-            'instagram' => 'nullable|string|max:255',
-            'facebook' => 'nullable|string|max:255',
-            'website' => 'nullable|url|max:255',
-            'logo' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
-            'foto_produk' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'tahun_berdiri' => 'nullable|integer|min:1900|max:' . date('Y'),
-            'kisaran_harga_min' => 'nullable|numeric|min:0',
-            'kisaran_harga_max' => 'nullable|numeric|min:0',
-            'is_active' => 'boolean',
-        ]);
+        $rules = [
+            'nama_usaha' => ['required', 'string', 'max:255'],
+            'nama_pemilik' => ['required', 'string', 'max:255'],
+            'kategori' => ['required', 'string', 'max:255'],
+            'deskripsi' => ['nullable', 'string'],
+            'produk_layanan' => ['nullable', 'string'],
+            'alamat' => ['required', 'string'],
+            'telepon' => ['nullable', 'string', 'max:20'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'whatsapp' => ['nullable', 'string', 'max:20'],
+            'instagram' => ['nullable', 'string', 'max:255'],
+            'facebook' => ['nullable', 'string', 'max:255'],
+            'website' => ['nullable', 'url', 'max:255'],
+            'logo' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
+            'foto_produk' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'tahun_berdiri' => ['nullable', 'integer', 'min:1900', 'max:' . date('Y')],
+            'kisaran_harga_min' => ['nullable', 'numeric', 'min:0'],
+            'kisaran_harga_max' => ['nullable', 'numeric', 'min:0'],
+            'is_active' => ['boolean'],
+        ];
+
+        $messages = [
+            'nama_usaha.required' => 'Nama usaha wajib diisi.',
+            'nama_pemilik.required' => 'Nama pemilik wajib diisi.',
+            'kategori.required' => 'Kategori usaha wajib dipilih.',
+            'alamat.required' => 'Alamat usaha wajib diisi.',
+            'logo.max' => 'Ukuran logo terlalu besar. Maksimal 2MB.',
+            'logo.mimes' => 'Format logo harus png, jpg, atau jpeg.',
+            'logo.image' => 'File logo harus berupa gambar.',
+            'logo.uploaded' => 'Gagal mengupload logo. Ukuran file mungkin melebihi batas server.',
+            'foto_produk.max' => 'Ukuran foto produk terlalu besar. Maksimal 2MB.',
+            'foto_produk.mimes' => 'Format foto produk harus jpeg, png, jpg, atau webp.',
+            'foto_produk.image' => 'File foto produk harus berupa gambar.',
+            'foto_produk.uploaded' => 'Gagal mengupload foto produk. Ukuran file mungkin melebihi batas server.',
+        ];
+
+        $validated = $request->validate($rules, $messages);
 
         // Auto-generate slug
         $validated['slug'] = Str::slug($validated['nama_usaha']);
@@ -112,7 +129,7 @@ class UmkmController extends Controller
     public function edit(Umkm $umkm)
     {
         $categories = $this->getCategories();
-        
+
         return view('admin.umkm.edit', compact('umkm', 'categories'));
     }
 
@@ -121,26 +138,43 @@ class UmkmController extends Controller
      */
     public function update(Request $request, Umkm $umkm)
     {
-        $validated = $request->validate([
-            'nama_usaha' => 'required|string|max:255',
-            'nama_pemilik' => 'required|string|max:255',
-            'kategori' => 'required|string|max:255',
-            'deskripsi' => 'nullable|string',
-            'produk_layanan' => 'nullable|string',
-            'alamat' => 'required|string',
-            'telepon' => 'nullable|string|max:20',
-            'email' => 'nullable|email|max:255',
-            'whatsapp' => 'nullable|string|max:20',
-            'instagram' => 'nullable|string|max:255',
-            'facebook' => 'nullable|string|max:255',
-            'website' => 'nullable|url|max:255',
-            'logo' => 'nullable|image|mimes:png,jpg,jpeg|max:2048',
-            'foto_produk' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'tahun_berdiri' => 'nullable|integer|min:1900|max:' . date('Y'),
-            'kisaran_harga_min' => 'nullable|numeric|min:0',
-            'kisaran_harga_max' => 'nullable|numeric|min:0',
-            'is_active' => 'boolean',
-        ]);
+        $rules = [
+            'nama_usaha' => ['required', 'string', 'max:255'],
+            'nama_pemilik' => ['required', 'string', 'max:255'],
+            'kategori' => ['required', 'string', 'max:255'],
+            'deskripsi' => ['nullable', 'string'],
+            'produk_layanan' => ['nullable', 'string'],
+            'alamat' => ['required', 'string'],
+            'telepon' => ['nullable', 'string', 'max:20'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'whatsapp' => ['nullable', 'string', 'max:20'],
+            'instagram' => ['nullable', 'string', 'max:255'],
+            'facebook' => ['nullable', 'string', 'max:255'],
+            'website' => ['nullable', 'url', 'max:255'],
+            'logo' => ['nullable', 'image', 'mimes:png,jpg,jpeg', 'max:2048'],
+            'foto_produk' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'tahun_berdiri' => ['nullable', 'integer', 'min:1900', 'max:' . date('Y')],
+            'kisaran_harga_min' => ['nullable', 'numeric', 'min:0'],
+            'kisaran_harga_max' => ['nullable', 'numeric', 'min:0'],
+            'is_active' => ['boolean'],
+        ];
+
+        $messages = [
+            'nama_usaha.required' => 'Nama usaha wajib diisi.',
+            'nama_pemilik.required' => 'Nama pemilik wajib diisi.',
+            'kategori.required' => 'Kategori usaha wajib dipilih.',
+            'alamat.required' => 'Alamat usaha wajib diisi.',
+            'logo.max' => 'Ukuran logo terlalu besar. Maksimal 2MB.',
+            'logo.mimes' => 'Format logo harus png, jpg, atau jpeg.',
+            'logo.image' => 'File logo harus berupa gambar.',
+            'logo.uploaded' => 'Gagal mengupload logo. Ukuran file mungkin melebihi batas server.',
+            'foto_produk.max' => 'Ukuran foto produk terlalu besar. Maksimal 2MB.',
+            'foto_produk.mimes' => 'Format foto produk harus jpeg, png, jpg, atau webp.',
+            'foto_produk.image' => 'File foto produk harus berupa gambar.',
+            'foto_produk.uploaded' => 'Gagal mengupload foto produk. Ukuran file mungkin melebihi batas server.',
+        ];
+
+        $validated = $request->validate($rules, $messages);
 
         // Update slug if name changed
         if ($umkm->nama_usaha !== $validated['nama_usaha']) {
@@ -200,7 +234,7 @@ class UmkmController extends Controller
         $umkm->update(['is_active' => !$umkm->is_active]);
 
         $message = $umkm->is_active ? 'UMKM diaktifkan!' : 'UMKM dinonaktifkan!';
-        
+
         return back()->with('success', $message);
     }
 

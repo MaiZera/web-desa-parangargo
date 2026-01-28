@@ -46,7 +46,25 @@ class DemografisController extends Controller
             'agama.konghucu' => 'required_with:agama|numeric|min:0',
         ]);
 
-        // Custom Validation for Percentage Mode (Tingkat Pendidikan)
+        // Logic Consistency for Population Data
+        $pendudukMode = $request->input('penduduk_mode', 'total');
+        $inputs = $request->all();
+
+        if ($pendudukMode === 'total') {
+            // If inputting total, split equally
+            $total = (int) $request->input('jumlah_penduduk', 0);
+            $half = floor($total / 2);
+            $remainder = $total % 2;
+
+            $inputs['jumlah_laki_laki'] = $half + $remainder;
+            $inputs['jumlah_perempuan'] = $half;
+        } else {
+            // If inputting details, sum them up
+            $laki = (int) $request->input('jumlah_laki_laki', 0);
+            $perempuan = (int) $request->input('jumlah_perempuan', 0);
+
+            $inputs['jumlah_penduduk'] = $laki + $perempuan;
+        }
         if ($request->has('tingkat_pendidikan') && $request->input('tingkat_pendidikan.mode') === 'percentage') {
             $total = array_sum([
                 $request->input('tingkat_pendidikan.sd', 0),
@@ -89,8 +107,54 @@ class DemografisController extends Controller
             }
         }
 
+        // --- NEW VALIDATION: Number Limit Check ---
+        $populationLimit = $inputs['jumlah_penduduk'];
+
+        // 1. Validation for Number Mode (Tingkat Pendidikan)
+        if ($request->has('tingkat_pendidikan') && $request->input('tingkat_pendidikan.mode') === 'number') {
+            $total = array_sum([
+                $request->input('tingkat_pendidikan.sd', 0),
+                $request->input('tingkat_pendidikan.smp', 0),
+                $request->input('tingkat_pendidikan.sma', 0),
+                $request->input('tingkat_pendidikan.pt', 0),
+            ]);
+
+            if ($total > $populationLimit) {
+                return back()->withErrors(['tingkat_pendidikan' => 'Total jumlah tingkat pendidikan (' . number_format($total) . ') tidak boleh melebihi jumlah penduduk (' . number_format($populationLimit) . ').'])->withInput();
+            }
+        }
+
+        // 2. Validation for Number Mode (Mata Pencaharian)
+        if ($request->has('mata_pencaharian') && $request->input('mata_pencaharian.mode') === 'number') {
+            $data = $request->input('mata_pencaharian.data', []);
+            $total = 0;
+            foreach ($data as $item) {
+                $total += $item['amount'] ?? 0;
+            }
+
+            if ($total > $populationLimit) {
+                return back()->withErrors(['mata_pencaharian' => 'Total jumlah mata pencaharian (' . number_format($total) . ') tidak boleh melebihi jumlah penduduk (' . number_format($populationLimit) . ').'])->withInput();
+            }
+        }
+
+        // 3. Validation for Number Mode (Agama)
+        if ($request->has('agama') && $request->input('agama.mode') === 'number') {
+            $total = array_sum([
+                $request->input('agama.islam', 0),
+                $request->input('agama.kristen', 0),
+                $request->input('agama.katolik', 0),
+                $request->input('agama.hindu', 0),
+                $request->input('agama.buddha', 0),
+                $request->input('agama.konghucu', 0),
+            ]);
+
+            if ($total > $populationLimit) {
+                return back()->withErrors(['agama' => 'Total jumlah agama (' . number_format($total) . ') tidak boleh melebihi jumlah penduduk (' . number_format($populationLimit) . ').'])->withInput();
+            }
+        }
+
         $demografis = Demografis::firstOrCreate([]);
-        $demografis->update($request->all());
+        $demografis->update($inputs);
 
         return redirect()->route('admin.demografis.edit')->with('success', 'Data Demografis berhasil diupdate.');
     }

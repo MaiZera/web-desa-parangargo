@@ -32,9 +32,15 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
+        ], [
+            'image.required' => 'Gambar banner wajib diupload.',
+            'image.image' => 'File harus berupa gambar.',
+            'image.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
+            'image.max' => 'Ukuran gambar maksimal 2MB.',
+            'image.uploaded' => 'Gagal mengupload gambar.',
         ]);
 
         if ($request->hasFile('image')) {
@@ -66,7 +72,8 @@ class BannerController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $banner = Banner::findOrFail($id);
+        return view('admin.banners.edit', compact('banner'));
     }
 
     /**
@@ -74,7 +81,36 @@ class BannerController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $banner = Banner::findOrFail($id);
+
+        $request->validate([
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Nullable on update
+            'title' => 'nullable|string|max:255',
+            'description' => 'nullable|string',
+        ], [
+            'image.image' => 'File harus berupa gambar.',
+            'image.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
+            'image.max' => 'Ukuran gambar maksimal 2MB.',
+            'image.uploaded' => 'Gagal mengupload gambar.',
+        ]);
+
+        $data = [
+            'title' => $request->title,
+            'description' => $request->description,
+        ];
+
+        if ($request->hasFile('image')) {
+            // Delete old image
+            if ($banner->image_path) {
+                Storage::disk('public')->delete($banner->image_path);
+            }
+            // Store new image
+            $data['image_path'] = $request->file('image')->store('banners', 'public');
+        }
+
+        $banner->update($data);
+
+        return redirect()->route('admin.banners.index')->with('success', 'Banner berhasil diperbarui.');
     }
 
     /**
