@@ -35,9 +35,19 @@ class PageController extends Controller
         return view('pages.pengumuman');
     }
 
+    public function announcementDetail($slug)
+    {
+        return view('pages.announcement-detail');
+    }
+
     public function laporan()
     {
         return view('pages.laporan');
+    }
+
+    public function newsDetail($slug)
+    {
+        return view('pages.news-detail');
     }
 
 

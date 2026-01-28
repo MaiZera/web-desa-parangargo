@@ -8,7 +8,18 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     
-                    <form action="{{ route('admin.agendas.store') }}" method="POST">
+                    @if ($errors->any())
+                        <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700">
+                            <p class="font-bold">Terjadi kesalahan:</p>
+                            <ul class="mt-2 text-sm list-disc list-inside">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    
+                    <form action="{{ route('admin.agendas.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         
                         <div class="space-y-6">
@@ -17,6 +28,14 @@
                                 <label for="judul" class="block text-sm font-medium text-gray-700">Judul Agenda</label>
                                 <input type="text" name="judul" id="judul" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm" placeholder="Contoh: Rapat Koordinasi Desa">
                                 @error('judul') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
+                            </div>
+
+                            <!-- Gambar -->
+                            <div>
+                                <label for="gambar" class="block text-sm font-medium text-gray-700">Gambar Agenda (Opsional)</label>
+                                <input type="file" name="gambar" id="gambar" class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                                <p class="text-[10px] text-gray-500 mt-1 italic">Maksimal ukuran gambar: 4MB</p>
+                                @error('gambar') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
 
                             <!-- Deskripsi -->
@@ -59,9 +78,27 @@
 
                                 <!-- Narahubung -->
                                 <div>
-                                    <label for="narahubung" class="block text-sm font-medium text-gray-700">Narahubung (CP)</label>
-                                    <input type="text" name="narahubung" id="narahubung" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm" placeholder="Contoh: Budi (0812...)">
+                                    <label for="narahubung" class="block text-sm font-medium text-gray-700">Nama Narahubung (CP)</label>
+                                    <input type="text" name="narahubung" id="narahubung" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm" placeholder="Contoh: Pak Budi">
                                 </div>
+
+                                <!-- No HP -->
+                                <div>
+                                    <label for="telepon" class="block text-sm font-medium text-gray-700">No HP / WhatsApp</label>
+                                    <input type="text" name="telepon" id="telepon" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm" placeholder="Contoh: 08123456789">
+                                    <p class="text-[10px] text-gray-500 mt-1">Gunakan format 08xx atau 628xx</p>
+                                </div>
+                            </div>
+
+                            <!-- Status -->
+                            <div>
+                                <label for="status" class="block text-sm font-medium text-gray-700">Status Awal</label>
+                                <select name="status" id="status" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm">
+                                    <option value="scheduled" selected>Scheduled (Akan Datang)</option>
+                                    <option value="ongoing">Ongoing (Sedang Berjalan)</option>
+                                    <option value="completed">Completed (Selesai)</option>
+                                </select>
+                                @error('status') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                             </div>
                             
                             <!-- Featured Toggle -->

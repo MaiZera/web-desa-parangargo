@@ -63,22 +63,22 @@
       </div>
 
       <div class="relative group py-4">
-        <a class="text-sm font-semibold transition-colors flex items-center gap-1.5 {{ Request::is('transparansi') ? 'text-emerald-600' : 'text-slate-600 hover:text-emerald-600' }}" href="{{ url('/transparansi') }}">
+        <a class="text-[13px] font-bold uppercase tracking-widest transition-all flex items-center gap-1.5 {{ Request::is('transparansi') ? 'text-emerald-600' : 'text-slate-500 hover:text-emerald-600' }}" href="{{ url('/transparansi') }}">
           Transparansi
         </a>
       </div>
       <div class="relative group py-4">
-        <a class="text-sm font-semibold transition-colors flex items-center gap-1.5 {{ Request::is('umkm') ? 'text-emerald-600' : 'text-slate-600 hover:text-emerald-600' }}" href="{{ url('/umkm') }}">
+        <a class="text-[13px] font-bold uppercase tracking-widest transition-all flex items-center gap-1.5 {{ Request::is('umkm') ? 'text-emerald-600' : 'text-slate-500 hover:text-emerald-600' }}" href="{{ url('/umkm') }}">
           UMKM
         </a>
       </div>
       <div class="relative group py-4">
-        <a class="text-sm font-semibold transition-colors flex items-center gap-1.5 {{ Request::is('galeri') ? 'text-emerald-600' : 'text-slate-600 hover:text-emerald-600' }}" href="{{ url('/galeri') }}">
+        <a class="text-[13px] font-bold uppercase tracking-widest transition-all flex items-center gap-1.5 {{ Request::is('galeri') ? 'text-emerald-600' : 'text-slate-500 hover:text-emerald-600' }}" href="{{ url('/galeri') }}">
           Galeri
         </a>
       </div>
       <div class="relative group py-4">
-        <a class="text-sm font-semibold transition-colors flex items-center gap-1.5 {{ Request::is('partisipasi') ? 'text-emerald-600' : 'text-slate-600 hover:text-emerald-600' }}" href="{{ url('/partisipasi') }}">
+        <a class="text-[13px] font-bold uppercase tracking-widest transition-all flex items-center gap-1.5 {{ Request::is('partisipasi') ? 'text-emerald-600' : 'text-slate-500 hover:text-emerald-600' }}" href="{{ url('/partisipasi') }}">
           Partisipasi
         </a>
       </div>

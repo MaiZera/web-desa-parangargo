@@ -73,13 +73,13 @@
         </h3>
         <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             @for ($i = 1; $i <= 4; $i++)
-            <div class="bg-white rounded-[2rem] p-6 border border-slate-50 shadow-sm hover:shadow-xl transition-all group">
+            <a href="{{ route('news.show', 'slug-' . $i) }}" class="bg-white rounded-[2rem] p-6 border border-slate-50 shadow-sm hover:shadow-xl transition-all group">
                 <div class="aspect-square bg-slate-100 rounded-2xl mb-4 overflow-hidden">
                     <img src="https://picsum.photos/seed/recent{{ $i }}/400/400" alt="news" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                 </div>
                 <p class="text-[10px] font-black uppercase tracking-widest text-emerald-600 mb-2">Kabar Terbaru</p>
                 <h4 class="font-black text-slate-900 leading-tight line-clamp-2">Update Pembangunan Posyandu Terintegrasi Blok A</h4>
-            </div>
+            </a>
             @endfor
         </div>
     </div>

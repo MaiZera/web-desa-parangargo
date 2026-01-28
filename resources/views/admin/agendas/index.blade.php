@@ -42,21 +42,13 @@
                                         <td class="p-4 font-medium">{{ $agenda->judul }}</td>
                                         <td class="p-4 text-slate-600">{{ $agenda->lokasi ?? '-' }}</td>
                                         <td class="p-4">
-                                            @php
-                                                $status = 'scheduled';
-                                                if ($agenda->tanggal_selesai && now()->gt($agenda->tanggal_selesai)) {
-                                                    $status = 'completed';
-                                                } elseif (now()->gt($agenda->tanggal_mulai)) {
-                                                    $status = 'ongoing';
-                                                }
-                                            @endphp
                                             <span class="px-2 py-1 rounded-full text-xs font-bold uppercase
-                                                @if($status == 'scheduled') bg-blue-100 text-blue-700 
-                                                @elseif($status == 'ongoing') bg-amber-100 text-amber-700 
-                                                @elseif($status == 'completed') bg-emerald-100 text-emerald-700 
+                                                @if($agenda->status == 'scheduled') bg-blue-100 text-blue-700 
+                                                @elseif($agenda->status == 'ongoing') bg-amber-100 text-amber-700 
+                                                @elseif($agenda->status == 'completed') bg-emerald-100 text-emerald-700 
                                                 @else bg-gray-100 text-gray-700 @endif
                                             ">
-                                                {{ ucfirst($status) }}
+                                                {{ ucfirst($agenda->status) }}
                                             </span>
                                         </td>
                                         <td class="p-4 text-right space-x-2">
