@@ -19,10 +19,10 @@ class GaleriController extends Controller
         // Search
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('judul', 'like', "%{$search}%")
-                  ->orWhere('deskripsi', 'like', "%{$search}%")
-                  ->orWhere('tags', 'like', "%{$search}%");
+                    ->orWhere('deskripsi', 'like', "%{$search}%")
+                    ->orWhere('tags', 'like', "%{$search}%");
             });
         }
 
@@ -39,7 +39,7 @@ class GaleriController extends Controller
         $galeri = $query->paginate(15);
         $categories = $this->getCategories();
 
-        return view('admin.galeri.index', compact('galeri', 'categories'));
+        return view('admin.gallery.index', compact('galeri', 'categories'));
     }
 
     /**
@@ -48,8 +48,8 @@ class GaleriController extends Controller
     public function create()
     {
         $categories = $this->getCategories();
-        
-        return view('admin.galeri.create', compact('categories'));
+
+        return view('admin.gallery.create', compact('categories'));
     }
 
     /**
@@ -86,8 +86,8 @@ class GaleriController extends Controller
     public function show(Galeri $galeri)
     {
         $galeri->load('uploader');
-        
-        return view('admin.galeri.show', compact('galeri'));
+
+        return view('admin.gallery.show', compact('galeri'));
     }
 
     /**
@@ -96,8 +96,8 @@ class GaleriController extends Controller
     public function edit(Galeri $galeri)
     {
         $categories = $this->getCategories();
-        
-        return view('admin.galeri.edit', compact('galeri', 'categories'));
+
+        return view('admin.gallery.edit', compact('galeri', 'categories'));
     }
 
     /**
@@ -155,7 +155,7 @@ class GaleriController extends Controller
         $galeri->update(['is_featured' => !$galeri->is_featured]);
 
         $message = $galeri->is_featured ? 'Foto ditandai sebagai unggulan!' : 'Foto dihapus dari unggulan!';
-        
+
         return back()->with('success', $message);
     }
 

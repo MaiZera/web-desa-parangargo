@@ -39,5 +39,13 @@ class ProfileDesa extends Model
         'jumlah_rw',
         'jumlah_rt',
         'image_path',
+        'facebook',
+        'instagram',
+        'twitter',
+        'youtube',
+        'tiktok',
+        'jam_kerja_senin_kamis',
+        'jam_kerja_jumat',
+        'jam_kerja_sabtu_minggu',
     ];
 }

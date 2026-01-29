@@ -31,7 +31,7 @@
                             <label class="block text-sm font-medium text-gray-700 mb-1">File Gambar (Banner)</label>
 
                             <!-- Dropzone Style Area -->
-                            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md relative hover:bg-gray-50 transition overflow-hidden"
+                            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md relative hover:bg-gray-50 transition overflow-hidden min-h-[16rem]"
                                 id="drop-area">
                                 <div class="space-y-1 text-center" id="empty-state">
                                     <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none"
@@ -56,32 +56,34 @@
 
                                 <!-- Preview Container -->
                                 <div id="preview-container"
-                                    class="hidden absolute inset-0 w-full h-full bg-white flex items-center justify-center rounded-md overflow-hidden">
+                                    class="hidden w-full flex flex-col items-center justify-center p-4">
                                     <img id="image-preview" src="#" alt="Preview"
-                                        class="max-h-full max-w-full object-contain p-2">
+                                        class="max-w-full h-auto object-contain shadow-md rounded-lg mb-4 max-h-[80vh]">
 
                                     <!-- Controls: Change & Remove -->
-                                    <div class="absolute top-0 right-0 z-50 flex p-2 gap-2">
+                                    <div class="flex gap-3 bg-white p-1 rounded-full shadow-sm border border-slate-100">
                                         <!-- Change Button -->
                                         <button type="button" onclick="document.getElementById('image-upload').click()"
-                                            class="bg-yellow-400 text-gray-800 rounded-full p-2 hover:bg-yellow-500 shadow-md transition-transform hover:scale-105"
-                                            style="background-color: #fbbf24; color: #1f2937;" title="Ganti Gambar">
+                                            class="flex items-center gap-2 px-4 py-2 bg-amber-50 text-amber-700 rounded-full hover:bg-amber-100 transition-colors font-medium text-sm border border-amber-200"
+                                            title="Ganti Gambar">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
                                                 </path>
                                             </svg>
+                                            Ganti
                                         </button>
 
                                         <!-- Remove Button -->
                                         <button type="button" onclick="resetFile()"
-                                            class="bg-red-600 text-white rounded-full p-2 hover:bg-red-700 shadow-md transition-transform hover:scale-105"
-                                            style="background-color: #dc2626; color: white;" title="Hapus Gambar">
+                                            class="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-700 rounded-full hover:bg-red-100 transition-colors font-medium text-sm border border-red-200"
+                                            title="Hapus Gambar">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                     d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
                                                 </path>
                                             </svg>
+                                            Hapus
                                         </button>
                                     </div>
                                 </div>
@@ -118,9 +120,8 @@
 
                 reader.onload = function (e) {
                     previewImage.src = e.target.result;
-                    emptyState.classList.add('opacity-0'); // Hide empty state
-                    previewContainer.classList.remove('hidden'); // Show using flex which is default or set via class? 
-                    // Actually just removing hidden is safer if flex is already there. container has flex.
+                    emptyState.classList.add('hidden'); // Hide empty state completely
+                    previewContainer.classList.remove('hidden'); 
                 }
 
                 reader.readAsDataURL(input.files[0]);
@@ -131,7 +132,7 @@
             const input = document.getElementById('image-upload');
             input.value = '';
             document.getElementById('image-preview').src = '#';
-            document.getElementById('empty-state').classList.remove('opacity-0');
+            document.getElementById('empty-state').classList.remove('hidden');
             document.getElementById('preview-container').classList.add('hidden');
         }
     </script>

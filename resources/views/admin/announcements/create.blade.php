@@ -32,7 +32,7 @@
                                     </option>
                                     <option value="darurat" {{ old('tipe') == 'darurat' ? 'selected' : '' }}>Darurat
                                     </option>
-                                    <option value="berita" {{ old('tipe') == 'berita' ? 'selected' : '' }}>Berita</option>
+                                    <!-- <option value="berita" {{ old('tipe') == 'berita' ? 'selected' : '' }}>Berita</option> -->
                                 </select>
                                 @error('tipe')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

@@ -26,9 +26,9 @@ class ProfileDesaController extends Controller
         ]);
 
         $profile = ProfileDesa::firstOrCreate([]);
-        
-        $data = $request->only(['deskripsi', 'visi', 'misi']);
-        
+
+        $data = $request->except(['image', '_token', '_method']);
+
         if ($request->hasFile('image')) {
             // Delete old image
             if ($profile->image_path) {
@@ -36,7 +36,7 @@ class ProfileDesaController extends Controller
             }
             $data['image_path'] = $request->file('image')->store('profile-desa', 'public');
         }
-        
+
         $profile->update($data);
 
         return redirect()->route('admin.profile-desa.edit')->with('success', 'Profile Desa berhasil diupdate.');

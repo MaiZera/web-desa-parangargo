@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\ProfileDesaController;
+use App\Http\Controllers\Admin\ContactInfoController;
 use App\Http\Controllers\Admin\DemografisController;
 use App\Http\Controllers\Admin\AgendaController as AdminAgendaController;
 use App\Http\Controllers\Admin\AnnouncementController;
@@ -40,6 +41,7 @@ Route::get('/transparansi', [PageController::class, 'transparency'])->name('tran
 Route::get('/umkm', [PageController::class, 'umkm'])->name('umkm');
 Route::get('/galeri', [PageController::class, 'gallery'])->name('gallery');
 Route::get('/partisipasi', [PageController::class, 'participation'])->name('participation');
+Route::post('/feedback/submit', [\App\Http\Controllers\FeedbackController::class, 'submit'])->name('feedback.submit');
 
 Route::get('/banner', [App\Http\Controllers\BannerController::class, 'index'])->name('banner.index');
 Route::get('/banner/{banner}', [App\Http\Controllers\BannerController::class, 'show'])->name('banner.show');
@@ -63,6 +65,10 @@ Route::middleware('auth')->group(function () {
         // Profile Desa routes
         Route::get('profile-desa/edit', [ProfileDesaController::class, 'edit'])->name('profile-desa.edit');
         Route::put('profile-desa', [ProfileDesaController::class, 'update'])->name('profile-desa.update');
+
+        // Kontak Desa routes
+        Route::get('contact-info/edit', [ContactInfoController::class, 'edit'])->name('contact-info.edit');
+        Route::put('contact-info', [ContactInfoController::class, 'update'])->name('contact-info.update');
 
         // Demografis routes
         Route::get('demografis/edit', [DemografisController::class, 'edit'])->name('demografis.edit');
@@ -90,6 +96,9 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('sponsors', \App\Http\Controllers\SponsorController::class);
         Route::resource('transparency', \App\Http\Controllers\Admin\TransparencyController::class);
+
+        Route::patch('galeri/{galeri}/toggle-featured', [\App\Http\Controllers\GaleriController::class, 'toggleFeatured'])->name('galeri.toggle-featured');
+        Route::resource('galeri', \App\Http\Controllers\GaleriController::class);
     });
 });
 

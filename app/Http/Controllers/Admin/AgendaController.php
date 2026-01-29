@@ -21,6 +21,14 @@ class AgendaController extends Controller
             });
         }
 
+        if ($request->filled('status_publikasi')) {
+            $query->where('status_publikasi', $request->status_publikasi);
+        }
+
+        if ($request->filled('status_kegiatan')) {
+            $query->where('status_kegiatan', $request->status_kegiatan);
+        }
+
         $agendas = $query->paginate(10);
         return view('admin.agendas.index', compact('agendas'));
     }
@@ -41,7 +49,7 @@ class AgendaController extends Controller
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
             if (!$file->isValid()) {
-                $errorMsg = match($file->getError()) {
+                $errorMsg = match ($file->getError()) {
                     1 => 'Ukuran file melebihi batas upload server (upload_max_filesize di php.ini).',
                     2 => 'Ukuran file melebihi batas form HTML.',
                     3 => 'File hanya terupload sebagian.',
@@ -62,19 +70,10 @@ class AgendaController extends Controller
             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
             'penyelenggara' => 'nullable|string|max:255',
             'narahubung' => 'nullable|string|max:255',
-<<<<<<< HEAD
             'telepon' => 'nullable|string|max:20',
-            'status' => 'required|in:scheduled,ongoing,completed',
-            'is_featured' => 'nullable',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
-        ]);
-
-        $validated['is_featured'] = $request->has('is_featured');
-
-        if ($request->hasFile('gambar')) {
-            $validated['gambar'] = $request->file('gambar')->store('agendas', 'public');
-=======
             'is_featured' => 'boolean',
+            'status_publikasi' => 'required|in:draft,published',
+            'status_kegiatan' => 'required|in:scheduled,ongoing,completed,cancelled',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ], [
             'judul.required' => 'Judul agenda wajib diisi.',
@@ -88,7 +87,6 @@ class AgendaController extends Controller
         if ($request->hasFile('gambar')) {
             $path = $request->file('gambar')->store('agenda', 'public');
             $validated['gambar'] = $path;
->>>>>>> b65391a (Update admin area)
         }
 
         Agenda::create($validated);
@@ -112,7 +110,7 @@ class AgendaController extends Controller
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
             if (!$file->isValid()) {
-                $errorMsg = match($file->getError()) {
+                $errorMsg = match ($file->getError()) {
                     1 => 'Ukuran file melebihi batas upload server (upload_max_filesize di php.ini).',
                     2 => 'Ukuran file melebihi batas form HTML.',
                     3 => 'File hanya terupload sebagian.',
@@ -133,35 +131,10 @@ class AgendaController extends Controller
             'tanggal_selesai' => 'nullable|date|after_or_equal:tanggal_mulai',
             'penyelenggara' => 'nullable|string|max:255',
             'narahubung' => 'nullable|string|max:255',
-<<<<<<< HEAD
             'telepon' => 'nullable|string|max:20',
-            'is_featured' => 'nullable',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
-        ]);
-
-        $validated['is_featured'] = $request->has('is_featured');
-
-        if ($request->hasFile('gambar')) {
-            // Delete old image if exists
-            if ($agenda->gambar) {
-                Storage::disk('public')->delete($agenda->gambar);
-            }
-            $validated['gambar'] = $request->file('gambar')->store('agendas', 'public');
-        }
-
-        // Auto Status Logic
-        $now = now();
-        $start = \Illuminate\Support\Carbon::parse($request->tanggal_mulai);
-        $end = $request->tanggal_selesai ? \Illuminate\Support\Carbon::parse($request->tanggal_selesai) : null;
-
-        if ($end && $now->greaterThan($end)) {
-            $validated['status'] = 'completed';
-        } elseif ($now->greaterThan($start)) {
-            $validated['status'] = 'ongoing';
-        } else {
-            $validated['status'] = 'scheduled';
-=======
             'is_featured' => 'boolean',
+            'status_publikasi' => 'required|in:draft,published',
+            'status_kegiatan' => 'required|in:scheduled,ongoing,completed,cancelled',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ], [
             'judul.required' => 'Judul agenda wajib diisi.',
@@ -172,19 +145,19 @@ class AgendaController extends Controller
             'gambar.uploaded' => 'Gagal mengupload gambar.',
         ]);
 
+        $validated['is_featured'] = $request->has('is_featured');
+
         if ($request->hasFile('gambar')) {
-            // Delete old image
+            // Delete old image if exists
             if ($agenda->gambar) {
                 Storage::disk('public')->delete($agenda->gambar);
             }
-            $path = $request->file('gambar')->store('agenda', 'public');
-            $validated['gambar'] = $path;
->>>>>>> b65391a (Update admin area)
+            $validated['gambar'] = $request->file('gambar')->store('agenda', 'public');
         }
 
         $agenda->update($validated);
 
-        return redirect()->route('admin.agendas.index')->with('success', 'Agenda berhasil diperbarui. Status diperbarui secara otomatis.');
+        return redirect()->route('admin.agendas.index')->with('success', 'Agenda berhasil diperbarui.');
     }
 
     public function destroy(Agenda $agenda)

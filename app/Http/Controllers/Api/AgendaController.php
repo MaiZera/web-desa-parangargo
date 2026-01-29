@@ -17,33 +17,34 @@ class AgendaController extends Controller
         $events = collect();
 
         // 1. Fetch Local Events
-        $query = Agenda::query();
-        
+        $query = Agenda::where('status_publikasi', 'published');
+
+
         // FullCalendar sends 'start' and 'end' parameters (ISO strings)
         if ($request->filled('start') && $request->filled('end')) {
             $start = Carbon::parse($request->start);
             $end = Carbon::parse($request->end);
-            
-            $query->where(function($q) use ($start, $end) {
+
+            $query->where(function ($q) use ($start, $end) {
                 $q->whereBetween('tanggal_mulai', [$start, $end])
-                  ->orWhereBetween('tanggal_selesai', [$start, $end])
-                  // Include events that span across the range
-                  ->orWhere(function($sub) use ($start, $end) {
-                      $sub->where('tanggal_mulai', '<', $start)
-                          ->where('tanggal_selesai', '>', $end);
-                  });
+                    ->orWhereBetween('tanggal_selesai', [$start, $end])
+                    // Include events that span across the range
+                    ->orWhere(function ($sub) use ($start, $end) {
+                        $sub->where('tanggal_mulai', '<', $start)
+                            ->where('tanggal_selesai', '>', $end);
+                    });
             });
         }
-        
+
         $localEvents = $query->orderBy('tanggal_mulai')->get();
 
         foreach ($localEvents as $agenda) {
-             $className = 'bg-emerald-600 border-emerald-700';
-             if ($agenda->is_featured) {
-                 $className = 'bg-amber-500 border-amber-600'; // Highlight color (Gold/Amber)
-             }
+            $className = 'bg-emerald-600 border-emerald-700';
+            if ($agenda->is_featured) {
+                $className = 'bg-amber-500 border-amber-600'; // Highlight color (Gold/Amber)
+            }
 
-             $events->push([
+            $events->push([
                 'id' => 'local_' . $agenda->id,
                 'title' => ($agenda->is_featured ? '⭐ ' : '') . $agenda->judul, // Add star icon
                 'start' => $agenda->tanggal_mulai ? $agenda->tanggal_mulai->toIso8601String() : null,
@@ -67,7 +68,7 @@ class AgendaController extends Controller
         // 2. Fetch Indonesian Holidays (Tanggal Merah)
         try {
             $year = $request->start ? Carbon::parse($request->start)->year : now()->year;
-            
+
             // Cache for 1 day to avoid rate limiting
             $holidays = Cache::remember("holidays_{$year}", 86400, function () use ($year) {
                 // Using a public API for Indonesian holidays
@@ -127,14 +128,15 @@ class AgendaController extends Controller
                 Log::warning('Google Calendar Fetch Failed: ' . $e->getMessage());
             }
         }
-        
+
         // Return directly as array (FullCalendar expects array of objects)
         return response()->json($events);
     }
 
     public function upcoming()
     {
-        $agendas = Agenda::where('tanggal_mulai', '>=', now())
+        $agendas = Agenda::where('status_publikasi', 'published')
+            ->where('tanggal_mulai', '>=', now())
             ->orderBy('tanggal_mulai', 'asc')
             ->take(5)
             ->get();

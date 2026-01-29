@@ -46,12 +46,12 @@
                                     <th class="p-4 font-bold text-slate-700">Deskripsi</th>
                                     <th class="p-4 font-bold text-slate-700">Kategori</th>
                                     <th class="p-4 font-bold text-slate-700">Tanggal</th>
+                                    <th class="p-4 font-bold text-slate-700">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @forelse($feedback as $item)
-                                    <tr
-                                        class="border-b border-slate-100 hover:bg-slate-50 transition-colors {{ $item->status == 'baru' ? 'bg-indigo-50/50' : '' }}">
+                                    <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
                                         <td class="p-4">
                                             <div class="font-medium text-slate-900">{{ $item->nama }}</div>
                                         </td>
@@ -77,11 +77,17 @@
                                         <td class="p-4 text-sm text-slate-600">
                                             {{ $item->created_at->format('d M Y H:i') }}
                                         </td>
+                                        <td class="p-4">
+                                            <a href="{{ route('admin.feedback.show', $item) }}"
+                                                class="inline-flex items-center justify-center px-3 py-1.5 bg-sky-50 text-sky-600 hover:bg-sky-100 rounded-lg text-xs font-medium transition-colors">
+                                                Detail
+                                            </a>
+                                        </td>
 
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="p-8 text-center text-slate-500 italic">Belum ada feedback
+                                        <td colspan="7" class="p-8 text-center text-slate-500 italic">Belum ada feedback
                                             masuk.</td>
                                     </tr>
                                 @endforelse

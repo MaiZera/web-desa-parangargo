@@ -15,7 +15,7 @@ class Feedback extends Model
         'nama',
         'rt',
         'rw',
-        'email',
+        // 'email', // Removed
         'telepon',
         'subjek',
         'deskripsi',
@@ -25,6 +25,7 @@ class Feedback extends Model
         'responder_id',
         'responded_at',
         'rating',
+        'lampiran', // Added
     ];
 
     protected $casts = [
