@@ -74,12 +74,12 @@ class FeedbackController extends Controller
             'subjek' => 'nullable|string|max:255',
             'deskripsi' => 'required|string',
             'kategori' => 'nullable|in:Saran Pembangunan,Keluhan Pelayanan,Laporan Keamanan,Lainnya',
-            'lampiran' => 'nullable|image|max:2048',
+            'lampiran' => 'nullable|image|max:5120',
         ], [
             'nama.required' => 'Nama wajib diisi.',
             'deskripsi.required' => 'Pesan aspirasi wajib diisi.',
             'lampiran.image' => 'File harus berupa gambar.',
-            'lampiran.max' => 'Ukuran file foto maksimal 2MB.',
+            'lampiran.max' => 'Ukuran file foto maksimal 5MB.',
         ]);
 
         if ($request->hasFile('lampiran')) {

@@ -37,7 +37,7 @@ class DashboardController extends Controller
             return [
                 'id' => $item->id,
                 'title' => $item->title,
-                'category_type' => 'Berita', // Label for display
+                'category_type' => 'Berita',
                 'date' => $item->created_at,
                 'status' => $item->status,
                 'image' => $item->image,
@@ -53,8 +53,8 @@ class DashboardController extends Controller
                 'title' => $item->judul,
                 'category_type' => 'Pengumuman',
                 'date' => $item->created_at,
-                'status' => $item->status, // published/draft
-                'image' => null, // Announcements might not have cover images easily accessible or different logic
+                'status' => $item->status,
+                'image' => null,
                 'edit_route' => route('admin.announcements.edit', $item->id),
                 'delete_route' => route('admin.announcements.destroy', $item->id),
                 'type' => 'announcement'
@@ -78,7 +78,7 @@ class DashboardController extends Controller
         // Merge and Sort
         $recentContent = $recentNews->concat($recentAnnouncements)->concat($recentUmkm)
             ->sortByDesc('date')
-            ->take(7); // Show top 7 mixed items
+            ->take(7);
 
         return view('dashboard', compact(
             'newsStats',
@@ -90,42 +90,39 @@ class DashboardController extends Controller
         ));
     }
 
-    private function getStats($modelClass)
+    private function getStats($modelClass, $filters = [])
     {
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
         $lastMonth = Carbon::now()->subMonth();
 
-        $total = $modelClass::count();
-
-        // Calculate counts for current month vs last month to determine trend (growth)
-        // Wait, "growth" usually compares "This Month vs Last Month" OR "Total now vs Total Month Ago".
-        // The image shows "Total Berita: 120, +10% vs last month".
-        // This implies Total Increase. Or it implies "New items this month compared to new items last month"?
-        // Usually, for "Total Count" widgets, the percentage shows the rate of *growth* of the total.
-        // OR it shows "New items added this period".
-        // Let's assume it means "New items this month vs New items last month" if the metric is "Activity".
-        // BUT the label is "Total Berita". If "Total" is 120. +10% means we added 10% more... relative to what?
-        // Let's implement: count of items created "This Month" vs "Last Month".
-        // If "This Month" > "Last Month", then it's an upward trend.
-        // Percentage = ((ThisMonth - LastMonth) / LastMonth) * 100.
-        // Let's try that.
+        $query = $modelClass::query();
+        if (!empty($filters)) {
+            $query->where($filters);
+        }
+        $total = $query->count();
 
         $countThisMonth = $modelClass::whereMonth('created_at', $currentMonth)
-            ->whereYear('created_at', $currentYear)
-            ->count();
+            ->whereYear('created_at', $currentYear);
+        if (!empty($filters)) {
+            $countThisMonth->where($filters);
+        }
+        $countThisMonth = $countThisMonth->count();
 
         $countLastMonth = $modelClass::whereMonth('created_at', $lastMonth->month)
-            ->whereYear('created_at', $lastMonth->year)
-            ->count();
+            ->whereYear('created_at', $lastMonth->year);
+        if (!empty($filters)) {
+            $countLastMonth->where($filters);
+        }
+        $countLastMonth = $countLastMonth->count();
 
         $change = 0;
-        $trend = 'neutral'; // up, down, neutral
+        $trend = 'neutral';
 
         if ($countLastMonth > 0) {
             $change = (($countThisMonth - $countLastMonth) / $countLastMonth) * 100;
         } else if ($countThisMonth > 0) {
-            $change = 100; // 100% increase if last month was 0
+            $change = 100;
         }
 
         if ($change > 0)
@@ -135,7 +132,7 @@ class DashboardController extends Controller
 
         return [
             'total' => $total,
-            'change' => round(abs($change), 1), // Absolute value for display
+            'change' => round(abs($change), 1),
             'trend' => $trend
         ];
     }

@@ -40,7 +40,7 @@
                                 hover:file:bg-emerald-100" accept="image/*" onchange="previewImage(this)">
 
                             <p class="text-xs text-gray-500 mt-1">Biarkan kosong jika tidak ingin mengubah gambar.
-                                Format: jpeg, png, jpg, webp. Maksimal 2MB.</p>
+                                Format: jpeg, png, jpg, webp. Maksimal 5MB.</p>
                             @error('image')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -166,7 +166,38 @@
                     ['table', ['table']],
                     ['insert', ['link', 'picture', 'video']],
                     ['view', ['fullscreen', 'codeview', 'help']]
-                ]
+                ],
+                callbacks: {
+                    onImageUpload: function(files) {
+                        if (files.length == 0) return;
+                        var file = files[0];
+                        if (file.size > 5 * 1024 * 1024) { // 5MB Limit
+                            alert('Ukuran gambar terlalu besar. Maksimal 5MB.');
+                            return;
+                        }
+                        
+                        var data = new FormData();
+                        data.append("image", file);
+                        data.append("_token", "{{ csrf_token() }}");
+                        
+                        $.ajax({
+                            url: "{{ route('admin.news.upload-image') }}",
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: data,
+                            type: "POST",
+                            success: function(url) {
+                                var image = $('<img>').attr('src', url);
+                                $('#editor').summernote("insertNode", image[0]);
+                            },
+                            error: function(data) {
+                                console.log(data);
+                                alert('Gagal upload gambar. Silakan coba lagi.');
+                            }
+                        });
+                    }
+                }
             });
 
             // -- Select2 Init --

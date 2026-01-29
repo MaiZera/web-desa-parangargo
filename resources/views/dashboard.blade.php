@@ -229,7 +229,9 @@
                         <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider">Category</th>
                         <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider">Date</th>
                         <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider">Status</th>
+                        @if(auth()->user()->access_level !== 'editor')
                         <th class="px-6 py-4 text-xs font-semibold uppercase tracking-wider">Actions</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
@@ -273,6 +275,7 @@
                                     </span>
                                 @endif
                             </td>
+                            @if(auth()->user()->access_level !== 'editor')
                             <td class="px-6 py-4">
                                 <div class="flex gap-3 text-gray-400">
                                     <a href="{{ $item['edit_route'] }}" class="hover:text-indigo-600">
@@ -296,6 +299,7 @@
                                     </form>
                                 </div>
                             </td>
+                            @endif
                         </tr>
                     @empty
                         <tr>

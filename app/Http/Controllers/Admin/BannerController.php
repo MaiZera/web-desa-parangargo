@@ -32,14 +32,14 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:5120',
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
         ], [
             'image.required' => 'Gambar banner wajib diupload.',
             'image.image' => 'File harus berupa gambar.',
             'image.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
-            'image.max' => 'Ukuran gambar maksimal 2MB.',
+            'image.max' => 'Ukuran gambar maksimal 5MB.',
             'image.uploaded' => 'Gagal mengupload gambar.',
         ]);
 
@@ -84,13 +84,13 @@ class BannerController extends Controller
         $banner = Banner::findOrFail($id);
 
         $request->validate([
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Nullable on update
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120', // Nullable on update
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
         ], [
             'image.image' => 'File harus berupa gambar.',
             'image.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
-            'image.max' => 'Ukuran gambar maksimal 2MB.',
+            'image.max' => 'Ukuran gambar maksimal 5MB.',
             'image.uploaded' => 'Gagal mengupload gambar.',
         ]);
 

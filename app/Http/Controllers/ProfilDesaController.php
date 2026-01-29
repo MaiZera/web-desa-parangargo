@@ -83,9 +83,9 @@ class ProfilDesaController extends Controller
             'jumlah_rt' => 'nullable|integer',
             
             // Media
-            'logo' => 'nullable|image|mimes:png,jpg,svg|max:2048',
-            'gambar_kantor' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'gambar_peta' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'logo' => 'nullable|image|mimes:png,jpg,svg|max:5120',
+            'gambar_kantor' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
+            'gambar_peta' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
 
         // Handle logo upload

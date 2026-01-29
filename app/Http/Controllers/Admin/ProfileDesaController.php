@@ -19,7 +19,7 @@ class ProfileDesaController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
             'deskripsi' => 'nullable|string',
             'visi' => 'nullable|string',
             'misi' => 'nullable|string',

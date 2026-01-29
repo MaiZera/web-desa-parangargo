@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }} - Admin</title>
+    <title>{{ config('app.name', 'Desa Parangargo') }} - Admin</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -57,6 +57,7 @@
                 <div class="px-2 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Content
                     Management</div>
 
+                @if(auth()->user()->access_level !== 'editor')
                 <a href="{{ route('admin.announcements.index') }}"
                     class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.announcements.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,6 +67,7 @@
                     </svg>
                     Pengumuman
                 </a>
+                @endif
 
                 <!-- Berita Dropdown -->
                 <div x-data="{ open: {{ request()->routeIs('admin.news.*') || request()->routeIs('admin.categories.*') ? 'true' : 'false' }} }"
@@ -105,6 +107,7 @@
                     </div>
                 </div>
 
+                @if(auth()->user()->access_level !== 'editor')
                 <a href="{{ route('admin.galeri.index') }}"
                     class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.galeri.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -114,7 +117,9 @@
                     </svg>
                     Galeri Foto
                 </a>
+                @endif
 
+                @if(auth()->user()->access_level !== 'editor')
                 <a href="{{ route('admin.umkm.index') }}"
                     class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.umkm.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -143,7 +148,9 @@
                     </svg>
                     Sponsor
                 </a>
+                @endif
 
+                @if(auth()->user()->access_level !== 'editor')
                 <a href="{{ route('admin.feedback.index') }}"
                     class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.feedback.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -173,7 +180,9 @@
                     </svg>
                     Agenda / Kalender
                 </a>
+                @endif
 
+                @if(auth()->user()->access_level !== 'editor')
                 <!-- Tentang Desa Dropdown -->
                 <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open"
@@ -222,7 +231,9 @@
                         </a>
                     </div>
                 </div>
+                @endif
 
+                @if(auth()->user()->access_level !== 'editor')
                 <a href="#"
                     class="flex items-center px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -232,26 +243,37 @@
                     </svg>
                     Layanan Publik
                 </a>
+                @endif
+
+                @if(auth()->user()->access_level === 'super_admin')
+                <div class="px-2 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Akun Pengguna</div>
+
+                <a href="{{ route('admin.accounts.index') }}"
+                    class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.accounts.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                    </svg>
+                    Pusat Akun
+                </a>
+                @endif
             </div>
 
             <!-- User Profile -->
-            <div class="p-4 border-t border-gray-100 flex-shrink-0">
-                <div class="flex items-center gap-3 p-3 rounded-xl bg-gray-50">
-                    <div
-                        class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold shrink-0">
+            <div class="p-4 border-t border-gray-100 flex-shrink-0 mt-auto">
+                <div class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100 group/profile overflow-hidden">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-black shrink-0 shadow-lg shadow-emerald-200 transition-transform group-hover/profile:scale-105">
                         {{ substr(Auth::user()->name, 0, 1) }}
                     </div>
-                    <div class="flex-1 min-w-0">
-                        <p class="text-sm font-semibold text-gray-900 truncate">{{ Auth::user()->name }}</p>
-                        <p class="text-xs text-gray-500 truncate">{{ Auth::user()->email }}</p>
+                    <div class="flex-1 min-w-0 pr-1">
+                        <p class="text-sm font-black text-slate-900 truncate tracking-tight">{{ Auth::user()->name }}</p>
+                        <p class="text-[10px] text-slate-500 truncate font-bold uppercase tracking-widest">{{ Auth::user()->email }}</p>
                     </div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="text-gray-400 hover:text-red-500 transition-colors">
+                        <button type="submit" class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all" title="Keluar dari Sistem">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1">
-                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
                         </button>
                     </form>

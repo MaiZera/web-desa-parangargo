@@ -291,60 +291,7 @@
             </div>
         </section>
 
-        <!-- Data Geografis Section -->
-        <section class="space-y-12">
-            <div class="text-center">
-                <h2 class="text-3xl font-bold">Data Geografis</h2>
-                <p class="text-slate-500">Wilayah dan batas administrasi</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Luas & Dusun -->
-                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100">
-                    <h3 class="font-bold text-emerald-900 mb-6 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
-                        Wilayah Administrasi
-                    </h3>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center border-b border-gray-50 pb-3">
-                            <span class="text-slate-500 text-sm">Luas Wilayah</span>
-                            <span class="font-bold text-slate-800">{{ $profile->luas_wilayah ?? '-' }}</span>
-                        </div>
-                        <div class="flex justify-between items-center pb-3">
-                            <span class="text-slate-500 text-sm">Jumlah Dusun</span>
-                            <span class="font-bold text-slate-800">4</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Batas Wilayah -->
-                <div class="md:col-span-2 bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100">
-                    <h3 class="font-bold text-emerald-900 mb-6 flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-600"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-                        Batas Wilayah
-                    </h3>
-                    <div class="grid sm:grid-cols-2 gap-x-8 gap-y-4">
-                        <div class="flex justify-between items-center border-b border-gray-50 pb-3">
-                            <span class="text-slate-500 text-sm">Sebelah Utara</span>
-                            <span class="font-medium text-slate-800">Desa Sidorahayu</span>
-                        </div>
-                        <div class="flex justify-between items-center border-b border-gray-50 pb-3">
-                            <span class="text-slate-500 text-sm">Sebelah Timur</span>
-                            <span class="font-medium text-slate-800">Desa Sitirejo</span>
-                        </div>
-                        <div class="flex justify-between items-center border-b border-gray-50 pb-3">
-                            <span class="text-slate-500 text-sm">Sebelah Selatan</span>
-                            <span class="font-medium text-slate-800">Desa Mendalanwangi</span>
-                        </div>
-                        <div class="flex justify-between items-center border-b border-gray-50 pb-3">
-                            <span class="text-slate-500 text-sm">Sebelah Barat</span>
-                            <span class="font-medium text-slate-800">Desa Godowangi</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
+        <!-- Struktur Organisasi Section -->
         <section class="space-y-8">
             <div class="text-center">
                 <h2 class="text-3xl font-bold">Struktur Organisasi</h2>
@@ -378,16 +325,58 @@
             </div>
         </section>
 
+
+
+
+
         <section class="bg-slate-900 text-white rounded-[3rem] p-12 overflow-hidden relative">
             <div class="grid md:grid-cols-2 gap-12 relative z-10">
                 <div class="space-y-8">
-                    <h2 class="text-3xl font-bold">Hubungi &amp; Kunjungi Kami</h2>
-                    <div class="space-y-4">
-                        <div class="flex items-center gap-4">
-                            <div class="p-3 bg-white/10 rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin w-6 h-6 text-emerald-400"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg></div>
-                            <div>
-                                <p class="text-emerald-400 font-bold text-sm">Alamat Kantor</p>
-                                <p class="text-slate-300">Jl. Raya Parangargo No. 1, Desa Parangargo, Kec. Wagir, Kab. Malang</p>
+                    <h2 class="text-3xl font-bold">Data Geografis</h2>
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 bg-white/10 rounded-xl shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
+                            </div>
+                            <div class="space-y-2 w-full">
+                                <p class="text-emerald-400 font-bold text-sm">Wilayah Administrasi</p>
+                                <div class="grid grid-cols-2 gap-4 text-sm">
+                                    <div>
+                                        <p class="text-slate-400 text-xs">Luas Wilayah</p>
+                                        <p class="text-white font-medium">{{ $profile->luas_wilayah ?? '-' }}</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-slate-400 text-xs">Jumlah Dusun</p>
+                                        <p class="text-white font-medium">4</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                             <div class="p-3 bg-white/10 rounded-xl shrink-0">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-emerald-400"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                            </div>
+                            <div class="space-y-2 w-full">
+                                <p class="text-emerald-400 font-bold text-sm">Batas Wilayah</p>
+                                <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                                    <div>
+                                        <p class="text-slate-400 text-xs">Utara</p>
+                                        <p class="text-white font-medium">Desa Sidorahayu</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-slate-400 text-xs">Timur</p>
+                                        <p class="text-white font-medium">Desa Sitirejo</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-slate-400 text-xs">Selatan</p>
+                                        <p class="text-white font-medium">Desa Mendalanwangi</p>
+                                    </div>
+                                    <div>
+                                        <p class="text-slate-400 text-xs">Barat</p>
+                                        <p class="text-white font-medium">Desa Godowangi</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

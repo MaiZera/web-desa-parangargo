@@ -2,8 +2,9 @@
   <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
     <a class="flex items-center gap-2 group" href="{{ url('/') }}">
       <div
-        class="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center text-white font-bold group-hover:rotate-12 transition-transform">
-        D</div>
+        class="w-10 h-10 bg-white rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform overflow-hidden shadow-sm border border-slate-50">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo Kabupaten Malang" class="w-8 h-8 object-contain">
+      </div>
       <div>
         <h1 class="font-bold text-lg leading-none">Desa Parangargo</h1>
         <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Kabupaten Malang</p>

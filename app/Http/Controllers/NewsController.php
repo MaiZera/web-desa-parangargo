@@ -67,7 +67,7 @@ class NewsController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'summary' => ['required', 'string'],
             'content' => ['required', 'string'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
             'image_caption' => ['nullable', 'string', 'max:255'],
             'category' => ['nullable', 'string', 'max:255'],
             'is_featured' => ['boolean'],
@@ -76,7 +76,7 @@ class NewsController extends Controller
         ];
 
         $messages = [
-            'image.max' => 'Ukuran gambar terlalu besar. Maksimal 2MB.',
+            'image.max' => 'Ukuran gambar terlalu besar. Maksimal 5MB.',
             'image.uploaded' => 'Gagal mengupload gambar. Ukuran file mungkin melebihi batas server.',
             'image.mimes' => 'Format gambar harus jpeg, png, jpg, atau webp.',
             'image.image' => 'File harus berupa gambar.',
@@ -140,7 +140,7 @@ class NewsController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'summary' => ['required', 'string'],
             'content' => ['required', 'string'],
-            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
             'image_caption' => ['nullable', 'string', 'max:255'],
             'category' => ['nullable', 'string', 'max:255'],
             'is_featured' => ['boolean'],
@@ -149,7 +149,7 @@ class NewsController extends Controller
         ];
 
         $messages = [
-            'image.max' => 'Ukuran gambar terlalu besar. Maksimal 2MB.',
+            'image.max' => 'Ukuran gambar terlalu besar. Maksimal 5MB.',
             'image.uploaded' => 'Gagal mengupload gambar. Ukuran file mungkin melebihi batas server.',
             'image.mimes' => 'Format gambar harus jpeg, png, jpg, atau webp.',
             'image.image' => 'File harus berupa gambar.',

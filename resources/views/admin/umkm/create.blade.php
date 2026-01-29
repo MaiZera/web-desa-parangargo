@@ -224,7 +224,7 @@
                                             class="h-32 w-auto object-cover rounded-md border shadow-sm">
                                         <p class="text-xs text-gray-500 mt-1">Preview foto produk</p>
                                     </div>
-                                    <p class="text-xs text-gray-500 mt-1">Format: JPG, PNG. Max: 2MB.</p>
+                                    <p class="text-xs text-gray-500 mt-1">Format: JPG, PNG. Max: 5MB.</p>
                                     @error('foto_produk') <span class="text-red-500 text-sm">{{ $message }}</span>
                                     @enderror
                                 </div>

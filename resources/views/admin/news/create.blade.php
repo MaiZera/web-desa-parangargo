@@ -29,7 +29,7 @@
                             @error('image')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
-                            <p class="text-xs text-gray-500 mt-1">Format: jpeg, png, jpg, webp. Maksimal 2MB.</p>
+                            <p class="text-xs text-gray-500 mt-1">Format: jpeg, png, jpg, webp. Maksimal 5MB.</p>
                         </div>
 
                         <div class="mb-6">

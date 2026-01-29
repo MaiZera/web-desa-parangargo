@@ -51,7 +51,21 @@
 
                         <div class="mb-6">
                             <label for="jabatan" class="block text-sm font-medium text-gray-700 mb-2">Jabatan *</label>
-                            <input type="text" name="jabatan" id="jabatan" value="{{ old('jabatan', $staff->jabatan) }}" required class="w-full border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                            <select name="jabatan" id="jabatan" required class="w-full border-gray-300 rounded-md shadow-sm focus:border-emerald-500 focus:ring-emerald-500">
+                                <option value="" disabled selected>Pilih Jabatan</option>
+                                <option value="Kepala Desa" {{ old('jabatan', $staff->jabatan) == 'Kepala Desa' ? 'selected' : '' }}>Kepala Desa</option>
+                                <option value="Sekretaris Desa" {{ old('jabatan', $staff->jabatan) == 'Sekretaris Desa' ? 'selected' : '' }}>Sekretaris Desa</option>
+                                <option value="KAUR. Tata Usaha & Umum" {{ old('jabatan', $staff->jabatan) == 'KAUR. Tata Usaha & Umum' ? 'selected' : '' }}>KAUR. Tata Usaha & Umum</option>
+                                <option value="KAUR. Keuangan" {{ old('jabatan', $staff->jabatan) == 'KAUR. Keuangan' ? 'selected' : '' }}>KAUR. Keuangan</option>
+                                <option value="KAUR. Perencanaan" {{ old('jabatan', $staff->jabatan) == 'KAUR. Perencanaan' ? 'selected' : '' }}>KAUR. Perencanaan</option>
+                                <option value="KASI. Pemerintahan" {{ old('jabatan', $staff->jabatan) == 'KASI. Pemerintahan' ? 'selected' : '' }}>KASI. Pemerintahan</option>
+                                <option value="KASI. Kesejahteraan" {{ old('jabatan', $staff->jabatan) == 'KASI. Kesejahteraan' ? 'selected' : '' }}>KASI. Kesejahteraan</option>
+                                <option value="KASI. Pelayanan" {{ old('jabatan', $staff->jabatan) == 'KASI. Pelayanan' ? 'selected' : '' }}>KASI. Pelayanan</option>
+                                <option value="KASUN. Wagir" {{ old('jabatan', $staff->jabatan) == 'KASUN. Wagir' ? 'selected' : '' }}>KASUN. Wagir</option>
+                                <option value="KASUN. Genengan" {{ old('jabatan', $staff->jabatan) == 'KASUN. Genengan' ? 'selected' : '' }}>KASUN. Genengan</option>
+                                <option value="KASUN. Durenan" {{ old('jabatan', $staff->jabatan) == 'KASUN. Durenan' ? 'selected' : '' }}>KASUN. Durenan</option>
+                                <option value="KASUN. Juwetmanting" {{ old('jabatan', $staff->jabatan) == 'KASUN. Juwetmanting' ? 'selected' : '' }}>KASUN. Juwetmanting</option>
+                            </select>
                             @error('jabatan')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror

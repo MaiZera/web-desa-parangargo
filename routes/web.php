@@ -80,6 +80,7 @@ Route::middleware('auth')->group(function () {
         Route::get('categories/search', [CategoryController::class, 'search'])->name('categories.search');
         Route::post('categories/store', [CategoryController::class, 'store']); // Match JS URL
         Route::post('news/autosave', [NewsController::class, 'autosave'])->name('news.autosave');
+        Route::post('news/upload-image', [NewsController::class, 'uploadImage'])->name('news.upload-image');
 
         Route::resource('announcements', AnnouncementController::class);
         Route::resource('categories', CategoryController::class);
@@ -97,6 +98,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('sponsors', \App\Http\Controllers\SponsorController::class);
         Route::resource('transparency', \App\Http\Controllers\Admin\TransparencyController::class);
 
+        Route::resource('accounts', \App\Http\Controllers\Admin\AccountController::class);
         Route::patch('galeri/{galeri}/toggle-featured', [\App\Http\Controllers\GaleriController::class, 'toggleFeatured'])->name('galeri.toggle-featured');
         Route::resource('galeri', \App\Http\Controllers\GaleriController::class);
     });

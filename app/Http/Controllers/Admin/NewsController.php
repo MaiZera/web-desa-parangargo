@@ -16,6 +16,11 @@ class NewsController extends Controller
     {
         $query = News::with(['author', 'categories'])->latest();
 
+        // If user is editor, only show their own news
+        if (auth()->user()->access_level === 'editor') {
+            $query->where('author_id', auth()->id());
+        }
+
         // Search
         if ($request->filled('search')) {
             $query->where('title', 'like', '%' . $request->search . '%');
@@ -54,7 +59,7 @@ class NewsController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
             'categories' => 'array',
             'status' => 'required|in:draft,published,archived',
             'published_at' => 'nullable|date',
@@ -95,7 +100,7 @@ class NewsController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
             'categories' => 'array',
             'status' => 'required|in:draft,published,archived',
             'published_at' => 'nullable|date',
@@ -157,6 +162,22 @@ class NewsController extends Controller
         }
 
         return response()->json(['status' => 'success', 'id' => $news->id, 'action' => 'create']);
+    }
+
+    public function uploadImage(Request $request)
+    {
+        if ($request->hasFile('image')) {
+            $originName = $request->file('image')->getClientOriginalName();
+            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $fileName = $fileName . '_' . time() . '.' . $extension;
+
+            $request->file('image')->storeAs('news/content', $fileName, 'public');
+
+            $url = asset('storage/news/content/' . $fileName);
+            return response()->json($url);
+        }
+        return response()->json(['error' => 'No image uploaded.'], 400);
     }
 
     public function destroy(string $id)

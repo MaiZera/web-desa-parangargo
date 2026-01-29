@@ -74,13 +74,13 @@ class AgendaController extends Controller
             'is_featured' => 'boolean',
             'status_publikasi' => 'required|in:draft,published',
             'status_kegiatan' => 'required|in:scheduled,ongoing,completed,cancelled',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         ], [
             'judul.required' => 'Judul agenda wajib diisi.',
             'tanggal_mulai.required' => 'Tanggal mulai wajib diisi.',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
-            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
+            'gambar.max' => 'Ukuran gambar maksimal 5MB.',
             'gambar.uploaded' => 'Gagal mengupload gambar.',
         ]);
 
@@ -135,13 +135,13 @@ class AgendaController extends Controller
             'is_featured' => 'boolean',
             'status_publikasi' => 'required|in:draft,published',
             'status_kegiatan' => 'required|in:scheduled,ongoing,completed,cancelled',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         ], [
             'judul.required' => 'Judul agenda wajib diisi.',
             'tanggal_mulai.required' => 'Tanggal mulai wajib diisi.',
             'gambar.image' => 'File harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, atau jpg.',
-            'gambar.max' => 'Ukuran gambar maksimal 2MB.',
+            'gambar.max' => 'Ukuran gambar maksimal 5MB.',
             'gambar.uploaded' => 'Gagal mengupload gambar.',
         ]);
 

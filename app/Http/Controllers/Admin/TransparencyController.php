@@ -24,13 +24,13 @@ class TransparencyController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
         ], [
             'title.required' => 'Judul banner wajib diisi.',
             'image.required' => 'Gambar banner wajib diupload.',
             'image.image' => 'File harus berupa gambar.',
             'image.mimes' => 'Format gambar harus jpeg, png, jpg, atau gif.',
-            'image.max' => 'Ukuran gambar maksimal 2MB.',
+            'image.max' => 'Ukuran gambar maksimal 5MB.',
             'image.uploaded' => 'Gagal mengupload gambar.',
         ]);
 

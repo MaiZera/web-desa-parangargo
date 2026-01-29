@@ -82,7 +82,21 @@ class PageController extends Controller
 
     public function newsDetail($slug)
     {
-        return view('pages.news-detail');
+        $news = \App\Models\News::where('slug', $slug)
+            ->published()
+            ->with(['author', 'categories'])
+            ->firstOrFail();
+
+        // Increment view count if you have a column for it, otherwise skip
+        // $news->increment('views');
+
+        $relatedNews = \App\Models\News::where('id', '!=', $news->id)
+            ->published()
+            ->latest('published_at')
+            ->take(3)
+            ->get();
+
+        return view('pages.news-detail', compact('news', 'relatedNews'));
     }
 
 

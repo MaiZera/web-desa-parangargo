@@ -149,7 +149,7 @@
                                     file:text-sm file:font-semibold
                                     file:bg-emerald-50 file:text-emerald-700
                                     hover:file:bg-emerald-100" accept="image/*" onchange="previewImage(this)">
-                                <p class="text-xs text-gray-500 mt-1 italic">Format: JPG, PNG. Maks: 2MB. Biarkan kosong
+                                <p class="text-xs text-gray-500 mt-1 italic">Format: JPG, PNG. Maks: 5MB. Biarkan kosong
                                     jika tidak ingin mengubah.</p>
                                 @error('gambar')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
