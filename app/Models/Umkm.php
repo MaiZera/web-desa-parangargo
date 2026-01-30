@@ -44,6 +44,13 @@ class Umkm extends Model
         'is_active' => 'boolean',
     ];
 
+    protected $appends = ['kisaran_harga', 'image_url'];
+
+    public function getImageUrlAttribute()
+    {
+        return $this->foto_produk ? asset('storage/' . $this->foto_produk) : 'https://placehold.co/800x600?text=' . urlencode($this->nama_usaha);
+    }
+
     // Scopes
     public function scopeActive($query)
     {

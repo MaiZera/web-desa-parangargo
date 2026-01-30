@@ -58,7 +58,7 @@ class SponsorController extends Controller
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
-            'logo' => 'nullable|image|mimes:png,jpg,jpeg,svg|max:2048',
+            'logo' => 'nullable|image|mimes:png,jpg,jpeg,svg|max:5120',
             'website' => 'nullable|url|max:255',
             'instagram' => 'nullable|string|max:255',
             'deskripsi' => 'nullable|string',
@@ -105,7 +105,7 @@ class SponsorController extends Controller
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
-            'logo' => 'nullable|image|mimes:png,jpg,jpeg,svg|max:2048',
+            'logo' => 'nullable|image|mimes:png,jpg,jpeg,svg|max:5120',
             'website' => 'nullable|url|max:255',
             'instagram' => 'nullable|string|max:255',
             'deskripsi' => 'nullable|string',

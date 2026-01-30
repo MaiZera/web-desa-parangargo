@@ -32,7 +32,7 @@
                                     <option value="umum" {{ old('tipe', $announcement->tipe) == 'umum' ? 'selected' : '' }}>Umum</option>
                                     <option value="layanan" {{ old('tipe', $announcement->tipe) == 'layanan' ? 'selected' : '' }}>Layanan</option>
                                     <option value="darurat" {{ old('tipe', $announcement->tipe) == 'darurat' ? 'selected' : '' }}>Darurat</option>
-                                    <option value="berita" {{ old('tipe', $announcement->tipe) == 'berita' ? 'selected' : '' }}>Berita</option>
+                                    <!-- <option value="berita" {{ old('tipe', $announcement->tipe) == 'berita' ? 'selected' : '' }}>Berita</option> -->
                                 </select>
                                 @error('tipe')
                                     <p class="mt-1 text-sm text-red-600">{{ $message }}</p>

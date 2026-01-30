@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\ProfileDesaController;
+use App\Http\Controllers\Admin\ContactInfoController;
 use App\Http\Controllers\Admin\DemografisController;
 use App\Http\Controllers\Admin\AgendaController as AdminAgendaController;
 use App\Http\Controllers\Admin\AnnouncementController;
@@ -40,14 +41,14 @@ Route::get('/transparansi', [PageController::class, 'transparency'])->name('tran
 Route::get('/umkm', [PageController::class, 'umkm'])->name('umkm');
 Route::get('/galeri', [PageController::class, 'gallery'])->name('gallery');
 Route::get('/partisipasi', [PageController::class, 'participation'])->name('participation');
+Route::post('/feedback/submit', [\App\Http\Controllers\FeedbackController::class, 'submit'])->name('feedback.submit');
 
 Route::get('/banner', [App\Http\Controllers\BannerController::class, 'index'])->name('banner.index');
 Route::get('/banner/{banner}', [App\Http\Controllers\BannerController::class, 'show'])->name('banner.show');
 
-Route::get('/dashboard', function () {
-    $banners = \App\Models\Banner::where('is_active', true)->latest()->get();
-    return view('dashboard', compact('banners'));
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 // Authenticated routes
 Route::middleware('auth')->group(function () {
@@ -65,6 +66,10 @@ Route::middleware('auth')->group(function () {
         Route::get('profile-desa/edit', [ProfileDesaController::class, 'edit'])->name('profile-desa.edit');
         Route::put('profile-desa', [ProfileDesaController::class, 'update'])->name('profile-desa.update');
 
+        // Kontak Desa routes
+        Route::get('contact-info/edit', [ContactInfoController::class, 'edit'])->name('contact-info.edit');
+        Route::put('contact-info', [ContactInfoController::class, 'update'])->name('contact-info.update');
+
         // Demografis routes
         Route::get('demografis/edit', [DemografisController::class, 'edit'])->name('demografis.edit');
         Route::put('demografis', [DemografisController::class, 'update'])->name('demografis.update');
@@ -75,6 +80,7 @@ Route::middleware('auth')->group(function () {
         Route::get('categories/search', [CategoryController::class, 'search'])->name('categories.search');
         Route::post('categories/store', [CategoryController::class, 'store']); // Match JS URL
         Route::post('news/autosave', [NewsController::class, 'autosave'])->name('news.autosave');
+        Route::post('news/upload-image', [NewsController::class, 'uploadImage'])->name('news.upload-image');
 
         Route::resource('announcements', AnnouncementController::class);
         Route::resource('categories', CategoryController::class);
@@ -90,6 +96,12 @@ Route::middleware('auth')->group(function () {
         Route::put('feedback/{feedback}/complete', [\App\Http\Controllers\FeedbackController::class, 'complete'])->name('feedback.complete');
 
         Route::resource('sponsors', \App\Http\Controllers\SponsorController::class);
+        Route::resource('transparency', \App\Http\Controllers\Admin\TransparencyController::class);
+
+        Route::resource('accounts', \App\Http\Controllers\Admin\AccountController::class);
+        Route::patch('galeri/{galeri}/toggle-featured', [\App\Http\Controllers\GaleriController::class, 'toggleFeatured'])->name('galeri.toggle-featured');
+        Route::resource('galeri', \App\Http\Controllers\GaleriController::class);
+        Route::resource('project-reports', \App\Http\Controllers\Admin\ProjectReportController::class);
     });
 });
 

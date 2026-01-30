@@ -216,8 +216,15 @@
                                       file:text-sm file:font-semibold
                                       file:bg-emerald-50 file:text-emerald-700
                                       hover:file:bg-emerald-100
-                                    ">
-                                    <p class="text-xs text-gray-500 mt-1">Format: JPG, PNG. Max: 2MB.</p>
+                                    " onchange="previewImage(this, 'foto-produk-preview')">
+
+                                    <!-- Image Preview -->
+                                    <div id="foto-produk-preview" class="hidden mt-3">
+                                        <img src="" alt="Preview"
+                                            class="h-32 w-auto object-cover rounded-md border shadow-sm">
+                                        <p class="text-xs text-gray-500 mt-1">Preview foto produk</p>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mt-1">Format: JPG, PNG. Max: 5MB.</p>
                                     @error('foto_produk') <span class="text-red-500 text-sm">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -254,22 +261,41 @@
 
     @push('scripts')
         <script>
+            // Image Preview Script
+            function previewImage(input, previewId) {
+                const previewContainer = document.getElementById(previewId);
+                const previewImage = previewContainer.querySelector('img');
+                const file = input.files[0];
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        previewContainer.classList.remove('hidden');
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    previewContainer.classList.add('hidden');
+                    previewImage.src = '';
+                }
+            }
+
             // Produk Script
             function addProdukRow() {
                 const container = document.getElementById('produk-container');
                 const row = document.createElement('div');
                 row.className = 'flex items-center gap-2 produk-row';
                 row.innerHTML = `
-                    <input type="text" name="produk_layanan[]" 
-                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm" 
-                        placeholder="Nama Produk atau Layanan">
+                        <input type="text" name="produk_layanan[]" 
+                            class="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm" 
+                            placeholder="Nama Produk atau Layanan">
 
-                    <button type="button" onclick="removeProdukRow(this)" class="text-red-500 hover:text-red-700 focus:outline-none p-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
-                    </button>
-                `;
+                        <button type="button" onclick="removeProdukRow(this)" class="text-red-500 hover:text-red-700 focus:outline-none p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    `;
                 container.appendChild(row);
             }
 

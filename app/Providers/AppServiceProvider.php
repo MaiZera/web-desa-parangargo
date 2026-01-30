@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
+use App\Models\Sponsor;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        View::composer('components.footer', function ($view) {
+            $view->with('sponsors', Sponsor::active()->ordered()->get());
+            $view->with('profile', \App\Models\ProfileDesa::firstOrCreate([]));
+        });
     }
 }

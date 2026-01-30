@@ -24,10 +24,12 @@ class StaffController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'jabatan' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'jabatan' => 'required|string|max:255|unique:staff,jabatan',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
             'telepon' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
+        ], [
+            'jabatan.unique' => 'Jabatan ini sudah diisi oleh orang lain.',
         ]);
 
         $data = $request->only(['nama', 'nip', 'jabatan', 'pangkat', 'golongan', 'pendidikan', 'telepon', 'email', 'alamat', 'tanggal_lahir', 'tempat_lahir', 'mulai_menjabat', 'selesai_menjabat', 'urutan']);
@@ -53,10 +55,12 @@ class StaffController extends Controller
 
         $request->validate([
             'nama' => 'required|string|max:255',
-            'jabatan' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'jabatan' => 'required|string|max:255|unique:staff,jabatan,' . $id,
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
             'telepon' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
+        ], [
+            'jabatan.unique' => 'Jabatan ini sudah diisi oleh orang lain.',
         ]);
 
         $data = $request->only(['nama', 'nip', 'jabatan', 'pangkat', 'golongan', 'pendidikan', 'telepon', 'email', 'alamat', 'tanggal_lahir', 'tempat_lahir', 'mulai_menjabat', 'selesai_menjabat', 'urutan']);

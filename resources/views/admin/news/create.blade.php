@@ -13,15 +13,23 @@
 
                         <div class="mb-6">
                             <label for="image" class="block text-sm font-medium text-gray-700 mb-2">Gambar Utama</label>
+
+                            <!-- Image Preview Container -->
+                            <div id="image-preview" class="hidden mb-3">
+                                <img src="" alt="Preview Gambar" class="w-48 h-auto rounded-lg object-cover shadow-sm">
+                                <p class="text-xs text-gray-500 mt-1">Preview gambar yang akan diupload</p>
+                            </div>
+
                             <input type="file" name="image" id="image" class="block w-full text-sm text-gray-500
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded-full file:border-0
                                 file:text-sm file:font-semibold
                                 file:bg-emerald-50 file:text-emerald-700
-                                hover:file:bg-emerald-100" accept="image/*">
+                                hover:file:bg-emerald-100" accept="image/*" onchange="previewImage(this)">
                             @error('image')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
+                            <p class="text-xs text-gray-500 mt-1">Format: jpeg, png, jpg, webp. Maksimal 5MB.</p>
                         </div>
 
                         <div class="mb-6">
@@ -256,5 +264,25 @@
                 });
             }
         });
+    </script>
+    <script>
+        function previewImage(input) {
+            const previewContainer = document.getElementById('image-preview');
+            const previewImage = previewContainer.querySelector('img');
+            const file = input.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                }
+
+                reader.readAsDataURL(file);
+            } else {
+                previewContainer.classList.add('hidden');
+            }
+        }
     </script>
 </x-admin-layout>

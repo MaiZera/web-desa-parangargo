@@ -69,12 +69,23 @@ class FeedbackController extends Controller
             'nama' => 'required|string|max:255',
             'rt' => 'nullable|string|max:5',
             'rw' => 'nullable|string|max:5',
-            'email' => 'required|email|max:255',
+            // 'email' => 'nullable|email|max:255', // Removed
             'telepon' => 'nullable|string|max:20',
-            'subjek' => 'required|string|max:255',
+            'subjek' => 'nullable|string|max:255',
             'deskripsi' => 'required|string',
-            'kategori' => 'nullable|in:Complaint,Suggestion,Question,Praise',
+            'kategori' => 'nullable|in:Saran Pembangunan,Keluhan Pelayanan,Laporan Keamanan,Lainnya',
+            'lampiran' => 'nullable|image|max:5120',
+        ], [
+            'nama.required' => 'Nama wajib diisi.',
+            'deskripsi.required' => 'Pesan aspirasi wajib diisi.',
+            'lampiran.image' => 'File harus berupa gambar.',
+            'lampiran.max' => 'Ukuran file foto maksimal 5MB.',
         ]);
+
+        if ($request->hasFile('lampiran')) {
+            $path = $request->file('lampiran')->store('feedback', 'public');
+            $validated['lampiran'] = $path;
+        }
 
         // Set default status
         $validated['status'] = 'baru';

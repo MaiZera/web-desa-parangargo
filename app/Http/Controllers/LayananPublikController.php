@@ -60,7 +60,7 @@ class LayananPublikController extends Controller
             'telepon' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
             'icon' => 'nullable|string|max:255',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'is_active' => 'boolean',
             'urutan' => 'required|integer|min:0',
         ]);
@@ -110,7 +110,7 @@ class LayananPublikController extends Controller
             'telepon' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
             'icon' => 'nullable|string|max:255',
-            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
             'is_active' => 'boolean',
             'urutan' => 'required|integer|min:0',
         ]);

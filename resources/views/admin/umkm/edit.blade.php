@@ -126,13 +126,13 @@
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-2">Jadwal Buka</label>
-                                    
+
                                     @php
                                         // Determine if we should show simple mode or detail mode
                                         $days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
                                         $firstDay = $umkm->jam_buka['Senin'] ?? [];
                                         $isSimpleMode = true;
-                                        
+
                                         foreach ($days as $day) {
                                             $current = $umkm->jam_buka[$day] ?? [];
                                             // Compare with Monday (first day)
@@ -153,9 +153,10 @@
                                                 break;
                                             }
                                         }
-                                        
+
                                         // If data is empty (new/legacy), default to simple
-                                        if (empty($umkm->jam_buka)) $isSimpleMode = true;
+                                        if (empty($umkm->jam_buka))
+                                            $isSimpleMode = true;
 
                                         // Simple values (default to Monday/First Day or empty)
                                         $simpleBuka = $firstDay['buka'] ?? '';
@@ -166,30 +167,42 @@
                                     <!-- Schedule Mode Toggle -->
                                     <div class="flex items-center gap-4 mb-3">
                                         <label class="inline-flex items-center">
-                                            <input type="radio" name="schedule_mode" value="simple" {{ $isSimpleMode ? 'checked' : '' }} onchange="toggleScheduleMode()" class="text-emerald-600 focus:ring-emerald-500">
+                                            <input type="radio" name="schedule_mode" value="simple" {{ $isSimpleMode ? 'checked' : '' }} onchange="toggleScheduleMode()"
+                                                class="text-emerald-600 focus:ring-emerald-500">
                                             <span class="ml-2 text-sm text-gray-700">Setiap Hari Sama</span>
                                         </label>
                                         <label class="inline-flex items-center">
-                                            <input type="radio" name="schedule_mode" value="detail" {{ !$isSimpleMode ? 'checked' : '' }} onchange="toggleScheduleMode()" class="text-emerald-600 focus:ring-emerald-500">
+                                            <input type="radio" name="schedule_mode" value="detail" {{ !$isSimpleMode ? 'checked' : '' }} onchange="toggleScheduleMode()"
+                                                class="text-emerald-600 focus:ring-emerald-500">
                                             <span class="ml-2 text-sm text-gray-700">Berbeda Setiap Hari</span>
                                         </label>
                                     </div>
 
                                     <!-- Simple Mode Input -->
-                                    <div id="schedule-simple" class="p-3 bg-gray-50 rounded-md border border-gray-200 mb-2 {{ !$isSimpleMode ? 'hidden' : '' }}">
+                                    <div id="schedule-simple"
+                                        class="p-3 bg-gray-50 rounded-md border border-gray-200 mb-2 {{ !$isSimpleMode ? 'hidden' : '' }}">
                                         <div class="grid grid-cols-2 gap-4">
                                             <div>
-                                                <label class="block text-xs font-medium text-gray-500 mb-1">Jam Buka</label>
-                                                <input type="time" id="simple-buka" value="{{ $simpleBuka }}" onchange="syncSimpleSchedule()" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm">
+                                                <label class="block text-xs font-medium text-gray-500 mb-1">Jam
+                                                    Buka</label>
+                                                <input type="time" id="simple-buka" value="{{ $simpleBuka }}"
+                                                    onchange="syncSimpleSchedule()"
+                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm">
                                             </div>
                                             <div>
-                                                <label class="block text-xs font-medium text-gray-500 mb-1">Jam Tutup</label>
-                                                <input type="time" id="simple-tutup" value="{{ $simpleTutup }}" onchange="syncSimpleSchedule()" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm">
+                                                <label class="block text-xs font-medium text-gray-500 mb-1">Jam
+                                                    Tutup</label>
+                                                <input type="time" id="simple-tutup" value="{{ $simpleTutup }}"
+                                                    onchange="syncSimpleSchedule()"
+                                                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm">
                                             </div>
                                         </div>
                                         <div class="mt-2 flex items-center">
-                                            <input type="checkbox" id="simple-libur" {{ $simpleLibur ? 'checked' : '' }} onchange="syncSimpleSchedule()" class="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 h-4 w-4">
-                                            <label for="simple-libur" class="ml-2 text-sm text-gray-600">Libur / Tutup</label>
+                                            <input type="checkbox" id="simple-libur" {{ $simpleLibur ? 'checked' : '' }}
+                                                onchange="syncSimpleSchedule()"
+                                                class="rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 h-4 w-4">
+                                            <label for="simple-libur" class="ml-2 text-sm text-gray-600">Libur /
+                                                Tutup</label>
                                         </div>
                                     </div>
 
@@ -205,11 +218,15 @@
                                             <div class="flex items-center space-x-2 schedule-row" data-day="{{ $day }}">
                                                 <div class="w-16 text-sm text-gray-600 font-medium">{{ $day }}</div>
                                                 <div class="flex-1 grid grid-cols-2 gap-2">
-                                                    <input type="time" name="jam_buka[{{ $day }}][buka]" value="{{ $buka }}" class="schedule-buka rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-xs">
-                                                    <input type="time" name="jam_buka[{{ $day }}][tutup]" value="{{ $tutup }}" class="schedule-tutup rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-xs">
+                                                    <input type="time" name="jam_buka[{{ $day }}][buka]" value="{{ $buka }}"
+                                                        class="schedule-buka rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-xs">
+                                                    <input type="time" name="jam_buka[{{ $day }}][tutup]"
+                                                        value="{{ $tutup }}"
+                                                        class="schedule-tutup rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 text-xs">
                                                 </div>
                                                 <div class="flex items-center">
-                                                    <input type="checkbox" name="jam_buka[{{ $day }}][libur]" value="1" {{ $libur ? 'checked' : '' }} class="schedule-libur rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 h-4 w-4">
+                                                    <input type="checkbox" name="jam_buka[{{ $day }}][libur]" value="1" {{ $libur ? 'checked' : '' }}
+                                                        class="schedule-libur rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 h-4 w-4">
                                                     <label class="ml-1 text-xs text-xs text-gray-500">Libur</label>
                                                 </div>
                                             </div>
@@ -254,7 +271,7 @@
                                         / Tempat Usaha</label>
 
                                     @if($umkm->foto_produk)
-                                        <div class="mb-2">
+                                        <div class="mb-2" id="existing-image-container">
                                             <img src="{{ asset('storage/' . $umkm->foto_produk) }}" alt="Current Image"
                                                 class="h-20 w-20 object-cover rounded-md border">
                                         </div>
@@ -266,7 +283,14 @@
                                       file:text-sm file:font-semibold
                                       file:bg-emerald-50 file:text-emerald-700
                                       hover:file:bg-emerald-100
-                                    ">
+                                    " onchange="previewImage(this, 'foto-produk-preview')">
+
+                                    <!-- Image Preview for New Upload -->
+                                    <div id="foto-produk-preview" class="hidden mt-3">
+                                        <img src="" alt="Preview"
+                                            class="h-32 w-auto object-cover rounded-md border shadow-sm">
+                                        <p class="text-xs text-gray-500 mt-1">Preview foto baru</p>
+                                    </div>
                                     <p class="text-xs text-gray-500 mt-1">Biarkan kosong jika tidak ingin mengubah foto.
                                     </p>
                                     @error('foto_produk') <span class="text-red-500 text-sm">{{ $message }}</span>
@@ -304,67 +328,89 @@
     </div>
 
     @push('scripts')
-    <script>
-        // Produk Script
-        function addProdukRow() {
-            const container = document.getElementById('produk-container');
-            const row = document.createElement('div');
-            row.className = 'flex items-center gap-2 produk-row';
-            row.innerHTML = `
-                <input type="text" name="produk_layanan[]" 
-                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm" 
-                    placeholder="Nama Produk atau Layanan">
-                
-                <button type="button" onclick="removeProdukRow(this)" class="text-red-500 hover:text-red-700 focus:outline-none p-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                    </svg>
-                </button>
-            `;
-            container.appendChild(row);
-        }
+        <script>
+            // Image Preview Script
+            function previewImage(input, previewId) {
+                const previewContainer = document.getElementById(previewId);
+                const previewImage = previewContainer.querySelector('img');
+                const file = input.files[0];
+                const existingImage = document.getElementById('existing-image-container');
 
-        function removeProdukRow(btn) {
-            const container = document.getElementById('produk-container');
-            if (container.children.length > 1) {
-                btn.closest('.produk-row').remove();
-            } else {
-                btn.closest('.produk-row').querySelector('input').value = '';
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        previewImage.src = e.target.result;
+                        previewContainer.classList.remove('hidden');
+                        if (existingImage) existingImage.classList.add('hidden');
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    previewContainer.classList.add('hidden');
+                    previewImage.src = '';
+                    if (existingImage) existingImage.classList.remove('hidden');
+                }
             }
-        }
 
-        // Schedule Script
-        function toggleScheduleMode() {
-            const mode = document.querySelector('input[name="schedule_mode"]:checked').value;
-            const simpleDiv = document.getElementById('schedule-simple');
-            const detailDiv = document.getElementById('schedule-detail');
-            
-            if (mode === 'simple') {
-                simpleDiv.classList.remove('hidden');
-                detailDiv.classList.add('hidden');
-                syncSimpleSchedule();
-            } else {
-                simpleDiv.classList.add('hidden');
-                detailDiv.classList.remove('hidden');
+            // Produk Script
+            function addProdukRow() {
+                const container = document.getElementById('produk-container');
+                const row = document.createElement('div');
+                row.className = 'flex items-center gap-2 produk-row';
+                row.innerHTML = `
+                    <input type="text" name="produk_layanan[]"
+                        class="block w-full rounded-md border-gray-300 shadow-sm focus:border-emerald-500 focus:ring-emerald-500 sm:text-sm"
+                        placeholder="Nama Produk atau Layanan">
+
+                        <button type="button" onclick="removeProdukRow(this)" class="text-red-500 hover:text-red-700 focus:outline-none p-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    `;
+                container.appendChild(row);
             }
-        }
 
-        function syncSimpleSchedule() {
-            const buka = document.getElementById('simple-buka').value;
-            const tutup = document.getElementById('simple-tutup').value;
-            const libur = document.getElementById('simple-libur').checked;
+            function removeProdukRow(btn) {
+                const container = document.getElementById('produk-container');
+                if (container.children.length > 1) {
+                    btn.closest('.produk-row').remove();
+                } else {
+                    btn.closest('.produk-row').querySelector('input').value = '';
+                }
+            }
 
-            const rows = document.querySelectorAll('.schedule-row');
-            rows.forEach(row => {
-                const bukaInput = row.querySelector('.schedule-buka');
-                const tutupInput = row.querySelector('.schedule-tutup');
-                const liburInput = row.querySelector('.schedule-libur');
+            // Schedule Script
+            function toggleScheduleMode() {
+                const mode = document.querySelector('input[name="schedule_mode"]:checked').value;
+                const simpleDiv = document.getElementById('schedule-simple');
+                const detailDiv = document.getElementById('schedule-detail');
 
-                bukaInput.value = buka;
-                tutupInput.value = tutup;
-                liburInput.checked = libur;
-            });
-        }
-    </script>
+                if (mode === 'simple') {
+                    simpleDiv.classList.remove('hidden');
+                    detailDiv.classList.add('hidden');
+                    syncSimpleSchedule();
+                } else {
+                    simpleDiv.classList.add('hidden');
+                    detailDiv.classList.remove('hidden');
+                }
+            }
+
+            function syncSimpleSchedule() {
+                const buka = document.getElementById('simple-buka').value;
+                const tutup = document.getElementById('simple-tutup').value;
+                const libur = document.getElementById('simple-libur').checked;
+
+                const rows = document.querySelectorAll('.schedule-row');
+                rows.forEach(row => {
+                    const bukaInput = row.querySelector('.schedule-buka');
+                    const tutupInput = row.querySelector('.schedule-tutup');
+                    const liburInput = row.querySelector('.schedule-libur');
+
+                    bukaInput.value = buka;
+                    tutupInput.value = tutup;
+                    liburInput.checked = libur;
+                });
+            }
+        </script>
     @endpush
 </x-admin-layout>

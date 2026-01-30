@@ -90,7 +90,7 @@ class TransparansiPembangunanController extends Controller
             'status' => 'required|in:perencanaan,dalam_proses,selesai,ditunda',
             'persentase_penyelesaian' => 'required|integer|min:0|max:100',
             'keterangan' => 'nullable|string',
-            'dokumentasi' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'dokumentasi' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
 
         // Handle dokumentasi upload
@@ -142,7 +142,7 @@ class TransparansiPembangunanController extends Controller
             'status' => 'required|in:perencanaan,dalam_proses,selesai,ditunda',
             'persentase_penyelesaian' => 'required|integer|min:0|max:100',
             'keterangan' => 'nullable|string',
-            'dokumentasi' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'dokumentasi' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
 
         // Handle dokumentasi upload

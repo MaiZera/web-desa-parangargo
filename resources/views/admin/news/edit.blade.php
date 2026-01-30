@@ -16,21 +16,31 @@
                         <div class="mb-6">
                             <label for="image" class="block text-sm font-medium text-gray-700 mb-2">Gambar Utama</label>
 
+                            <!-- Existing Image -->
                             @if($news->image)
-                                <div class="mb-3">
+                                <div id="existing-image" class="mb-3">
                                     <img src="{{ asset('storage/' . $news->image) }}" alt="{{ $news->title }}"
-                                        class="w-48 h-auto rounded-lg object-cover">
+                                        class="w-48 h-auto rounded-lg object-cover shadow-sm">
                                     <p class="text-xs text-gray-500 mt-1">Gambar saat ini</p>
                                 </div>
                             @endif
+
+                            <!-- Image Preview Container (Initially Hidden if using existing image, but logic handles swap) -->
+                            <div id="image-preview" class="hidden mb-3">
+                                <img src="" alt="Preview Gambar Baru"
+                                    class="w-48 h-auto rounded-lg object-cover shadow-sm">
+                                <p class="text-xs text-gray-500 mt-1">Preview gambar baru</p>
+                            </div>
 
                             <input type="file" name="image" id="image" class="block w-full text-sm text-gray-500
                                 file:mr-4 file:py-2 file:px-4
                                 file:rounded-full file:border-0
                                 file:text-sm file:font-semibold
                                 file:bg-emerald-50 file:text-emerald-700
-                                hover:file:bg-emerald-100" accept="image/*">
-                            <p class="text-xs text-gray-500 mt-1">Biarkan kosong jika tidak ingin mengubah gambar</p>
+                                hover:file:bg-emerald-100" accept="image/*" onchange="previewImage(this)">
+
+                            <p class="text-xs text-gray-500 mt-1">Biarkan kosong jika tidak ingin mengubah gambar.
+                                Format: jpeg, png, jpg, webp. Maksimal 5MB.</p>
                             @error('image')
                                 <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                             @enderror
@@ -156,7 +166,38 @@
                     ['table', ['table']],
                     ['insert', ['link', 'picture', 'video']],
                     ['view', ['fullscreen', 'codeview', 'help']]
-                ]
+                ],
+                callbacks: {
+                    onImageUpload: function(files) {
+                        if (files.length == 0) return;
+                        var file = files[0];
+                        if (file.size > 5 * 1024 * 1024) { // 5MB Limit
+                            alert('Ukuran gambar terlalu besar. Maksimal 5MB.');
+                            return;
+                        }
+                        
+                        var data = new FormData();
+                        data.append("image", file);
+                        data.append("_token", "{{ csrf_token() }}");
+                        
+                        $.ajax({
+                            url: "{{ route('admin.news.upload-image') }}",
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: data,
+                            type: "POST",
+                            success: function(url) {
+                                var image = $('<img>').attr('src', url);
+                                $('#editor').summernote("insertNode", image[0]);
+                            },
+                            error: function(data) {
+                                console.log(data);
+                                alert('Gagal upload gambar. Silakan coba lagi.');
+                            }
+                        });
+                    }
+                }
             });
 
             // -- Select2 Init --
@@ -255,5 +296,32 @@
                 });
             }
         });
+    </script>
+    <script>
+        function previewImage(input) {
+            const previewContainer = document.getElementById('image-preview');
+            const existingImage = document.getElementById('existing-image');
+            const previewImage = previewContainer.querySelector('img');
+            const file = input.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.classList.remove('hidden');
+                    if (existingImage) {
+                        existingImage.classList.add('hidden');
+                    }
+                }
+
+                reader.readAsDataURL(file);
+            } else {
+                previewContainer.classList.add('hidden');
+                if (existingImage) {
+                    existingImage.classList.remove('hidden');
+                }
+            }
+        }
     </script>
 </x-admin-layout>
