@@ -80,6 +80,41 @@
                 <p class="text-[10px] mt-1 opacity-70 font-medium">Informasi Resmi</p>
               </div>
             </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative group py-4">
+        <a class="text-[13px] font-bold uppercase tracking-widest transition-all flex items-center gap-1.5 {{ Request::is('transparansi*') || Request::is('berita/laporan') ? 'text-emerald-600' : 'text-slate-500 hover:text-emerald-600' }}"
+          href="javascript:void(0)">
+          Transparansi
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"
+            class="w-3 h-3 transition-transform group-hover:rotate-180" aria-hidden="true">
+            <path d="m6 9 6 6 6-6"></path>
+          </svg>
+        </a>
+        <!-- Dropdown Menu -->
+        <div
+          class="absolute top-full left-1/2 -translate-x-1/2 mt-0 w-64 bg-white/95 backdrop-blur-xl rounded-[2rem] shadow-[0_32px_80px_-16px_rgba(0,0,0,0.15)] border border-slate-100 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+          <div class="p-3 space-y-1">
+            <a href="{{ url('/transparansi') }}"
+              class="flex items-center gap-4 px-5 py-4 rounded-[1.5rem] text-sm text-slate-600 hover:bg-emerald-600 hover:text-white transition-all group/item {{ Request::is('transparansi') ? 'bg-emerald-50 text-emerald-600' : '' }}">
+              <div
+                class="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center transition-colors group-hover/item:bg-white/20 group-hover/item:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                  class="w-5 h-5">
+                  <rect width="18" height="18" x="3" y="3" rx="2" />
+                  <path d="M3 9h18" />
+                  <path d="M9 21V9" />
+                </svg>
+              </div>
+              <div>
+                <p class="font-black leading-none">Banner APBD</p>
+                <p class="text-[10px] mt-1 opacity-70 font-medium">Transparansi Anggaran</p>
+              </div>
+            </a>
             <a href="{{ route('news.laporan') }}"
               class="flex items-center gap-4 px-5 py-4 rounded-[1.5rem] text-sm text-slate-600 hover:bg-indigo-600 hover:text-white transition-all group/item {{ Request::is('berita/laporan') ? 'bg-indigo-50 text-indigo-600' : '' }}">
               <div
@@ -95,19 +130,12 @@
                 </svg>
               </div>
               <div>
-                <p class="font-black leading-none">Laporan</p>
+                <p class="font-black leading-none">Laporan Kerja</p>
                 <p class="text-[10px] mt-1 opacity-70 font-medium">Dokumentasi Kerja</p>
               </div>
             </a>
           </div>
         </div>
-      </div>
-
-      <div class="relative group py-4">
-        <a class="text-[13px] font-bold uppercase tracking-widest transition-all flex items-center gap-1.5 {{ Request::is('transparansi') ? 'text-emerald-600' : 'text-slate-500 hover:text-emerald-600' }}"
-          href="{{ url('/transparansi') }}">
-          Transparansi
-        </a>
       </div>
       <div class="relative group py-4">
         <a class="text-[13px] font-bold uppercase tracking-widest transition-all flex items-center gap-1.5 {{ Request::is('umkm') ? 'text-emerald-600' : 'text-slate-500 hover:text-emerald-600' }}"

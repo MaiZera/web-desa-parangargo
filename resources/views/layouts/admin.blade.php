@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Desa Parangargo') }} - Admin</title>
-
+    <title>Desa Parangargo - Admin</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.png') }}">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700&display=swap" rel="stylesheet" />
@@ -35,8 +35,15 @@
             <!-- Logo -->
             <div class="flex items-center justify-center h-16 border-b border-gray-100 shrink-0">
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
-                    <x-application-logo class="w-8 h-8 text-indigo-600 fill-current" />
-                    <span class="text-xl font-bold text-gray-900 tracking-tight">Desa Parangargo</span>
+                    <div
+                        class="w-10 h-10 bg-white rounded-xl flex items-center justify-center group-hover:rotate-12 transition-transform overflow-hidden">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo Kabupaten Malang"
+                            class="w-8 h-8 object-contain">
+                    </div>
+                    <div>
+                        <h1 class="font-bold text-lg leading-none">Desa Parangargo</h1>
+                        <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Kabupaten Malang</p>
+                    </div>
                 </a>
             </div>
 
@@ -58,15 +65,15 @@
                     Management</div>
 
                 @if(auth()->user()->access_level !== 'editor')
-                <a href="{{ route('admin.announcements.index') }}"
-                    class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.announcements.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z">
-                        </path>
-                    </svg>
-                    Pengumuman
-                </a>
+                    <a href="{{ route('admin.announcements.index') }}"
+                        class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.announcements.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z">
+                            </path>
+                        </svg>
+                        Pengumuman
+                    </a>
                 @endif
 
                 <!-- Berita Dropdown -->
@@ -108,172 +115,210 @@
                 </div>
 
                 @if(auth()->user()->access_level !== 'editor')
-                <a href="{{ route('admin.galeri.index') }}"
-                    class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.galeri.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                        </path>
-                    </svg>
-                    Galeri Foto
-                </a>
-                @endif
-
-                @if(auth()->user()->access_level !== 'editor')
-                <a href="{{ route('admin.umkm.index') }}"
-                    class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.umkm.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
-                    UMKM
-                </a>
-
-                <a href="{{ route('admin.banners.index') }}"
-                    class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.banners.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                        </path>
-                    </svg>
-                    Banner Slider
-                </a>
-
-                <a href="{{ route('admin.sponsors.index') }}"
-                    class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.sponsors.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
-                        </path>
-                    </svg>
-                    Sponsor
-                </a>
-                @endif
-
-                @if(auth()->user()->access_level !== 'editor')
-                <a href="{{ route('admin.feedback.index') }}"
-                    class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.feedback.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z">
-                        </path>
-                    </svg>
-                    Feedback
-                </a>
-
-                <a href="{{ route('admin.transparency.index') }}"
-                    class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.transparency.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-                        </path>
-                    </svg>
-                    Transparansi
-                </a>
-
-                <a href="{{ route('admin.agendas.index') }}"
-                    class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.agendas.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
-                        </path>
-                    </svg>
-                    Agenda / Kalender
-                </a>
-                @endif
-
-                @if(auth()->user()->access_level !== 'editor')
-                <!-- Tentang Desa Dropdown -->
-                <div x-data="{ open: false }" class="relative">
-                    <button @click="open = !open"
-                        class="w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-colors text-gray-600 hover:bg-gray-50 hover:text-gray-900">
-                        <div class="flex items-center">
-                            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
-                                </path>
-                            </svg>
-                            Tentang Desa
-                        </div>
-                        <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-180': open }" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6">
+                    <a href="{{ route('admin.galeri.index') }}"
+                        class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.galeri.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
                             </path>
                         </svg>
-                    </button>
-
-                    <div x-show="open" x-transition:enter="transition ease-out duration-200"
-                        x-transition:enter-start="opacity-0 -translate-y-1"
-                        x-transition:enter-end="opacity-100 translate-y-0"
-                        x-transition:leave="transition ease-in duration-150"
-                        x-transition:leave-start="opacity-100 translate-y-0"
-                        x-transition:leave-end="opacity-0 -translate-y-1" class="mt-2 space-y-1 pl-11"
-                        style="display: none;">
-                        <a href="{{ route('admin.profile-desa.edit') }}"
-                            class="block px-4 py-2 text-sm {{ request()->routeIs('admin.profile-desa.*') ? 'text-emerald-600 bg-emerald-50' : 'text-gray-600 hover:text-emerald-600 hover:bg-gray-50' }} rounded-lg transition-colors">
-                            Profile Desa
-                        </a>
-                        <a href="{{ route('admin.demografis.edit') }}"
-                            class="block px-4 py-2 text-sm {{ request()->routeIs('admin.demografis.*') ? 'text-emerald-600 bg-emerald-50' : 'text-gray-600 hover:text-emerald-600 hover:bg-gray-50' }} rounded-lg transition-colors">
-                            Demografis
-                        </a>
-                        <a href="{{ route('admin.staff.index') }}"
-                            class="block px-4 py-2 text-sm {{ request()->routeIs('admin.staff.*') ? 'text-emerald-600 bg-emerald-50' : 'text-gray-600 hover:text-emerald-600 hover:bg-gray-50' }} rounded-lg transition-colors">
-                            Struktur Desa
-                        </a>
-                        <!-- <a href="#"
-                            class="block px-4 py-2 text-sm text-gray-600 hover:text-emerald-600 hover:bg-gray-50 rounded-lg transition-colors">
-                            Maps
-                        </a> -->
-                        <a href="{{ route('admin.contact-info.edit') }}"
-                            class="block px-4 py-2 text-sm {{ request()->routeIs('admin.contact-info.*') ? 'text-emerald-600 bg-emerald-50' : 'text-gray-600 hover:text-emerald-600 hover:bg-gray-50' }} rounded-lg transition-colors">
-                            Kontak Desa
-                        </a>
-                    </div>
-                </div>
+                        Galeri Foto
+                    </a>
                 @endif
 
                 @if(auth()->user()->access_level !== 'editor')
-                <a href="#"
-                    class="flex items-center px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
-                        </path>
-                    </svg>
-                    Layanan Publik
-                </a>
+                    <a href="{{ route('admin.umkm.index') }}"
+                        class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.umkm.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                        UMKM
+                    </a>
+
+                    <a href="{{ route('admin.banners.index') }}"
+                        class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.banners.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        Banner Slider
+                    </a>
+
+                    <a href="{{ route('admin.sponsors.index') }}"
+                        class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.sponsors.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
+                            </path>
+                        </svg>
+                        Sponsor
+                    </a>
+                @endif
+
+                @if(auth()->user()->access_level !== 'editor')
+                    <a href="{{ route('admin.feedback.index') }}"
+                        class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.feedback.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z">
+                            </path>
+                        </svg>
+                        Feedback
+                    </a>
+
+
+                    <!-- Transparansi Dropdown -->
+                    <div x-data="{ open: {{ request()->routeIs('admin.transparency.*') || request()->routeIs('admin.project-reports.*') ? 'true' : 'false' }} }"
+                        class="relative">
+                        <button @click="open = !open"
+                            class="w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.transparency.*') || request()->routeIs('admin.project-reports.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                    </path>
+                                </svg>
+                                Transparansi
+                            </div>
+                            <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-180': open }" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6">
+                                </path>
+                            </svg>
+                        </button>
+
+                        <div x-show="open" x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 -translate-y-1"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 -translate-y-1" class="mt-2 space-y-1 pl-11"
+                            style="display: none;">
+                            <a href="{{ route('admin.transparency.index') }}"
+                                class="block px-4 py-2 text-sm {{ request()->routeIs('admin.transparency.*') ? 'text-emerald-600 bg-emerald-50' : 'text-gray-600 hover:text-emerald-600 hover:bg-gray-50' }} rounded-lg transition-colors">
+                                Banner APBD
+                            </a>
+                            <a href="{{ route('admin.project-reports.index') }}"
+                                class="block px-4 py-2 text-sm {{ request()->routeIs('admin.project-reports.*') ? 'text-emerald-600 bg-emerald-50' : 'text-gray-600 hover:text-emerald-600 hover:bg-gray-50' }} rounded-lg transition-colors">
+                                Laporan Kerja
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="{{ route('admin.agendas.index') }}"
+                        class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.agendas.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        Agenda / Kalender
+                    </a>
+                @endif
+
+                @if(auth()->user()->access_level !== 'editor')
+                    <!-- Tentang Desa Dropdown -->
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open"
+                            class="w-full flex items-center justify-between px-4 py-3 text-sm font-medium rounded-xl transition-colors text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                                    </path>
+                                </svg>
+                                Tentang Desa
+                            </div>
+                            <svg class="w-4 h-4 transition-transform" :class="{ 'rotate-180': open }" fill="none"
+                                stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m6 9 6 6 6-6">
+                                </path>
+                            </svg>
+                        </button>
+
+                        <div x-show="open" x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 -translate-y-1"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            x-transition:leave="transition ease-in duration-150"
+                            x-transition:leave-start="opacity-100 translate-y-0"
+                            x-transition:leave-end="opacity-0 -translate-y-1" class="mt-2 space-y-1 pl-11"
+                            style="display: none;">
+                            <a href="{{ route('admin.profile-desa.edit') }}"
+                                class="block px-4 py-2 text-sm {{ request()->routeIs('admin.profile-desa.*') ? 'text-emerald-600 bg-emerald-50' : 'text-gray-600 hover:text-emerald-600 hover:bg-gray-50' }} rounded-lg transition-colors">
+                                Profile Desa
+                            </a>
+                            <a href="{{ route('admin.demografis.edit') }}"
+                                class="block px-4 py-2 text-sm {{ request()->routeIs('admin.demografis.*') ? 'text-emerald-600 bg-emerald-50' : 'text-gray-600 hover:text-emerald-600 hover:bg-gray-50' }} rounded-lg transition-colors">
+                                Demografis
+                            </a>
+                            <a href="{{ route('admin.staff.index') }}"
+                                class="block px-4 py-2 text-sm {{ request()->routeIs('admin.staff.*') ? 'text-emerald-600 bg-emerald-50' : 'text-gray-600 hover:text-emerald-600 hover:bg-gray-50' }} rounded-lg transition-colors">
+                                Struktur Desa
+                            </a>
+                            <!-- <a href="#"
+                                                        class="block px-4 py-2 text-sm text-gray-600 hover:text-emerald-600 hover:bg-gray-50 rounded-lg transition-colors">
+                                                        Maps
+                                                    </a> -->
+                            <a href="{{ route('admin.contact-info.edit') }}"
+                                class="block px-4 py-2 text-sm {{ request()->routeIs('admin.contact-info.*') ? 'text-emerald-600 bg-emerald-50' : 'text-gray-600 hover:text-emerald-600 hover:bg-gray-50' }} rounded-lg transition-colors">
+                                Kontak Desa
+                            </a>
+                        </div>
+                    </div>
+                @endif
+
+                @if(auth()->user()->access_level !== 'editor')
+                    <a href="#"
+                        class="flex items-center px-4 py-3 text-sm font-medium rounded-xl text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9">
+                            </path>
+                        </svg>
+                        Layanan Publik
+                    </a>
                 @endif
 
                 @if(auth()->user()->access_level === 'super_admin')
-                <div class="px-2 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Akun Pengguna</div>
+                    <div class="px-2 mt-6 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Akun Pengguna
+                    </div>
 
-                <a href="{{ route('admin.accounts.index') }}"
-                    class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.accounts.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-                    </svg>
-                    Pusat Akun
-                </a>
+                    <a href="{{ route('admin.accounts.index') }}"
+                        class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-colors {{ request()->routeIs('admin.accounts.*') ? 'bg-emerald-50 text-emerald-600' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900' }}">
+                        <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                        </svg>
+                        Pusat Akun
+                    </a>
                 @endif
             </div>
 
             <!-- User Profile -->
             <div class="p-4 border-t border-gray-100 flex-shrink-0 mt-auto">
-                <div class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100 group/profile overflow-hidden">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-black shrink-0 shadow-lg shadow-emerald-200 transition-transform group-hover/profile:scale-105">
+                <div
+                    class="flex items-center gap-3 p-3 rounded-2xl bg-slate-50 border border-slate-100 group/profile overflow-hidden">
+                    <div
+                        class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-black shrink-0 shadow-lg shadow-emerald-200 transition-transform group-hover/profile:scale-105">
                         {{ substr(Auth::user()->name, 0, 1) }}
                     </div>
                     <div class="flex-1 min-w-0 pr-1">
-                        <p class="text-sm font-black text-slate-900 truncate tracking-tight">{{ Auth::user()->name }}</p>
-                        <p class="text-[10px] text-slate-500 truncate font-bold uppercase tracking-widest">{{ Auth::user()->email }}</p>
+                        <p class="text-sm font-black text-slate-900 truncate tracking-tight">{{ Auth::user()->name }}
+                        </p>
+                        <p class="text-[10px] text-slate-500 truncate font-bold uppercase tracking-widest">
+                            {{ Auth::user()->email }}
+                        </p>
                     </div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all" title="Keluar dari Sistem">
+                        <button type="submit"
+                            class="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all"
+                            title="Keluar dari Sistem">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                             </svg>
                         </button>
                     </form>

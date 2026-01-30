@@ -75,9 +75,21 @@ class PageController extends Controller
         return view('pages.announcement-detail');
     }
 
-    public function laporan()
+    public function laporan(Request $request)
     {
-        return view('pages.laporan');
+        $query = \App\Models\ProjectReport::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        $reports = $query->latest()->paginate(9);
+
+        return view('pages.laporan', compact('reports'));
     }
 
     public function newsDetail($slug)

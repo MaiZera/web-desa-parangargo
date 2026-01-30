@@ -101,6 +101,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('accounts', \App\Http\Controllers\Admin\AccountController::class);
         Route::patch('galeri/{galeri}/toggle-featured', [\App\Http\Controllers\GaleriController::class, 'toggleFeatured'])->name('galeri.toggle-featured');
         Route::resource('galeri', \App\Http\Controllers\GaleriController::class);
+        Route::resource('project-reports', \App\Http\Controllers\Admin\ProjectReportController::class);
     });
 });
 
