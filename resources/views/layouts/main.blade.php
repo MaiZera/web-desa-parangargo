@@ -2,10 +2,16 @@
 <html lang="id">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desa Parangargo</title>
-    <link rel="icon" type="image/x-icon" href="{{ asset('images/logo.png') }}">
+    @php
+        $defaultTitle = 'Desa Parangargo - Website Resmi Pemerintah Desa Parangargo, Kabupaten Malang';
+        $defaultDescription = 'Website Resmi Pemerintah Desa Parangargo, Kabupaten Malang. Informasi layanan publik, berita desa, transparansi anggaran, UMKM, dan partisipasi masyarakat.';
+        $defaultKeywords = 'desa parangargo, kabupaten malang, pemerintah desa, layanan publik, transparansi desa, berita desa, umkm desa';
+    @endphp
+
+    <x-meta-seo :title="$seoTitle ?? $defaultTitle" :description="$seoDescription ?? $defaultDescription"
+        :keywords="$seoKeywords ?? $defaultKeywords" :image="$seoImage ?? null" :url="$seoUrl ?? null" :type="$seoType ?? 'website'" :publishedTime="$seoPublishedTime ?? null" :modifiedTime="$seoModifiedTime ?? null"
+        :schema="$seoSchema ?? null" />
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">

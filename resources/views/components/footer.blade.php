@@ -36,22 +36,24 @@
       <h3 class="text-slate-900 font-bold text-xs uppercase tracking-wider mb-5">Jam Pelayanan</h3>
       <ul class="space-y-3 text-[12px] text-slate-500">
         <li class="flex justify-between"><span>Senin - Kamis:</span>
-          <span>{{ $profile->jam_kerja_senin_kamis ?? '08:00 - 15:00' }}</span></li>
+          <span>{{ $profile->jam_kerja_senin_kamis ?? '08:00 - 15:00' }}</span>
+        </li>
         <li class="flex justify-between"><span>Jumat:</span>
-          <span>{{ $profile->jam_kerja_jumat ?? '08:00 - 11:30' }}</span></li>
+          <span>{{ $profile->jam_kerja_jumat ?? '08:00 - 11:30' }}</span>
+        </li>
         @if(isset($profile->jam_kerja_sabtu_minggu) && $profile->jam_kerja_sabtu_minggu != 'Libur')
           <li class="flex justify-between"><span>Sabtu - Minggu:</span>
-            <span>{{ $profile->jam_kerja_sabtu_minggu }}</span></li>
+            <span>{{ $profile->jam_kerja_sabtu_minggu }}</span>
+          </li>
         @endif
       </ul>
     </div>
     <div>
       <h3 class="text-slate-900 font-bold text-xs uppercase tracking-wider mb-5">Didukung Oleh</h3>
-      <div class="grid grid-cols-3 gap-2">
+      <div class="grid grid-cols-3 gap-4">
         @if(isset($sponsors) && $sponsors->count() > 0)
           @foreach($sponsors as $sponsor)
-            <div class="h-10 border rounded flex items-center justify-center overflow-hidden bg-white p-1"
-              title="{{ $sponsor->nama }}">
+            <div class="h-10 flex items-center justify-center overflow-hidden p-1" title="{{ $sponsor->nama }}">
               @if($sponsor->logo)
                 <img src="{{ asset('storage/' . $sponsor->logo) }}" alt="{{ $sponsor->nama }}"
                   class="max-h-full max-w-full object-contain">
@@ -62,8 +64,7 @@
           @endforeach
         @else
           <!-- Fallback if no sponsors -->
-          <div
-            class="h-10 border rounded flex items-center justify-center text-[8px] font-black bg-slate-50 text-slate-400">
+          <div class="h-10 flex items-center justify-center text-[8px] font-black text-slate-400">
             PARTNER</div>
         @endif
       </div>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\ProfileDesaController;
@@ -26,12 +27,15 @@ use App\Http\Controllers\Admin\NewsController;
 |
 */
 
+// Sitemap
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+
 // Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/tentang', [PageController::class, 'about'])->name('about');
 Route::get('/layanan', [PageController::class, 'services'])->name('services');
-Route::get('/berita', [PageController::class, 'news'])->name('news');
+// Route::get('/berita', [PageController::class, 'news'])->name('news');
 Route::get('/berita/artikel', [PageController::class, 'artikel'])->name('news.artikel');
 Route::get('/berita/pengumuman', [PageController::class, 'pengumuman'])->name('news.pengumuman');
 Route::get('/berita/pengumuman/{slug}', [PageController::class, 'announcementDetail'])->name('news.announcement.show');

@@ -1,3 +1,24 @@
+@php
+    use App\Helpers\SeoHelper;
+
+    // SEO Variables for Homepage
+    $seoTitle = 'Desa Parangargo - Website Resmi Pemerintah Desa Parangargo, Kabupaten Malang';
+    $seoDescription = 'Website Resmi Pemerintah Desa Parangargo, Kabupaten Malang. Informasi layanan publik, berita desa, transparansi anggaran, UMKM, dan partisipasi masyarakat.';
+    $seoKeywords = 'desa parangargo, kabupaten malang, pemerintah desa malang, layanan publik desa, transparansi desa, berita desa parangargo, umkm desa, agenda desa, partisipasi masyarakat';
+    $seoImage = asset('images/logo.png');
+    $seoUrl = route('home');
+
+    // Generate Organization Schema
+    $seoSchema = SeoHelper::generateOrganizationSchema([
+        'name' => 'Desa Parangargo',
+        'url' => route('home'),
+        'logo' => asset('images/logo.png'),
+        'description' => 'Pemerintah Desa Parangargo, Kabupaten Malang, Jawa Timur',
+        'locality' => 'Parangargo',
+        'region' => 'Jawa Timur',
+    ]);
+@endphp
+
 @extends('layouts.main')
 
 @section('content')
@@ -348,7 +369,7 @@
                     <h2 class="text-3xl font-bold">Berita Terbaru</h2>
                     <p class="text-slate-500">Informasi dan kabar terkini seputar desa.</p>
                 </div>
-                <a href="{{ url('/berita') }}"
+                <a href="{{ url('/berita/artikel') }}"
                     class="text-emerald-600 font-semibold hover:underline flex items-center gap-1">
                     Semua Berita
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"

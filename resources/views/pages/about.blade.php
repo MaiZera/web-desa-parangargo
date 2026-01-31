@@ -1,3 +1,11 @@
+@php
+    // SEO Variables for page About
+    $seoTitle = 'Tentang Desa Parangargo - Profil, Sejarah, dan Demografis';
+    $seoDescription = 'Profil lengkap Desa Parangargo, Kabupaten Malang termasuk sejarah, visi misi, data demografis, struktur organisasi pemerintahan desa, dan informasi geografis wilayah.';
+    $seoKeywords = 'profil desa parangargo, sejarah parangargo, demografis parangargo, struktur organisasi desa, pemerintah desa parangargo,  kabupaten malang, wagir malang';
+    $seoImage = $profile && $profile->image_path ? asset('storage/' . $profile->image_path) : asset('images/logo.png');
+@endphp
+
 @extends('layouts.main')
 
 @section('content')
@@ -204,7 +212,7 @@
                     @foreach($religions as $key => $label)
                         @if(($rel[$key] ?? 0) > 0)
                             @php 
-                                                                                                        $val = $rel[$key];
+                                                                                                                                $val = $rel[$key];
                                 $percent = $relMode == 'percentage' ? $val : ($penduduk > 0 ? round(($val / $penduduk) * 100) : 0);
                                 $color = $colors[$key];
                             @endphp
